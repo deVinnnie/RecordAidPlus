@@ -1,0 +1,226 @@
+*
+{
+    font-family:"Calibri";
+}
+
+
+root {
+    margin: 0px;
+    padding:  0px;
+    display: block;
+}
+
+
+root a:active, root a:visited {
+    color: #EE5757;
+}
+
+root a:hover{
+    color: #333;
+}
+
+html
+{
+    overflow-y: scroll;
+}
+
+body{
+    background-color: #595959;
+}
+
+body p{
+    font-size: 1em;
+}
+
+h1, h2, h3, h4{
+    color: black;
+    font-family: "Century Gothic";
+}
+
+#content{
+    min-height: 500px;
+    width: 1024px;
+    margin-top: -10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: #FCF7EF;
+    box-shadow: 0 0 12px #FFF3E2;
+}
+
+#head{
+    text-align: right;
+    font-size: 1.2em;
+    background-image: url('logo11.png');
+    background-repeat:no-repeat;
+    height: 265px;
+    width: 1024px;
+}
+
+#navigation{
+    margin: 0 auto;
+    width: auto;
+    border-bottom: 1px solid #ddd;
+
+}
+
+#navlist{
+    width: 900px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    text-indent: 0;
+    list-style-type: none;
+    
+}
+
+#navlist li{
+    padding: 0 20px;
+    margin: 0;
+    text-indent: 0;
+    display: inline;
+}
+
+#navlist li a{
+    letter-spacing: -1px;
+    text-decoration: none;
+    color: #EE5757;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+
+#navlist li a:hover,#navlist a#current{
+    color: #333;
+    font-size: 1.5em;
+    border-bottom: 2px dashed #333;
+}
+
+
+.lijstopmaak {
+    list-style-type: square;
+    padding-top: 10px;
+}
+
+.page {
+    margin: 50px auto;
+    width: 800px;
+    padding-bottom: 50px; 
+}
+
+
+p a:active, p a:visited{
+    color: #EE5757;
+}
+
+div p a:hover{
+    color: #333;
+}
+
+.probleema{
+    color: #EE5757;
+}
+.probleema:visited{
+    color: #EE5757;
+}
+
+.probleema:hover{
+    color: #333;
+}
+
+
+.tb {
+    width: 221px;
+    background: transparent url('bgtb.jpg') no-repeat;
+    color : #747862;
+    height:20px;
+    border:0;
+    padding:4px 6px;
+    margin-bottom:0px;
+}
+
+.ta{
+    background-image:url(bgta.jpg);
+    background-repeat:repeat-x;
+    border:1px solid #d1c7ac;
+
+    color:#333333;
+    padding:3px;
+    margin-right:4px;
+    margin-bottom:8px;
+    font-family:tahoma, arial, sans-serif;
+
+}
+
+
+.dataTables_wrapper {
+    padding: 30px;
+    background-color: lightgrey;
+}
+
+td{
+    font-family:"Calibri";
+    font-size: 1em;
+}
+
+.bericht{
+    border-top: solid 2px lightgrey;
+
+    border-bottom: solid 1px lightgrey;
+    padding-bottom: 10px; 
+}
+
+
+.htmlTable
+{
+    border-collapse: collapse;
+    box-shadow: 0 0 5px;
+}
+
+.htmlTable a
+{
+    color: #EE5757;
+}
+
+.htmlTable td, .htmlTable th
+{
+    border: solid 1px #AAA;
+    padding: 5px;
+}
+
+.htmlTable th
+{
+    background-color: #EE5757;
+    color: white;
+    font-weight: bold;
+}
+
+#formReserveer
+{
+    margin-bottom: 40px;
+}
+
+.detailTable
+{
+    border-collapse: collapse;
+}
+
+.detailTable td
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #AAA;
+}
+
+.accountTable
+{
+    border-collapse: collapse;
+}
+
+.accountTable td
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    border-bottom: solid 1px #AAA;
+}
