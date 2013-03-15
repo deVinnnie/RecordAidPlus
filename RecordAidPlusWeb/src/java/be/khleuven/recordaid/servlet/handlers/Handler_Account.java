@@ -4,6 +4,7 @@ import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
 import be.khleuven.recordaid.servlet.ActionServlet;
+import be.khleuven.recordaid.util.WachtwoordUtility;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -25,17 +26,17 @@ public class Handler_Account extends Handler {
         String wachtwoord2 = request.getParameter("nieuw_ww2");
 
         if (wachtwoord1 != null && wachtwoord2 != null && oudWachtwoord != null) {
+            WachtwoordUtility wachtwoordChecker = new WachtwoordUtility(); 
+            
             oudWachtwoord = oudWachtwoord.trim();
             wachtwoord1 = wachtwoord1.trim();
             wachtwoord2 = wachtwoord2.trim();
             
-            String hashedww = super.saltWachtwoord(oudWachtwoord, request, response);
-
             Gebruiker gebruiker = (Gebruiker) request.getSession().getAttribute("gebruiker");
 
-            if (hashedww.equals(gebruiker.getWachtwoord())){
+            if (wachtwoordChecker.controleerWachtwoord(oudWachtwoord, gebruiker.getWachtwoord())){
                 if (wachtwoord1.equals(wachtwoord2)){
-                    gebruiker.setWachtwoord(super.saltWachtwoord(wachtwoord1, request, response));
+                    gebruiker.setWachtwoord(wachtwoordChecker.hashWachtwoord(wachtwoord1)); 
                     try {
                         domainFacade.updateGebruiker(gebruiker);
                         request.setAttribute("wachtwoord_verandert_boodschap", "Uw wachtwoord werd met succes aangepast.");

@@ -4,6 +4,7 @@ import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.domain.Rollen;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.util.WachtwoordUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,9 +49,9 @@ public class Handler_GebruikerDetail extends Handler
                 }
                 else if(action2.equals("Wachtwoord wijzigen naar temp"))
                 {
-                    String wachtwoord = super.saltWachtwoord("temp", request, response);
+                    WachtwoordUtility wachtwoordChecker = new WachtwoordUtility(); 
+                    String wachtwoord = wachtwoordChecker.hashWachtwoord("temp");
                     gebruiker.setWachtwoord(wachtwoord);
-
                     domainFacade.updateGebruiker(gebruiker);
                 }
                 else if(action2.equals("Gebruiker valideren"))

@@ -21,7 +21,6 @@ public abstract class Handler
     protected RecordAidDomainFacade domainFacade;
     protected String destination;
 
-
     /**
      * Constructor.
      *
@@ -102,5 +101,3 @@ public abstract class Handler
         return wachtwoord;
     }
 }
-
-

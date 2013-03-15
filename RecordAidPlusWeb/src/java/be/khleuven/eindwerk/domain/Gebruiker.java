@@ -1,6 +1,7 @@
 package be.khleuven.eindwerk.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -16,16 +17,20 @@ import javax.persistence.Id;
 public class Gebruiker implements Serializable
 {
     private static long nextId;
+    
     private long id;
     private Rollen rol;
+    
     @Id
     private String emailadres;
     private String naam;
     private String voornaam;
+    
+    @Column(length=60)    
     private String wachtwoord;
+    
     private String validatieCode;
     private boolean gevalideerd;
-
 
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
@@ -304,5 +309,3 @@ public class Gebruiker implements Serializable
     }
     // </editor-fold>
 }
-
-

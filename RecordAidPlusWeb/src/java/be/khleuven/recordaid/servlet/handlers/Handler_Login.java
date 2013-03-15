@@ -3,6 +3,7 @@ package be.khleuven.recordaid.servlet.handlers;
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.util.WachtwoordUtility;
 import javax.servlet.http.*;
 
 /**
@@ -24,7 +25,8 @@ public class Handler_Login extends Handler {
         String email = request.getParameter("email");
         String wachtwoord = request.getParameter("wachtwoord");
         wachtwoord = wachtwoord.trim();
-        wachtwoord = super.saltWachtwoord(wachtwoord, request, response);
+        WachtwoordUtility wachtwoordChecker = new WachtwoordUtility(); 
+        wachtwoord = wachtwoordChecker.hashWachtwoord(wachtwoord); 
 
         try {
             Gebruiker dbGebruiker = super.domainFacade.getGebruiker(email);
@@ -39,7 +41,6 @@ public class Handler_Login extends Handler {
         } catch (DatabaseException ex) {
             loginNietMogelijk(request, response);
         }
-
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response, Gebruiker gebruiker) {

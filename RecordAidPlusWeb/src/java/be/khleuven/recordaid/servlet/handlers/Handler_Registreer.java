@@ -4,6 +4,7 @@ import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.domain.Rollen;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.util.WachtwoordUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +45,8 @@ public class Handler_Registreer extends Handler
                 rol = Rollen.LEERKRACHT;
             }
 
-            wachtwoord = super.saltWachtwoord(wachtwoord, request, response);
+            WachtwoordUtility wachtwoordChecker = new WachtwoordUtility(); 
+            wachtwoord = wachtwoordChecker.hashWachtwoord(wachtwoord);
 
             try
             {
