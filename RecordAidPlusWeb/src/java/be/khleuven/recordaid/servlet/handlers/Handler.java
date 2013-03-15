@@ -1,9 +1,6 @@
 package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,38 +63,5 @@ public abstract class Handler
     {
         request.setAttribute("error", "De volgende fout trad op: " + exception.getMessage());
         this.destination = "mijnFouten.jsp";
-    }
-
-
-    /**
-     * Methode die gebruikt wordt om een wachtwoord dat een gebruiker ingeeft te
-     * salten en te hashen zodat het wachtwoord niet plain-text in de database
-     * staat.
-     *
-     * @param wachtwoord String die het wachtwoord is dat de gebruiker ingaf.
-     * @param request Request dat verzonden werd.
-     * @param response Response die verzonden werd.
-     * @return String die het aangepaste wachtwoord bevat.
-     */
-    protected String saltWachtwoord(String wachtwoord, HttpServletRequest request, HttpServletResponse response)
-    {
-        wachtwoord = "@#&!$*£%" + wachtwoord + "*%$€£@###&";
-
-        try
-        {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            digest.update(wachtwoord.getBytes(), 0, wachtwoord.length());
-            wachtwoord = new BigInteger(1, digest.digest()).toString(16);
-
-            digest = MessageDigest.getInstance("SHA-1");
-            digest.update(wachtwoord.getBytes(), 0, wachtwoord.length());
-            wachtwoord = new BigInteger(1, digest.digest()).toString(16);
-        }
-        catch(NoSuchAlgorithmException exception)
-        {
-            handleException(request, response, exception);
-        }
-
-        return wachtwoord;
     }
 }

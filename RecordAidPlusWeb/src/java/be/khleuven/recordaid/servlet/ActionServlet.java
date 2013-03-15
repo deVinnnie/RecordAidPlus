@@ -6,6 +6,7 @@ import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.domain.Rollen;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.util.WachtwoordUtility;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -53,9 +54,7 @@ public class ActionServlet extends HttpServlet {
         }
 
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+   /**
      * Initialiseert de Servlet.
      */
     @Override
@@ -63,9 +62,11 @@ public class ActionServlet extends HttpServlet {
         try {
             RecordAidDomainFacade domainFacade = new RecordAidDomainFacade(this.getServletContext());
             handlerFactory = new HandlerFactory(domainFacade);
-
-            String ww = this.saltWachtwoord("geheim", null, null);
-
+            
+            //Create the admin user. 
+            WachtwoordUtility wachtwoordChecker = new WachtwoordUtility(); 
+            String ww = wachtwoordChecker.hashWachtwoord("geheim"); 
+            
             Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", ww);
 
             g.valideer(g.getValidatieCode());
@@ -77,9 +78,9 @@ public class ActionServlet extends HttpServlet {
         } catch (DatabaseException ex) {
             Logger.getLogger(ActionServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
+    
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Methode handelt het request af voor de GET methode, de algemene methode
      * processRequest wordt opgeroepen en parameters worden doorgegeven.
@@ -121,22 +122,4 @@ public class ActionServlet extends HttpServlet {
     public String getServletInfo() {
         return "Servlet voor de RecordAid website.";
     }// </editor-fold>
-
-    private String saltWachtwoord(String wachtwoord, HttpServletRequest request, HttpServletResponse response) {
-        wachtwoord = "@#&!$*£%" + wachtwoord + "*%$€£@###&";
-
-        try {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            digest.update(wachtwoord.getBytes(), 0, wachtwoord.length());
-            wachtwoord = new BigInteger(1, digest.digest()).toString(16);
-
-            digest = MessageDigest.getInstance("SHA-1");
-            digest.update(wachtwoord.getBytes(), 0, wachtwoord.length());
-            wachtwoord = new BigInteger(1, digest.digest()).toString(16);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ActionServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return wachtwoord;
-    }
 }

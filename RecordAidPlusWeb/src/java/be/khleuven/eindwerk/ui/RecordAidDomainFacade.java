@@ -2,7 +2,7 @@ package be.khleuven.eindwerk.ui;
 
 import be.khleuven.eindwerk.database.*;
 import be.khleuven.eindwerk.domain.*;
-import be.khleuven.recordaid.mailing.SendMail;
+import be.khleuven.recordaid.mailing.*;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +27,7 @@ public class RecordAidDomainFacade
     private ReservatieDatabaseInterface reservatieDB;
     private SupportDatabaseInterface supportDB;
     private ServletContext servletContext;
-    private SendMail mailing;
+    private MailHandler mailing;
 
 
     /**
@@ -48,9 +48,9 @@ public class RecordAidDomainFacade
         supportDB = new SupportDatabase();
         this.servletContext = servletContext;
 
-        mailing = new SendMail(this.servletContext.getRealPath("/WEB-INF"));
+        //mailing = new SendMail(this.servletContext.getRealPath("/WEB-INF"));
+        mailing = new MailHandlerDummy(); 
     }
-
 
     public void addFAQ(FAQ faq)
     {

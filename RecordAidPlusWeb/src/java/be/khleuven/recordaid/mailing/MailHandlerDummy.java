@@ -9,12 +9,12 @@ import be.khleuven.eindwerk.domain.Support;
  *
  * @author Vincent Ceulemans
  */
-public class MailhandlerDummy extends MailHandler{
-    public MailhandlerDummy(){
+public class MailHandlerDummy extends MailHandler{
+    public MailHandlerDummy(){
         super(); 
     }
     
-    public MailhandlerDummy(String path){
+    public MailHandlerDummy(String path){
         super(path);
     }
     
