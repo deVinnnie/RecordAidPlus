@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.domain.Aanvraag;
 import be.khleuven.eindwerk.domain.Gebruiker;

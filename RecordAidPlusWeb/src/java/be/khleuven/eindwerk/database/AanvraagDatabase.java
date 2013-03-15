@@ -106,5 +106,3 @@ public class AanvraagDatabase implements AanvraagDatabaseInterface
         return (List<Aanvraag>) aanvragen;
     }
 }
-
-

@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
@@ -31,7 +31,6 @@ public class Handler_Registreer extends Handler
         String voornaam = request.getParameter("voornaam");
         String wachtwoord = request.getParameter("wachtwoord1");
         String wachtwoord2 = request.getParameter("wachtwoord2");
-
 
         email = email.trim();
         naam = naam.trim();
@@ -76,11 +75,9 @@ public class Handler_Registreer extends Handler
         }
     }
 
-
     private boolean valideer(String email, String naam, String voornaam, String wachtwoord, String wachtwoord2)
     {
         boolean ok = true;
-
 
         if(!(email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@khleuven.be$") || email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@student.khleuven.be$")))
         {
@@ -115,5 +112,3 @@ public class Handler_Registreer extends Handler
         return ok;
     }
 }
-
-

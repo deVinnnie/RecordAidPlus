@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.domain.FAQ;
 import be.khleuven.eindwerk.domain.Gebruiker;
@@ -19,7 +19,6 @@ public class Handler_FAQ extends Handler
         super(domainFacade);
     }
 
-
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
     {
@@ -37,7 +36,6 @@ public class Handler_FAQ extends Handler
             }
             request.setAttribute("faqs", relevanteLijst);
             super.destination = "faq.jsp";
-
         }
         else if(actie.equals("nieuweFAQ"))
         {
@@ -50,7 +48,5 @@ public class Handler_FAQ extends Handler
             request.setAttribute("succes", "Bedankt voor uw vraag, ze werd goed ontvangen. U zal spoedig een email ontvangen met een antwoord.");
             super.destination = "ActionServlet?action=faq";
         }
-
-
     }
 }

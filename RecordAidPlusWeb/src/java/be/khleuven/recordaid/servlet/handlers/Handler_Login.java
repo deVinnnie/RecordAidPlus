@@ -1,11 +1,8 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.domain.Rollen;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.*;
 
 /**
@@ -48,21 +45,17 @@ public class Handler_Login extends Handler {
     private void login(HttpServletRequest request, HttpServletResponse response, Gebruiker gebruiker) {
         HttpSession session = request.getSession(true);
         session.setAttribute("gebruiker", gebruiker);
-
         request.setAttribute("result", "Nu ingelogd.");
-
         super.destination = "home.jsp";
     }
 
     private void loginNietMogelijk(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("gegevens_onjuist", "De combinatie emailadres / paswoord bestaat niet of het emailadres is niet geregistreerd.");
-
         super.destination = "login.jsp";
     }
 
     private void gebruikerNietGevalideerd(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("gegevens_onjuist", "Het emailadres is nog niet gevalideerd. Klik op de link in de email die u bij registratie heeft ontvangen om het emailadres te valideren.");
-
         super.destination = "login.jsp";
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;

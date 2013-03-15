@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Aanvraag;
@@ -30,26 +30,18 @@ public class Handler_AanvragenBeheren extends Handler
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
     {
-
         String method = request.getParameter("methode");
 
         if(method != null)
         {
             if(method.equals("updaten"))
             {
-                Long id = Long.parseLong(request.getParameter("aanvraagid"));
-
+                Long id = Long.parseLong(request.getParameter("aanvraagid")); 
                 Aanvraag a = domainFacade.findAanvraag(id);
 
-
                 String status = request.getParameter("aanvraagStatus");
-
                 String gebruiker = request.getParameter("toegewezenLid");
-
                 String link = request.getParameter("linkVideo");
-
-
-
 
                 if(status != null)
                 {
@@ -99,12 +91,9 @@ public class Handler_AanvragenBeheren extends Handler
                 Collection<Gebruiker> tmp = domainFacade.getGebruikers(Rollen.BUDDY);
                 tmp.addAll(domainFacade.getGebruikers(Rollen.KERNLID));
 
-
-
                 request.setAttribute("aanvraag", a);
                 request.setAttribute("statussen", Status.values());
                 request.setAttribute("buddies", tmp);
-
 
                 super.destination = "aanvraagDetail_1.jsp";
             }
@@ -116,7 +105,6 @@ public class Handler_AanvragenBeheren extends Handler
                 if(gebruiker.getRol() == Rollen.BUDDY)
                 {
                     aanvragen = super.domainFacade.getAanvragenToegewezenLid(gebruiker);
-
                 }
                 else
                 {
@@ -127,7 +115,6 @@ public class Handler_AanvragenBeheren extends Handler
                 {
                     request.setAttribute("geen_aanvragen", "Er zijn momenteel nog geen aanvragen.");
                 }
-
 
                 request.setAttribute("aanvragen", aanvragen);
                 super.destination = "Aanvragen.jsp";
@@ -141,7 +128,6 @@ public class Handler_AanvragenBeheren extends Handler
             if(gebruiker.getRol() == Rollen.BUDDY)
             {
                 aanvragen = super.domainFacade.getAanvragenToegewezenLid(gebruiker);
-
             }
             else
             {
@@ -153,11 +139,8 @@ public class Handler_AanvragenBeheren extends Handler
                 request.setAttribute("geen_aanvragen", "Er zijn momenteel nog geen aanvragen.");
             }
 
-
             request.setAttribute("aanvragen", aanvragen);
             super.destination = "Aanvragen.jsp";
         }
     }
 }
-
-

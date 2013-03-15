@@ -1,9 +1,6 @@
 package be.khleuven.recordaid.mailing;
 
 import be.khleuven.eindwerk.domain.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.*;
@@ -18,26 +15,15 @@ import javax.mail.internet.MimeMessage;
  *
  * @author Maxime Van den Kerkhof
  */
-public class SendMail
-{
-    private String username, password, path;
-
-
-    /**
-     * Constructor.
-     *
-     * @param path String die het path naar het project weergeeft.
-     */
-    public SendMail(String path)
-    {
-        this.path = path;
+public class SendMail extends MailHandler
+{   
+    public SendMail(String path){
+        super(path); 
     }
-
+   
     //<editor-fold defaultstate="collapsed" desc="mailing">
-
     private Session getSSLSession()
     {
-        getProperties();
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -52,7 +38,7 @@ public class SendMail
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(getUsername(), getPassword());
                     }
                 });
 
@@ -62,13 +48,10 @@ public class SendMail
 
     private Session getTLSSession()
     {
-        getProperties();
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        //props.put("mail.smtp.host", "relay.khleuven.be");
-
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
@@ -77,34 +60,12 @@ public class SendMail
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(getUsername(), getPassword());
                     }
                 });
 
         return session;
     }
-
-
-    private void getProperties()
-    {
-        Properties userProperties = new Properties();
-        try
-        {
-            userProperties.load(new FileInputStream(path + "/config.properties"));
-            username = userProperties.getProperty("username");
-            password = userProperties.getProperty("password");
-            System.out.println(username);
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-
 
     private boolean sendMyMessage(String emailAdres, String subject, String inhoud)
     {
@@ -114,7 +75,7 @@ public class SendMail
         {
             Message message = new MimeMessage(this.getTLSSession());
             //message.setFrom(new InternetAddress("recordaid@khleuven.be"));
-            message.setFrom(new InternetAddress(this.username));
+            message.setFrom(new InternetAddress(getUsername()));
             message.reply(false);
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAdres));
             message.setSubject(subject);
@@ -141,6 +102,7 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendValidatieEmail(Gebruiker gebruiker)
     {
         StringBuilder inhoud = new StringBuilder();
@@ -163,13 +125,14 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendNewBuddyMail(Gebruiker gebruiker)
     {
         StringBuilder inhoud = new StringBuilder();
         inhoud.append("Student ").append(gebruiker.getVoornaam()).append(" ").append(gebruiker.getNaam());
         inhoud.append(" heeft via de website opgegeven dat hij buddy wil worden. <br><br>");
         inhoud.append("Je kan ").append(gebruiker.getVoornaam()).append(" contacteren op volgend e-mail adres:<b> ").append(gebruiker.getEmailadres()).append("</b>");
-        return this.sendMyMessage("recordaid@khleuven.be", "Aanmelding nieuwe buddy", inhoud.toString());
+        return this.sendMyMessage(this.getEmailadresRecordAid(), "Aanmelding nieuwe buddy", inhoud.toString());
     }
 
 
@@ -182,6 +145,7 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendAntwoordFAQMail(FAQ faq, Gebruiker buddy)
     {
 
@@ -207,6 +171,7 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sentNieuweFAQMail(FAQ faq)
     {
 
@@ -217,7 +182,7 @@ public class SendMail
         inhoud.append("<b>").append(faq.getVraag()).append("</b><br><br>");
         inhoud.append("E-mail van de gebruiker: ").append(faq.getGebruiker().getEmailadres());
 
-        return sendMyMessage("recordaid@khleuven.be", "Nieuwe aanvraag", inhoud.toString());
+        return sendMyMessage(this.getEmailadresRecordAid(), "Nieuwe aanvraag", inhoud.toString());
     }
 
 
@@ -231,9 +196,9 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendNieuweAanvraagMailNaarBuddy(Aanvraag aanvraag, Gebruiker buddy)
     {
-
         StringBuilder inhoud = new StringBuilder();
 
         inhoud.append("Hey ").append(buddy.getVoornaam()).append("!<br>");
@@ -262,9 +227,9 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendSupportMail(Support support)
     {
-
         StringBuilder inhoud = new StringBuilder();
         inhoud.append("Gebruiker ").append(support.getZender().getVoornaam()).append(" ").append(support.getZender().getNaam());
         inhoud.append(" heeft het volgende support bericht gestuurd: ").append("<br>");
@@ -272,7 +237,7 @@ public class SendMail
         inhoud.append(support.getLokaal()).append(("<br>"));
         inhoud.append(support.getReport());
 
-        return this.sendMyMessage("recordaid@khleuven.be", "Nieuw support bericht", inhoud.toString());
+        return this.sendMyMessage(this.getEmailadresRecordAid(), "Nieuw support bericht", inhoud.toString());
     }
 
 
@@ -286,6 +251,7 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendMailVoorGoedkeuring(String email, Aanvraag aanvraag)
     {
         StringBuilder inhoud = new StringBuilder();
@@ -310,6 +276,7 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendAanvraagBeschikbaar(Aanvraag aanvraag)
     {
         StringBuilder inhoud = new StringBuilder();
@@ -351,6 +318,7 @@ public class SendMail
      * @return True indien de mail verzonden is, false indien die niet verzonden
      *         werd.
      */
+    @Override
     public boolean sendNieuweAanvraagIngediend(Aanvraag aanvraag)
     {
         StringBuilder inhoud = new StringBuilder();
@@ -365,7 +333,7 @@ public class SendMail
         inhoud.append("Reden van aanvraag: ").append(aanvraag.getReden()).append("<br><br>");
         inhoud.append("E-mail aanvrager: ").append(aanvraag.getAanvrager().getEmailadres()).append("<br><br>");
 
-        Boolean sent1 = sendMyMessage("recordaid@khleuven.be", "Nieuwe aanvraag", inhoud.toString());
+        Boolean sent1 = sendMyMessage(this.getEmailadresRecordAid(), "Nieuwe aanvraag", inhoud.toString());
 
         StringBuilder inhoud2 = new StringBuilder();
 
@@ -384,5 +352,3 @@ public class SendMail
         return sent1 && sent2;
     }
 }
-
-

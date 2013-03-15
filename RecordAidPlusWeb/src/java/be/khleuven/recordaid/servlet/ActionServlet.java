@@ -1,5 +1,7 @@
 package be.khleuven.recordaid.servlet;
 
+import be.khleuven.recordaid.servlet.handlers.HandlerFactory;
+import be.khleuven.recordaid.servlet.handlers.Handler;
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.domain.Rollen;

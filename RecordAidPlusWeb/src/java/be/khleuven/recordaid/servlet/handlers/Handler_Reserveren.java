@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.*;
@@ -146,5 +146,3 @@ public class Handler_Reserveren extends Handler
         request.setAttribute("reservaties", reservatieLijst);
     }
 }
-
-

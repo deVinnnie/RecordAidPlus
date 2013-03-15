@@ -18,7 +18,6 @@ public class FAQDatabase implements FAQDatabaseInterface
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("RecordAidPlusModelPU");
     private EntityManager em = factory.createEntityManager();
 
-
     @Override
     public void addFAQ(FAQ faq)
     {

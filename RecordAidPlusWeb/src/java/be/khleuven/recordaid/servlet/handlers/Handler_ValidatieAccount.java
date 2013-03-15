@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
@@ -55,5 +55,3 @@ public class Handler_ValidatieAccount extends Handler
         super.destination = "valideren.jsp";
     }
 }
-
-

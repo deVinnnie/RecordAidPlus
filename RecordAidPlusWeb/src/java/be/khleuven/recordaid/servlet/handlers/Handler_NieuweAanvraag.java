@@ -1,12 +1,15 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Aanvraag;
-import be.khleuven.eindwerk.domain.DatumMaker;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,17 +22,14 @@ public class Handler_NieuweAanvraag extends Handler
 {
     private String error = "";
 
-
     public Handler_NieuweAanvraag(RecordAidDomainFacade domainFacade)
     {
         super(domainFacade);
     }
 
-
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
-    {
-        
+    { 
         String lector = request.getParameter("lector");
         String vak = request.getParameter("vak");
         String lokaal = request.getParameter("lokaal");
@@ -44,32 +44,37 @@ public class Handler_NieuweAanvraag extends Handler
 
         if(validate(lector, vak, lokaal, reeks, reden, datumStr, beginUurH, beginUurM, eindUurH, eindUurM))
         {
-            String beginUur = beginUurH + ":" + beginUurM;
-            String eindUur = eindUurH + ":" + eindUurM;
+            try {
+                String beginUur = beginUurH + ":" + beginUurM;
+                String eindUur = eindUurH + ":" + eindUurM;
 
-            Calendar datum = DatumMaker.maakDatum(datumStr);
+                SimpleDateFormat fmt = new SimpleDateFormat(); 
+                Calendar datum = Calendar.getInstance(); 
+                datum.setTime(fmt.parse(datumStr)); 
+                
+                Gebruiker gebruiker = (Gebruiker) request.getSession().getAttribute("gebruiker");
+                String geb = gebruiker.getEmailadres();
+                try
+                {
+                    gebruiker = domainFacade.getGebruiker(geb);
+                }
+                catch(DatabaseException ex)
+                {
+                    super.handleException(request, response, ex);
+                }
 
-            Gebruiker gebruiker = (Gebruiker) request.getSession().getAttribute("gebruiker");
-            String geb = gebruiker.getEmailadres();
-            try
-            {
-                gebruiker = domainFacade.getGebruiker(geb);
+
+                Aanvraag aanvraag_1 = new Aanvraag(gebruiker, lector, vak, lokaal, reeks, reden, departement, beginUur, eindUur, datum);
+                super.domainFacade.addAanvraag(aanvraag_1);
+                
+                super.domainFacade.sendNieuweAanvraagIngediend(aanvraag_1);
+
+                Collection<Aanvraag> aanvragen = super.domainFacade.getAanvragenAanvrager(gebruiker);
+                request.setAttribute("aanvragen", aanvragen);
+                super.destination = "mijnaanvragen.jsp";
+            } catch (ParseException ex) {
+                Logger.getLogger(Handler_NieuweAanvraag.class.getName()).log(Level.SEVERE, null, ex);
             }
-            catch(DatabaseException ex)
-            {
-                super.handleException(request, response, ex);
-            }
-
-
-            Aanvraag aanvraag_1 = new Aanvraag(gebruiker, lector, vak, lokaal, reeks, reden, departement, beginUur, eindUur, datum);
-            super.domainFacade.addAanvraag(aanvraag_1);
-            
-            super.domainFacade.sendNieuweAanvraagIngediend(aanvraag_1);
-
-
-            Collection<Aanvraag> aanvragen = super.domainFacade.getAanvragenAanvrager(gebruiker);
-            request.setAttribute("aanvragen", aanvragen);
-            super.destination = "mijnaanvragen.jsp";
         }
         else
         {
@@ -77,7 +82,6 @@ public class Handler_NieuweAanvraag extends Handler
             super.destination = "nieuweAanvraag.jsp";
         }
     }
-
 
     private boolean validate(String lector, String vak, String lokaal, String reeks, String reden, String datumStr, String beginUurH, String beginUurM, String eindUurH, String eindUurM)
     {
@@ -142,5 +146,3 @@ public class Handler_NieuweAanvraag extends Handler
         return ok;
     }
 }
-
-

@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Gebruiker;
@@ -6,7 +6,6 @@ import be.khleuven.eindwerk.domain.Rollen;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 /**
  *
@@ -19,7 +18,6 @@ public class Handler_GebruikerDetail extends Handler
         super(domainFacade);
     }
 
-
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
     {
@@ -31,7 +29,6 @@ public class Handler_GebruikerDetail extends Handler
             Gebruiker gebruiker = domainFacade.getGebruiker(gebruikerStr);
             request.setAttribute("gebruiker", gebruiker);
             super.destination = "gebruikerDetail.jsp";
-
 
             if(action2 != null)
             {
@@ -78,34 +75,18 @@ public class Handler_GebruikerDetail extends Handler
         }
     }
 
-
     private Rollen getRol(String rolStr)
     {
-        Rollen rol = Rollen.STUDENT;
-
-        if(rolStr.equals("LEERKRACHT"))
-        {
-            rol = Rollen.LEERKRACHT;
+        Rollen rol; 
+        
+        try{
+            rol = Rollen.valueOf(rolStr.toUpperCase()); 
         }
-        if(rolStr.equals("BUDDY"))
-        {
-            rol = Rollen.BUDDY;
+        catch(IllegalArgumentException ex){
+            //De rol is niet gevonden. 
+            rol = Rollen.STUDENT;
         }
-        if(rolStr.equals("OPLEIDINGSHOOFD"))
-        {
-            rol = Rollen.OPLEIDINGSHOOFD;
-        }
-        if(rolStr.equals("KERNLID"))
-        {
-            rol = Rollen.KERNLID;
-        }
-        if(rolStr.equals("ADMIN"))
-        {
-            rol = Rollen.ADMIN;
-        }
-
-        return rol;
+        
+        return rol; 
     }
 }
-
-

@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Aanvraag;
@@ -18,7 +18,6 @@ public class Handler_ZendMailOpleidingshoofd extends Handler
     {
         super(domainFacade);
     }
-    
     
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -46,5 +45,3 @@ public class Handler_ZendMailOpleidingshoofd extends Handler
         super.destination = "ActionServlet?action=alleAanvragen";
     }
 }
-
-

@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
@@ -17,12 +17,10 @@ public class Handler_Mailen extends Handler
         super(domainFacade);
     }
 
-
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
     {
         String method = request.getParameter("method");
-
 
         if(method.equals("buddyworden"))
         {
@@ -36,5 +34,3 @@ public class Handler_Mailen extends Handler
         }
     }
 }
-
-

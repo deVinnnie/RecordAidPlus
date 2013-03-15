@@ -17,10 +17,13 @@ import javax.persistence.Temporal;
 public class Aanvraag extends Identifiable
 {
     private Status status;
+    
     @OneToOne
     private Gebruiker aanvrager;
+    
     @OneToOne
     private Gebruiker toegewezenLid;
+    
     private String lectorMail;
     private String optenemenVak;
     private String lokaal;
@@ -30,8 +33,10 @@ public class Aanvraag extends Identifiable
     private String linkNaarVideo;
     private String beginUur;
     private String eindUur;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar aanvraagDatum;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar lesDatum;
 
@@ -42,7 +47,6 @@ public class Aanvraag extends Identifiable
     public Aanvraag()
     {
     }
-
 
     /**
      * Constructor met parameters, dit is de constructor die gebruikt dient te
@@ -56,7 +60,7 @@ public class Aanvraag extends Identifiable
      * @param reden Reden waarom de gebruiker de aanvraag indient, bv ziekte.
      * @param departement Departement waar de les plaatsvindt.
      * @param beginUur Uur waarop de les start.
-     * @param eindUur Uus waarop de les eindigt.
+     * @param eindUur Uur waarop de les eindigt.
      * @param lesDatum Datum waarop de les plaatvindt.
      */
     public Aanvraag(Gebruiker aanvrager, String lectorMail, String optenemenVak, String lokaal, String klasReeks, String reden, String departement, String beginUur, String eindUur, Calendar lesDatum)
@@ -75,7 +79,6 @@ public class Aanvraag extends Identifiable
         this.aanvraagDatum = GregorianCalendar.getInstance();
         this.lesDatum = lesDatum;
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="Setters">
     /**
@@ -114,7 +117,6 @@ public class Aanvraag extends Identifiable
         this.toegewezenLid = toegewezenLid;
     }
     // </editor-fold>
-
 
     // <editor-fold defaultstate="collapsed" desc="Getters">
     /**
@@ -259,7 +261,6 @@ public class Aanvraag extends Identifiable
     }
     // </editor-fold>
 
-
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**
      * Methode die bepaalt wanneer 2 objecten hetzelfde zijn op basis van de
@@ -328,5 +329,3 @@ public class Aanvraag extends Identifiable
     }
     // </editor-fold>
 }
-
-

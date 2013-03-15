@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.domain.ForumTopic;
 import be.khleuven.eindwerk.domain.Gebruiker;
@@ -39,20 +39,13 @@ public class Handler_Forum extends Handler
         if(methode.equals("krijg"))
         {
             List<ForumTopic> topics = (List<ForumTopic>) domainFacade.getForumTopics();
-
             Collections.reverse(topics);
-
-
             request.setAttribute("topics", topics);
-
             super.destination = "berichten.jsp";
-
         }
         else if(methode.equals("nieuw"))
         {
-
             super.destination = "nieuwBericht.jsp";
-
         }
         else if(methode.equals("antwoord"))
         {
@@ -60,45 +53,33 @@ public class Handler_Forum extends Handler
             request.setAttribute("topic", domainFacade.findForumTopic(id));
 
             super.destination = "berichtDetail.jsp";
-
         }
         else if(methode.equals("beantwoord"))
         {
-
             String text = request.getParameter("berichtInhoud");
             Long id = Long.parseLong(request.getParameter("topicid"));
 
             ForumTopic topic = domainFacade.findForumTopic(id);
 
-
             if(!text.equals("") && !text.equals(" ") && text != null)
             {
                 Message m = new Message(g, GregorianCalendar.getInstance(), text);
-
                 topic.addMessage(m);
-
                 domainFacade.updateForumTopic(topic);
             }
 
-
             super.destination = "ActionServlet?action=berichten&method=detail&topicid=" + topic.getId();
-
-
         }
         else if(methode.equals("voegtoe"))
         {
-
             String titel = request.getParameter("titel");
             String text = request.getParameter("berichtInhoud");
-
+            
             ForumTopic nieuw = new ForumTopic(titel);
-
             Message nieuwm = new Message(g, GregorianCalendar.getInstance(), text);
-
             nieuw.addMessage(nieuwm);
 
             domainFacade.addForumTopic(nieuw);
-
             super.destination = "ActionServlet?action=berichten&method=krijg";
         }
         else if(methode.equals("verwijder"))
@@ -112,7 +93,6 @@ public class Handler_Forum extends Handler
             domainFacade.updateForumTopic(topic);
             domainFacade.removeForumTopic(id);
 
-
             super.destination = "ActionServlet?action=berichten&method=krijg";
         }
         else if(methode.equals("detail"))
@@ -122,12 +102,6 @@ public class Handler_Forum extends Handler
 
             request.setAttribute("topic", topic);
             super.destination = "berichtDetail.jsp";
-
         }
-
-
-
     }
 }
-
-

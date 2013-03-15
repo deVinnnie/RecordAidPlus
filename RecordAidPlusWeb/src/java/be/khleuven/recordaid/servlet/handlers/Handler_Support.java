@@ -1,12 +1,9 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.FAQ;
 import be.khleuven.eindwerk.domain.Gebruiker;
 import be.khleuven.eindwerk.domain.Support;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,5 +58,3 @@ public class Handler_Support extends Handler
         destination = "support.jsp";
     }
 }
-
-

@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.domain.Aanvraag;
 import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
@@ -17,7 +17,6 @@ public class Handler_ZendMailLeerkracht extends Handler
         super(domainFacade);
     }
 
-
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
     {
@@ -32,5 +31,3 @@ public class Handler_ZendMailLeerkracht extends Handler
         super.destination = "ActionServlet?action=alleAanvragen";
     }
 }
-
-

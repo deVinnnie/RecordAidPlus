@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.servlet;
+package be.khleuven.recordaid.servlet.handlers;
 
 import be.khleuven.eindwerk.database.DatabaseException;
 import be.khleuven.eindwerk.domain.Item;
@@ -21,7 +21,6 @@ public class Handler_Itembeheer extends Handler
         super(domainFacade);
     }
 
-
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
     {
@@ -30,7 +29,6 @@ public class Handler_Itembeheer extends Handler
         
         if(itemNaam != null)
         {
-            
             Collection<Reservatie> reservaties = domainFacade.getReservaties();
             
             for(Reservatie r : reservaties){
@@ -64,9 +62,6 @@ public class Handler_Itembeheer extends Handler
         Collection<Item> items = domainFacade.getItems();
 
         request.setAttribute("items", items);
-
         super.destination = "items.jsp";
     }
 }
-
-
