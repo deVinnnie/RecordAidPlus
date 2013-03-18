@@ -1,6 +1,10 @@
 package be.khleuven.recordaid.mailing;
 
-import be.khleuven.eindwerk.domain.*;
+import be.khleuven.recordaid.domain.FAQ;
+import be.khleuven.recordaid.domain.Support;
+import be.khleuven.recordaid.domain.Status;
+import be.khleuven.recordaid.domain.Aanvraag;
+import be.khleuven.recordaid.domain.Gebruiker;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.*;

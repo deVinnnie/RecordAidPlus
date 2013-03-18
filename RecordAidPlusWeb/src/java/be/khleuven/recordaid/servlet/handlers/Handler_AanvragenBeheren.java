@@ -4,12 +4,12 @@
  */
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.Aanvraag;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.domain.Rollen;
-import be.khleuven.eindwerk.domain.Status;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.Aanvraag;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.domain.Rollen;
+import be.khleuven.recordaid.domain.Status;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

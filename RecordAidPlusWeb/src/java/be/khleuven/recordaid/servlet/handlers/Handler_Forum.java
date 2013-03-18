@@ -1,9 +1,9 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.domain.ForumTopic;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.domain.Message;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.domain.ForumTopic;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.domain.Message;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.GregorianCalendar;

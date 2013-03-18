@@ -1,8 +1,12 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.*;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.domain.Reservatie;
+import be.khleuven.recordaid.domain.DatumMaker;
+import be.khleuven.recordaid.domain.Rollen;
+import be.khleuven.recordaid.domain.Item;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;

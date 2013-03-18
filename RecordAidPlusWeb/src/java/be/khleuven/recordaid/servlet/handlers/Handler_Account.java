@@ -1,8 +1,8 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import be.khleuven.recordaid.servlet.ActionServlet;
 import be.khleuven.recordaid.util.WachtwoordUtility;
 import java.util.logging.Level;

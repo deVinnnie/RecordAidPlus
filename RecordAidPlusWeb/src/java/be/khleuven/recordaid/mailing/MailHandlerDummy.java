@@ -1,9 +1,9 @@
 package be.khleuven.recordaid.mailing;
 
-import be.khleuven.eindwerk.domain.Aanvraag;
-import be.khleuven.eindwerk.domain.FAQ;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.domain.Support;
+import be.khleuven.recordaid.domain.Aanvraag;
+import be.khleuven.recordaid.domain.FAQ;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.domain.Support;
 
 /**
  *

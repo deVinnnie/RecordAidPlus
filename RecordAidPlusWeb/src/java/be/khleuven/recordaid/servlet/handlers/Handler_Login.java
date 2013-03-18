@@ -1,8 +1,8 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import be.khleuven.recordaid.util.WachtwoordUtility;
 import javax.servlet.http.*;
 
@@ -26,14 +26,13 @@ public class Handler_Login extends Handler {
         String wachtwoord = request.getParameter("wachtwoord");
         wachtwoord = wachtwoord.trim();
         WachtwoordUtility wachtwoordChecker = new WachtwoordUtility(); 
-        wachtwoord = wachtwoordChecker.hashWachtwoord(wachtwoord); 
-
+        
         try {
             Gebruiker dbGebruiker = super.domainFacade.getGebruiker(email);
 
             if (!dbGebruiker.isGevalideerd()) {
                 gebruikerNietGevalideerd(request, response);
-            } else if (dbGebruiker.getWachtwoord().equals(wachtwoord)) {
+            } else if (wachtwoordChecker.controleerWachtwoord(wachtwoord, dbGebruiker.getWachtwoord())) {
                 login(request, response, dbGebruiker);
             } else {
                 loginNietMogelijk(request, response);

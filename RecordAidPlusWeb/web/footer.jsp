@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="css/footerOpmaak.css" />
+<link rel="stylesheet" type="text/css" href="css/footer.css" />
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -17,17 +17,14 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div class="footer">
-
     <div class="footerNavigatie">
         <h4>Navigatie</h4>
-
         <ul>
             <li><a href="home.jsp" >Home</a></li>
             <li><a href="ActionServlet?action=mijnAanvragen">Mijn Aanvragen</a></li>
             <li><a href="support.jsp" >Support</a></li>
             <li><a href="ActionServlet?action=faq">FAQ</a></li>       
         </ul>
-
     </div>
 
     <div class="contact">
@@ -44,9 +41,7 @@
             <li class="fb-li"><a href="https://www.facebook.com/KhLeuvenScreencasting">Facebook</a></li>
             <li class="yt-li"><a href="http://www.youtube.com/user/RecordAid">YouTube</a></li>
             <div class="fb-follow" data-href="https://www.facebook.com/KhLeuvenScreencasting" data-show-faces="true" data-font="lucida grande" data-width="450"></div>
-
         </ul>
     </div>
-
 </div>
 </div>

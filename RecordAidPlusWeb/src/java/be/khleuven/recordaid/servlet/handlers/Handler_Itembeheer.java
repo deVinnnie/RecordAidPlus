@@ -1,10 +1,10 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.Item;
-import be.khleuven.eindwerk.domain.Reservatie;
-import be.khleuven.eindwerk.domain.exception.DomainException;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.Item;
+import be.khleuven.recordaid.domain.Reservatie;
+import be.khleuven.eindwerk.recordaid.exception.DomainException;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -1,9 +1,9 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.domain.Support;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.domain.Support;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

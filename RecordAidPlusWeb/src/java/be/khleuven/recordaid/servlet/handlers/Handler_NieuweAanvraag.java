@@ -1,9 +1,9 @@
 package be.khleuven.recordaid.servlet.handlers;
 
-import be.khleuven.eindwerk.database.DatabaseException;
-import be.khleuven.eindwerk.domain.Aanvraag;
-import be.khleuven.eindwerk.domain.Gebruiker;
-import be.khleuven.eindwerk.ui.RecordAidDomainFacade;
+import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.Aanvraag;
+import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

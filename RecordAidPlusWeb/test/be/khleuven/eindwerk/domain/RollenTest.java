@@ -1,5 +1,6 @@
 package be.khleuven.eindwerk.domain;
 
+import be.khleuven.recordaid.domain.Rollen;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
