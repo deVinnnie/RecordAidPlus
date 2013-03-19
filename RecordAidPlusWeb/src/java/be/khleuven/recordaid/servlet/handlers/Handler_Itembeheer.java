@@ -3,7 +3,7 @@ package be.khleuven.recordaid.servlet.handlers;
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.Item;
 import be.khleuven.recordaid.domain.Reservatie;
-import be.khleuven.eindwerk.recordaid.exception.DomainException;
+import be.khleuven.recordaid.recordaid.exception.DomainException;
 import be.khleuven.recordaid.ui.RecordAidDomainFacade;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;

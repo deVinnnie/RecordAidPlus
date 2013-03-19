@@ -1,4 +1,4 @@
-package be.khleuven.eindwerk.recordaid.exception;
+package be.khleuven.recordaid.recordaid.exception;
 
 /**
  * Een klasse die overerft van de klasse "Exception", deze klasse kan nu

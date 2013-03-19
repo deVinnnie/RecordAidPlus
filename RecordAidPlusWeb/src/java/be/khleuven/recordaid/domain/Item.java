@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.domain;
 
-import be.khleuven.eindwerk.recordaid.exception.DomainException;
+import be.khleuven.recordaid.recordaid.exception.DomainException;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
