@@ -17,3 +17,5 @@ nb-configuration.xml
 
 RecordAidPlusWeb/web/WEB-INF/config.properties
 
+/RecordAidPlus/nbproject/private/
+/Test/nbproject/private/

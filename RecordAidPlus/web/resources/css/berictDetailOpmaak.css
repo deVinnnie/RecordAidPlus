@@ -1,0 +1,40 @@
+/* 
+    Document   : berictDetailOpmaak
+    Created on : Mar 2, 2013, 10:10:55 PM
+    Author     : Maxime
+    Description: Deze stylesheet is voor de opmaak van een detail bericht.
+*/
+
+html{ 
+    display: block;
+}
+
+b{
+    color: #3b5998;
+}
+
+.reactie {
+    background-color: #eeeff4;
+    border:#FFF solid 1px;
+    width: 500px;
+    padding: 2px;
+}
+
+.reactie b{
+    color: #8b9dc3;
+}
+
+.reactie textarea{
+    margin: 5px 5px;
+    height: auto;
+    width: 480px;
+    overflow: auto;
+}
+.reactie p{
+    width: 500px;
+    height: auto;
+}
+
+.datum{
+    color:gray;
+}

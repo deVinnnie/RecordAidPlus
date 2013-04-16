@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/RecordAidPlus">
+    <!--<Loader loaderClass="org.springframework.instrument.classloading.tomcat.TomcatInstrumentableClassLoader"/> -->
+    
+    <Resource auth="Container" driverClassName="org.apache.derby.jdbc.ClientDriver" 
+    maxActive="8" maxIdle="4" 
+    name="jdbc/RecordAid" type="javax.sql.DataSource" 
+    url="jdbc:derby://localhost:1527/RecordAid;create=true" 
+    username="app" password="app" />
+    
+    
+    <ResourceLink global="jdbc/RecordAid" name="jdbc/RecordAid" type="javax.sql.DataSource"/>
+</Context>

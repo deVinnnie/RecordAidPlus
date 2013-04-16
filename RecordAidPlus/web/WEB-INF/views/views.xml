@@ -1,0 +1,67 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition name="template" template="/WEB-INF/views/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+        <put-list-attribute name="scripts"></put-list-attribute>
+        <put-list-attribute name="styles"></put-list-attribute>
+    </definition>
+    
+    <definition name="/home" extends="template">
+        <put-attribute name="title" value="home.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
+    </definition>
+    
+    <definition name="base.jquery" extends="template">
+        <put-list-attribute name="scripts">
+            <add-attribute value="/js/jquery/jquery-1.9.1.min.js"/>
+            <add-attribute value="/js/jquery/jquery-ui.min.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="styles" inherit="true">
+            <add-attribute value="/css/blitzer/jquery-ui-1.10.1.custom.min.css"/>
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="base.datatables" extends="base.jquery">
+        <put-list-attribute value="scripts" inherit="true">
+            <add-attribute value="/js/DataTables-1.9.4/js/jquery.dataTables.min.js"/>
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="/aanvragen/nieuw" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.nieuw.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw.jsp" />
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/js/nieuweAanvraag.js"/>
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="/aanvragen/beheer" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.beheer.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/beheer.jsp"/>
+    </definition>
+    
+    <definition name="/items/reserveer" extends="base.jquery">
+        <put-attribute name="title" value="items.reserveer.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/items/reserveer.jsp" />
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/js/reserveren.js"/>
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="/faq/faq" extends="base.jquery">
+        <put-attribute name="title" value="faq.faq.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/faq/faq.jsp" />
+    </definition>
+    
+    <definition name="/gebruikers/beheer" extends="base.dataTables">
+        <put-attribute name="title" value="gebruikers.beheer.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/gebruikers/beheer.jsp" />
+    </definition>
+    
+    <definition name="/*/*" extends="template">
+        <put-attribute name="title" value="{1}.{2}.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
+    </definition>
+</tiles-definitions>

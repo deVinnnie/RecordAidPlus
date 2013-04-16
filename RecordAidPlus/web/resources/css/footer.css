@@ -1,0 +1,73 @@
+/* 
+    Document   : footerOpmaak
+    Created on : Mar 4, 2013, 10:58:41 PM
+    Author     : Maxime
+    Description: Deze stylesheet definieert de opmaak van de footer.
+*/
+
+.footer{
+    border-top: 1px solid #ddd;
+    background-color: transparent;
+    margin: 0 auto;
+    width: auto;
+    height: 160px;
+}
+
+.footerNavigatie {
+    padding: 0px;
+    margin-left: 10px;
+    width: 125px;
+    float: left;
+    border-right: 1px solid #ddd;
+}
+
+
+.footerNavigatie ul{
+    list-style: none;
+    padding: 0px;
+}
+
+.footerNavigatie ul li{
+    padding-bottom: 2px;
+}
+
+.contact {
+    width: 350px;
+    float: left;
+    margin-left: 45px;
+}
+
+.social{
+    width:  350px;
+    padding-left: 10px;
+    float: right;
+    height: 160px;
+    border-left: 1px solid #ddd;
+}
+
+.social ul{
+    list-style-type:none;
+    padding:0px;
+    margin:0px;
+}
+
+.social ul li{
+    list-style-type:none;
+    display: inline;
+    vertical-align: middle;
+}
+
+.fb-follow{
+    margin-top: 5px;
+}
+
+.footer a:link,.footer a:visited, .footer a:active { 
+    letter-spacing: -1px;
+    text-decoration: none;
+    color: #EE5757;
+}      
+
+.footer a:hover { 
+    color: #333;
+    border-bottom: 2px dashed #333;
+}  
