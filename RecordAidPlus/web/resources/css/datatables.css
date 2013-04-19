@@ -3,6 +3,10 @@ table.dataTable {
     clear: none; 
 }
 
+.dataTables_filter{
+    float:none; 
+}   
+
 table.dataTable tr.odd,
 table.dataTable tr.even { 
     background-color: transparent !important; 
