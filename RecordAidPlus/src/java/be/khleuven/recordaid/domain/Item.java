@@ -25,10 +25,7 @@ public class Item implements Serializable
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
      */
-    public Item()
-    {
-    }
-
+    public Item(){}
 
     /**
      * /**
@@ -65,7 +62,6 @@ public class Item implements Serializable
         this.naam = naam;
     }
 
-
     /**
      * Geeft de naam van het item terug.
      *
@@ -75,7 +71,6 @@ public class Item implements Serializable
     {
         return naam;
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**

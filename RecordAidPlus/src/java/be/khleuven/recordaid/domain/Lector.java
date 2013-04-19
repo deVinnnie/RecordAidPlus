@@ -15,6 +15,15 @@ public class Lector implements Serializable {
     @Id
     private String emailadres; 
     
+    private boolean autonoomOpnemen = false; 
+    
+    /*
+     * Hoe lager dit getal hoe meer opnames de lector geweigerd heeft, 
+     * en waarschijnlijk zal weigeren. 
+     * Hoe hoger hoe meer geneigd de lector is om de opname toe te staan. 
+     */
+    private int aanvaardingsFactor = 0; 
+    
     public Lector(){}
     
     private Lector(String naam, String emailadres){
@@ -52,6 +61,14 @@ public class Lector implements Serializable {
             n+=Character.toUpperCase(naamSplitted[i].charAt(0)) + naamSplitted[i].substring(1)+" ";
         }
         this.naam=n.trim(); 
+    }
+    
+    public void setAutonoomOpnemen(boolean autonoomOpnemen){
+        this.autonoomOpnemen = autonoomOpnemen; 
+    }
+    
+    public boolean getAutonoomOpnemen(){
+        return this.autonoomOpnemen; 
     }
     
     @Override

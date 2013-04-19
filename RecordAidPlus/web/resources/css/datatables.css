@@ -1,0 +1,9 @@
+.dataTables_wrapper, 
+table.dataTable {
+    clear: none; 
+}
+
+table.dataTable tr.odd,
+table.dataTable tr.even { 
+    background-color: transparent !important; 
+}

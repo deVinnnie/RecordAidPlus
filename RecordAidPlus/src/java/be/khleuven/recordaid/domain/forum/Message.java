@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.domain.forum;
 
-import be.khleuven.recordaid.domain.Gebruiker;
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.Identifiable;
 import java.util.Calendar;
 import javax.persistence.*; 

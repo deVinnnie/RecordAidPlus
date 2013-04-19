@@ -6,12 +6,16 @@
 <s:url value="/resources" var="resources"/>
 <div id="head">
     <security:authorize access="isAuthenticated()">
-        <a class="link" href="<s:url value="/gebruikers/account"/>"><security:authentication property="principal.username"/></a>
-        <a class="link" href="<s:url value="/static/j_spring_security_logout"/>">Logout</a>
+        <div id="auth">
+            <a class="link" href="<s:url value="/gebruikers/account"/>"><security:authentication property="principal.username"/></a>
+            <a class="link" href="<s:url value="/static/j_spring_security_logout"/>">Logout</a>
+        </div>
     </security:authorize>
 
     <security:authorize access="isAnonymous()">
-        <a class="link" href="<s:url value="/login"/>">Login</a>
+        <div id="auth">
+           <a class="link" href="<s:url value="/login"/>">Login</a>
+        </div>
     </security:authorize>
     <img class="logo" src="${resources}/images/recordaid_logo.png" alt="RecordAid logo"/>
 </div>
@@ -24,18 +28,20 @@
         <li><a href="<s:url value="/faq"/>">FAQ</a></li> 
 
         <security:authorize access="isAuthenticated() and not hasRole('STUDENT')">
-            <li><a href="<s:url value="/items/reserveer"/>">Reserveren</a></li><br>
-            </security:authorize>
+            <li><a href="<s:url value="/items/reserveer"/>">Reserveren</a></li>
+        </security:authorize>
 
         <security:authorize access="isAuthenticated() and not hasRole('STUDENT') and not hasRole('LEERKRACHT')">
             <li><a href="<s:url value="/forum"/>">Berichten</a></li>
-            <li><a href="<s:url value="/aanvragen/beheer"/>">Aanvragen-beheer</a></li>
-            </security:authorize>
+        </security:authorize>
 
         <security:authorize access="hasRole('KERNLID') or hasRole('ADMIN')">
+            <li><a href="<s:url value="/beheer"/>">Beheer</a></li>
+            <!--<li><a href="<s:url value="/aanvragen/beheer"/>">Aanvragen-beheer</a></li>
             <li><a href="<s:url value="/faq/beheer"/>">FAQ-beheer</a></li>
             <li><a href="<s:url value="/gebruikers/beheer"/>">Gebruiker-beheer</a></li>
             <li><a href="<s:url value="/items/beheer"/>">Item-beheer</a></li>
-            </security:authorize>
+            <li><a href="<s:url value="/opnames/beheer"/>">Opname-beheer</a></li>-->
+        </security:authorize>
     </ul>
 </div>

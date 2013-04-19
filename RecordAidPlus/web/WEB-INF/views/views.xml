@@ -1,16 +1,12 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
 "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
+    <!--Templates-->
     <definition name="template" template="/WEB-INF/views/template.jsp">
-        <put-attribute name="header" value="/WEB-INF/views/header.jsp" />
-        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+        <put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
         <put-list-attribute name="scripts"></put-list-attribute>
         <put-list-attribute name="styles"></put-list-attribute>
-    </definition>
-    
-    <definition name="/home" extends="template">
-        <put-attribute name="title" value="home.title"/>
-        <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
     </definition>
     
     <definition name="base.jquery" extends="template">
@@ -24,11 +20,26 @@
     </definition>
     
     <definition name="base.datatables" extends="base.jquery">
-        <put-list-attribute value="scripts" inherit="true">
+        <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/DataTables-1.9.4/js/jquery.dataTables.min.js"/>
+            <add-attribute value="/js/datatable.js"/>
+        </put-list-attribute>
+         <put-list-attribute name="styles" inherit="true">
+            <add-attribute value="/js/DataTables-1.9.4/css/jquery.dataTables.css"/>
+            <add-attribute value="/css/datatables.css"/>
         </put-list-attribute>
     </definition>
     
+    <definition name="base.beheer" extends="base.datatables">
+        <put-attribute name="content" value="/WEB-INF/views/beheer_template.jsp"/>
+    </definition>
+    
+    <definition name="/home" extends="base.datatables">
+        <put-attribute name="title" value="home.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
+    </definition>
+    
+    <!--Aanvragen-->
     <definition name="/aanvragen/nieuw" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw.title"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw.jsp" />
@@ -37,11 +48,18 @@
         </put-list-attribute>
     </definition>
     
-    <definition name="/aanvragen/beheer" extends="base.jquery">
-        <put-attribute name="title" value="aanvragen.beheer.title"/>
-        <put-attribute name="content" value="/WEB-INF/views/aanvragen/beheer.jsp"/>
+    <definition name="/aanvragen/nieuwe_opname" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.nieuw.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuwe_opname.jsp" />
     </definition>
     
+    <!--Opnames-->
+      <definition name="/opnames/editor" extends="base.jquery">
+        <put-attribute name="title" value="opnames.editor.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/opnames/editor.jsp"/>
+    </definition>
+    
+    <!--Items-->
     <definition name="/items/reserveer" extends="base.jquery">
         <put-attribute name="title" value="items.reserveer.title"/>
         <put-attribute name="content" value="/WEB-INF/views/items/reserveer.jsp" />
@@ -50,18 +68,34 @@
         </put-list-attribute>
     </definition>
     
+    <!--FAQ-->
     <definition name="/faq/faq" extends="base.jquery">
         <put-attribute name="title" value="faq.faq.title"/>
         <put-attribute name="content" value="/WEB-INF/views/faq/faq.jsp" />
     </definition>
     
-    <definition name="/gebruikers/beheer" extends="base.dataTables">
-        <put-attribute name="title" value="gebruikers.beheer.title"/>
-        <put-attribute name="content" value="/WEB-INF/views/gebruikers/beheer.jsp" />
+    <!--Common-->
+    <definition name="/error" extends="template">
+        <put-attribute name="title" value="error.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/error.jsp" />
     </definition>
     
+    <!--Admin Pages-->
+    <definition name="/beheer" extends="base.beheer">
+        <put-attribute name="title" value="beheer.title"/>
+        <put-attribute name="beheer_content" value="/WEB-INF/views/beheer.jsp" cascade="true"/>
+    </definition>
+    
+    <definition name="/*/beheer" extends="base.beheer">
+        <put-attribute name="title" value="{1}.beheer.title"/>
+        <put-attribute name="beheer_content" value="/WEB-INF/views/{1}/beheer.jsp" cascade="true"/>
+    </definition>
+    
+    <!--Normal Pages-->
     <definition name="/*/*" extends="template">
         <put-attribute name="title" value="{1}.{2}.title"/>
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
+    
+    <!--End Common-->
 </tiles-definitions>

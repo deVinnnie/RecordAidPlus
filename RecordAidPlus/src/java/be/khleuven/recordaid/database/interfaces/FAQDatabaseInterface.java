@@ -12,40 +12,6 @@ import java.util.Collection;
 public interface FAQDatabaseInterface
 {
     /**
-     * Voegt een FAQ toe aan de database.
-     *
-     * @param faq De FAQ die toegevoegt moet worden.
-     */
-    public void addFAQ(FAQ faq);
-
-
-    /**
-     * Geeft een opgeslagen FAQ terug op basis van het id.
-     *
-     * @param id Het id van de terug te geven FAQ.
-     * @return FAQ met het id.
-     */
-    public FAQ findFAQ(Long id);
-
-
-    /**
-     * Past een opgeslagen FAQ aan met de nieuwe waarden van die FAQ.
-     *
-     * @param faq De FAQ die gewijzigd is en waarvan het opgeslagen object
-     * aangepast moet worden.
-     */
-    public void updateFAQ(FAQ faq);
-
-
-    /**
-     * Verwijdert een FAQ uit de database.
-     *
-     * @param faq De FAQ die verwijderd moet worden.
-     */
-    public void removeFAQ(FAQ faq);
-
-
-    /**
      * Geeft een collection van alle FAQs in de database terug.
      *
      * @return Collection<FAQ> van alle FAQs in de database.
@@ -81,5 +47,3 @@ public interface FAQDatabaseInterface
      */
     public Collection<FAQ> getNietBeantwoordeFAQs();
 }
-
-

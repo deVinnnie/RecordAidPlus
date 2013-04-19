@@ -59,7 +59,7 @@ public class TimeSpan implements Serializable {
     }
     
     public void setEndHour(int hour){
-        this.beginTime.set(Calendar.HOUR, hour);
+        this.endTime.set(Calendar.HOUR, hour);
     }
      
     public int getEndHour(){
@@ -67,7 +67,7 @@ public class TimeSpan implements Serializable {
     } 
     
     public void setEndMinute(int minute){
-        this.beginTime.set(Calendar.MINUTE, minute);
+        this.endTime.set(Calendar.MINUTE, minute);
     }
     
     public int getEndMinute(){

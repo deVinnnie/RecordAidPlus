@@ -22,12 +22,13 @@
         <c:forEach items="${scripts}" var="script">
         <script type="text/javascript" src="${resources}${script}"></script>
         </c:forEach>
+        <!--<link rel="shortcut icon" href=""/>-->
     </head>
     <body>
         <div id="content">
             <tiles:insertAttribute name="header"/>          
             
-            <div class="page">
+            <div id="page">
             <tiles:insertAttribute name="content"/>
             </div>
             

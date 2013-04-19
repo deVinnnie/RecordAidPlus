@@ -1,7 +1,7 @@
 package be.khleuven.recordaid.mvc;
 
-import be.khleuven.recordaid.domain.Gebruiker;
-import be.khleuven.recordaid.domain.RecordAidDomainFacade;
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -41,7 +41,7 @@ public class GebruikersController{
             return "/gebruikers/detail";
         }
         else{
-            return "/FoutPagina";        
+            return "/error";        
         }
     }
 }

@@ -1,8 +1,10 @@
 package be.khleuven.recordaid.mvc; 
 
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.domain.gebruiker.Rollen;
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*;
-import be.khleuven.recordaid.domain.RecordAidDomainFacade;
+import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,28 +24,6 @@ public class MyUserDetailsService implements UserDetailsService{
     
     public MyUserDetailsService(RecordAidDomainFacade domainFacade){
         this.domainFacade = domainFacade; 
-        this.createStandardUser(); 
-    }
-    
-    private void createStandardUser()
-    {
-        try {
-            String wachtwoord = this.passwordEncoder.encode("geheim"); 
-            
-            Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", wachtwoord);
-            g.valideer();
-            this.domainFacade.addGebruiker(g);
-            
-            Gebruiker g2 = new Gebruiker(Rollen.STUDENT, "dummy", "Dummy", "Dummy", wachtwoord);
-            g2.valideer();
-            this.domainFacade.addGebruiker(g2);
-        } catch (DatabaseException ex) {
-            System.out.println("**Exception Occured:"); 
-            ex.printStackTrace();
-        } catch (Exception e) {
-            System.out.println("**Exception Occured:"); 
-            e.printStackTrace(); 
-        }
     }
     
     @Override

@@ -3,7 +3,7 @@ package be.khleuven.recordaid.mvc;
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.Item;
 import be.khleuven.recordaid.domain.Reservatie;
-import be.khleuven.recordaid.domain.RecordAidDomainFacade;
+import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import java.util.Collection;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +36,13 @@ public class ItemController
     @RequestMapping(params="verwijder",method=RequestMethod.POST)
     public String deleteItem(@RequestParam("naam") String naam, 
                                 ModelMap model){
-        if (domainFacade.getItemDB().findItem(naam) != null) {
+        if (domainFacade.findItem(naam) != null) {
             Collection<Reservatie> reservaties = domainFacade.getReservaties();
 
             for (Reservatie r : reservaties) {
                 if (r.getItem().getNaam().equals(naam)) {
                     r.setItem(null);
-                    domainFacade.removeReservatie(r);
+                    domainFacade.remove(r);
                 }
             }
             domainFacade.removeItem(naam);

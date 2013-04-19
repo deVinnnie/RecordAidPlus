@@ -10,5 +10,5 @@
    
     
     <!--DomainFacade-->
-    <bean id="domainFacade" class="be.khleuven.recordaid.domain.RecordAidDomainFacade"/>
+    <bean id="domainFacade" class="be.khleuven.recordaid.domain.facade.RecordAidDomainFacade"/>
 </beans>

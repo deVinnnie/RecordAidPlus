@@ -8,11 +8,6 @@ var redenOK = false;
 
 $("document").ready(function()
 {
-    $("#datum").datepicker({
-        dateFormat: "yy-mm-dd",
-        showOtherMonths: true
-    });
-        
     $("#vak").focusout(checkVak);
     $("#vak").focus(vakErrorDisapear);
     $("#reeks").focusout(checkReeks);
@@ -27,7 +22,6 @@ $("document").ready(function()
     $("#reden").focus(redenErrorDisapear);
     $("#aanvraagForm").submit(checkAanvraag);
 });
-
 
 function checkAanvraag()
 {

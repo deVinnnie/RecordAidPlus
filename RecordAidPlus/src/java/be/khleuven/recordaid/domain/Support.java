@@ -1,8 +1,8 @@
 package be.khleuven.recordaid.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import java.util.Calendar;
+import javax.persistence.*; 
 
 /**
  * Klasse die voor een bericht over een defect in een lokaal bijhoudt om welk
@@ -13,19 +13,21 @@ import javax.persistence.OneToOne;
 @Entity
 public class Support extends Identifiable
 {
-    private String report, lokaal;
+    private String report; 
+    
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Lokaal lokaal;
     
     @OneToOne
     private Gebruiker zender;
 
-
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar datum = Calendar.getInstance();
+    
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
      */
-    protected Support()
-    {
-    }
-
+    protected Support(){}
 
     /**
      * Constructor met parameters, dit is de constructor die gebruikt dient te
@@ -35,7 +37,7 @@ public class Support extends Identifiable
      * @param lokaal String die het lokaal is waarin het defect is.
      * @param zender Gebruiker die het defect gemeld heeft.
      */
-    public Support(String report, String lokaal, Gebruiker zender)
+    public Support(String report, Lokaal lokaal, Gebruiker zender)
     {
         setReport(report);
         setLokaal(lokaal);
@@ -70,7 +72,7 @@ public class Support extends Identifiable
      *
      * @return String die het lokaal is waar het defect zich bevindt.
      */
-    public String getLokaal()
+    public Lokaal getLokaal()
     {
         return lokaal;
     }
@@ -81,11 +83,10 @@ public class Support extends Identifiable
      *
      * @param lokaal String die het lokaal is waar het defect zich bevindt.
      */
-    public void setLokaal(String lokaal)
+    public void setLokaal(Lokaal lokaal)
     {
         this.lokaal = lokaal;
     }
-
 
     /**
      * Geeft de gebruiker terug die het defect gemeld heeft.
@@ -97,7 +98,6 @@ public class Support extends Identifiable
         return zender;
     }
 
-
     /**
      * Setter om de gebruiker die het defect gemeld heeft aan te passen.
      *
@@ -107,7 +107,6 @@ public class Support extends Identifiable
     {
         this.zender = zender;
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**

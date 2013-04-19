@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <h1>Home</h1>
 
@@ -32,3 +34,29 @@
     willen ondersteunen zodat we alle studenten kunnen helpen en meer lessen 
     kunnen opnemen. Via de <a href="account.jsp">gebruikers-pagina</a> kan je opgeven dat je een buddy wil worden.
 </p>
+
+<h2>Opnames</h2>
+<script type="text/javascript">
+$(document).ready(function()
+{
+    datatable("opnames"); 
+});
+</script>
+<table id="opnames">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>OOD</th>
+            <th>Lector</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="opname" items="${opnames}">
+            <tr>
+                <td><fmt:formatDate value="${opname.beginTijdstip.time}" pattern="yyyy-MM-dd" /></td>
+                <td>${opname.OOD}</td>
+                <td>${opname.lector.naam}</td>
+            </tr>
+        </c:forEach>
+    </tbody>    
+</table>

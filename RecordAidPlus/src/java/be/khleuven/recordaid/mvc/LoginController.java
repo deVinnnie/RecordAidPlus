@@ -1,5 +1,7 @@
 package be.khleuven.recordaid.mvc;
 
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*; 
 import javax.validation.Valid;

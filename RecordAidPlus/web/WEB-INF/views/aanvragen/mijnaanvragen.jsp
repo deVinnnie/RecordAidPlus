@@ -21,11 +21,6 @@
             <thead>
                 <tr>
                     <th>Lesdatum</th>
-                    <th>Begin uur</th>
-                    <th>Eind uur</th>
-                    <th>Vak</th>
-                    <th>Lokaal</th>
-                    <th>Reeks</th>
                     <th>Status</th>
                     <th>Details</th>
                 </tr>
@@ -34,11 +29,6 @@
                 <c:forEach var="aanvraag" items="${aanvragen}" >
                     <tr align=center >
                         <td><fmt:formatDate value="${aanvraag.lesDatum.time}" pattern="dd/MM/yyyy" /></td>
-                        <td>${aanvraag.beginUur}</td>
-                        <td>${aanvraag.eindUur}</td>
-                        <td>${aanvraag.optenemenVak}</td>
-                        <td>${aanvraag.lokaal}</td>
-                        <td>${aanvraag.klasReeks}</td>
                         <td>${aanvraag.status}</td>
                         <td><a href="<s:url value="aanvragen/detail?id=${aanvraag.id}"/>">Details</a></td>
                     </tr>

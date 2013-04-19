@@ -1,11 +1,7 @@
 package be.khleuven.recordaid.domain;
 
 import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-
+import javax.persistence.*; 
 
 /**
  * Klasse waarvan overge-erfd kan worden door klassen die een id willen
@@ -29,12 +25,10 @@ public class Identifiable implements Serializable
     {
     }
 
-
     /**
-     * /**
      * Constructor met parameters.
      *
-     * @param id long dat het id van het object moet zijn.
+     * @param id Het id van het object.
      */
     public Identifiable(long id)
     {
@@ -43,7 +37,6 @@ public class Identifiable implements Serializable
             this.id = id;
         }
     }
-
 
     /**
      * Geeft het id van het object terug.
@@ -55,16 +48,13 @@ public class Identifiable implements Serializable
         return id;
     }
 
-
     /**
      * Setter om het id van het object te setten.
      *
-     * @param id long dat het id van het object moet zijn.
+     * @param id Het nieuwe id van het object.
      */
     public void setId(long id)
     {
         this.id = id;
     }
 }
-
-

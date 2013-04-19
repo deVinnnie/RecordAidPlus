@@ -1,8 +1,8 @@
 package be.khleuven.recordaid.mvc;
 
-import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.*;
-import be.khleuven.recordaid.domain.RecordAidDomainFacade;
+import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -47,8 +47,8 @@ public class FAQController
     public String nieuweFAQ(@Valid FAQ faq, ModelMap model, BindingResult bindingResult){
         Gebruiker gebruiker = (Gebruiker) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
         faq.setGebruiker(gebruiker);
-        domainFacade.addFAQ(faq);
-        domainFacade.sentNieuweFAQMail(faq);
+        domainFacade.create(faq);
+        //domainFacade.sentNieuweFAQMail(faq);
         model.addAttribute("faq_toegevoegd",1); 
         return "redirect:/faq";
     }
@@ -77,7 +77,7 @@ public class FAQController
      @RequestMapping(value="/beheer", params="delete")
      public String deleteFAQ(@RequestParam("id") long id){
          FAQ faq = this.domainFacade.findFAQ(id); 
-         this.domainFacade.removeFAQ(faq);
+         this.domainFacade.remove(faq);
          return "redirect:/faq/beheer";
      }
     
@@ -95,7 +95,7 @@ public class FAQController
             @Valid FAQ faq, 
             BindingResult bindingResult, 
             ModelMap model){
-        domainFacade.updateFAQ(faq);
+        domainFacade.edit(faq);
         /*Gebruiker buddy = (Gebruiker) request.getSession().getAttribute("gebruiker");
         domainFacade.sendAntwoordFAQMail(deFAQ, buddy);*/
         return "redirect:/faq/beheer";

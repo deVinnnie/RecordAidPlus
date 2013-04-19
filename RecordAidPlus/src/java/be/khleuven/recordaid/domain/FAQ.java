@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain;
 
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 

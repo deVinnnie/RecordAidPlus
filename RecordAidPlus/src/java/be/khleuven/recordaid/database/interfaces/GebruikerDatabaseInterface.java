@@ -1,8 +1,9 @@
 package be.khleuven.recordaid.database.interfaces;
 
 import be.khleuven.recordaid.database.DatabaseException;
-import be.khleuven.recordaid.domain.Gebruiker;
-import be.khleuven.recordaid.domain.Rollen;
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.domain.gebruiker.Rollen;
+import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import java.util.Collection;
 
 
@@ -23,50 +24,7 @@ public interface GebruikerDatabaseInterface
      */
     public Gebruiker getGebruiker(String emailadres);
 
-
     public Gebruiker getGebruikerByValidatiecode(String validatiecode);
-
-
-    /**
-     * Voegt een gebruiker toe aan de database. Gooit een DatabaseException
-     * indien de gebruiker reeds bestaat.
-     *
-     * @param gebruiker De gebruiker die toegevoegd moet worden.
-     * @throws DatabaseException indie de gebruiker reeds bestaat.
-     */
-    public void addGebruiker(Gebruiker gebruiker) throws DatabaseException;
-
-
-    /**
-     * Verwijdert een gebruiker uit de database op basis van zijn emailadres.
-     * Gooit een DatabaseException indien de gebruiker niet bestaat.
-     *
-     * @param emailadres Het emailadres van de gebruiker die verwijderd moet
-     * worden.
-     * @throws DatabaseException indien de gebruiker niet bestaat.
-     */
-    public void removeGebruiker(String emailadres) throws DatabaseException;
-
-
-    /**
-     * Verwijdert een gebruiker uit de database op basis van het object. Gooit
-     * een DatabaseException indien de gebruiker niet bestaat.
-     *
-     * @param gebruiker De gebruiker die verwijderd moet worden.
-     * @throws DatabaseException indien de gebruiker niet bestaat.
-     */
-    public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException;
-
-
-    /**
-     * Update een gebruiker in de database. Gooit een DatabaseException indien
-     * de gebruiker niet bestaat.
-     *
-     * @param gebruiker De gebruiker die aangepast moet worden.
-     * @throws DatabaseException indien de gebruiker niet bestaat.
-     */
-    public void updateGebruiker(Gebruiker gebruiker) throws DatabaseException;
-
 
     /**
      * Geeft alle gebruikers in de database terug.
@@ -74,7 +32,6 @@ public interface GebruikerDatabaseInterface
      * @return Collection<Gebruiker> met alle gebruikers in de database.
      */
     public Collection<Gebruiker> getGebruikers();
-
 
     /**
      * Geeft alle gebruikers in de database met een specifieke rol terug.
@@ -85,5 +42,3 @@ public interface GebruikerDatabaseInterface
      */
     public Collection<Gebruiker> getGebruikers(Rollen rol);
 }
-
-

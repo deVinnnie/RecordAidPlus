@@ -21,7 +21,6 @@
     border-right: 1px solid #ddd;
 }
 
-
 .footerNavigatie ul{
     list-style: none;
     padding: 0px;
@@ -61,7 +60,9 @@
     margin-top: 5px;
 }
 
-.footer a:link,.footer a:visited, .footer a:active { 
+.footer a:link,
+.footer a:visited, 
+.footer a:active { 
     letter-spacing: -1px;
     text-decoration: none;
     color: #EE5757;

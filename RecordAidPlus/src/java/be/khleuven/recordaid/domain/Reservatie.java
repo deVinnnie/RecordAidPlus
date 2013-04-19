@@ -1,9 +1,8 @@
 package be.khleuven.recordaid.domain;
 
+import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import java.util.Calendar;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
+import javax.persistence.*; 
 
 
 /**

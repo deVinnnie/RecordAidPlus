@@ -46,4 +46,8 @@
     <welcome-file-list>
         <welcome-file>/</welcome-file>
     </welcome-file-list>
+
+    <error-page>
+          <location>/error</location>
+    </error-page>
 </web-app>

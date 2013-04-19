@@ -4,10 +4,7 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <!--@include file="paginaCheck/checkGeenStudentenLeerkrachten.jsp" %>-->
 <!--<link type="text/css" rel="stylesheet" href="DataTables-1.9.4/media/css/jquery.dataTables.css"/>
-<link type="text/css" rel="stylesheet" href="DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css"/>
-<script type="text/javascript" src="DataTables-1.9.4/media/js/jquery.js"></script>
-<script type="text/javascript" src="DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>-->
+<link type="text/css" rel="stylesheet" href="DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css"/>-->
 <h1>Aanvragen</h1>
 <c:choose>
     <c:when test="${empty aanvragen}">

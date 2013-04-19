@@ -32,37 +32,32 @@ h1, h2, h3, h4{
 
 #content{
     min-height: 500px;
-    width: 1024px;
-    margin-top: -10px;
-    margin-left: auto;
-    margin-right: auto;
+    min-width: 900px; 
+    width: 90%; 
+    margin: -10px auto 0 auto; 
     padding: 10px;
     background-color: #FCF7EF;
     box-shadow: 0 0 12px #FFF3E2;
 }
 
 #head{
-    text-align: right;
-    font-size: 1.2em; 
     height: 265px;
-    width: 1024px;
+    overflow-y: hidden; 
+    overflow-x: hidden; 
 }
 
 #navigation{
     margin: 0 auto;
     width: auto;
     border-bottom: 1px solid #ddd;
-
 }
 
 #navlist{
-    width: 900px;
     text-align: center;
     margin: 0 auto;
     padding: 0;
     text-indent: 0;
-    list-style-type: none;
-    
+    list-style-type: none;    
 }
 
 #navlist li{
@@ -87,14 +82,23 @@ h1, h2, h3, h4{
     border-bottom: 2px dashed #333;
 }
 
+#subnav{
+    float: left; 
+}
+
+#beheer{
+    margin-left: 15em; 
+}
+
 .lijstopmaak {
     list-style-type: square;
     padding-top: 10px;
 }
 
-.page {
+#page {
     margin: 50px auto;
-    width: 800px;
+    min-width: 800px;
+    width: 90%; 
     padding-bottom: 50px; 
 }
 
@@ -136,12 +140,6 @@ textarea{
     margin-right:4px;
     margin-bottom:8px;
     font-family:tahoma, arial, sans-serif;
-}
-
-
-.dataTables_wrapper {
-    padding: 30px;
-    background-color: lightgrey;
 }
 
 td{
@@ -191,8 +189,7 @@ td{
 
 .detailTable td
 {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0; 
     border-bottom: solid 1px #AAA;
 }
 
@@ -203,9 +200,7 @@ td{
 
 .accountTable td
 {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 30px;
+    padding: 10px 30px 10px 0; 
     border-bottom: solid 1px #AAA;
 }
 
@@ -218,11 +213,11 @@ td{
 }
 
 img.logo{
-    position:relative;
-    left:0;
-    top:0; 
+    margin: 0 auto; 
+    display: block; 
 }
 
-#head{
-    overflow-y: hidden; 
+#auth{ 
+    text-align: right;
+    font-size: 1.2em; 
 }

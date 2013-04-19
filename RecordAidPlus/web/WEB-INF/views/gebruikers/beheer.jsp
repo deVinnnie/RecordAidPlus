@@ -27,7 +27,7 @@ $(document).ready(function()
         <c:forEach items="${gebruikers}" var="gebruiker">
             <tr>
                 <td>${gebruiker.voornaam}</td>
-                <td>${gebruiker.naam}</td>
+                <td>${gebruiker.achternaam}</td>
                 <td>${gebruiker.emailadres}</td>
                 <td>${gebruiker.rol}</td>
                 <td>${gebruiker.gevalideerd}</td>
