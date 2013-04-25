@@ -11,6 +11,7 @@
         <li><a href="<s:url value="/gebruikers/beheer"/>">Gebruikers</a></li>
         <li><a href="<s:url value="/items/beheer"/>">Items</a></li>
         <li><a href="<s:url value="/opnames/beheer"/>">Opnames</a></li>
+        <li><a href="<s:url value="/mailing/beheer"/>">Mail</a></li>
     </ul>
 </div>
 <div id="beheer">

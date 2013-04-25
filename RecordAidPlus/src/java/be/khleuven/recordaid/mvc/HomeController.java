@@ -2,7 +2,6 @@ package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.domain.aanvragen.OpnameMoment;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
-import java.text.MessageFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

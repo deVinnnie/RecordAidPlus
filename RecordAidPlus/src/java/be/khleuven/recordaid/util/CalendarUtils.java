@@ -1,6 +1,7 @@
 package be.khleuven.recordaid.util;
 
 import java.util.Calendar;
+import static java.util.Calendar.*;
 
 /**
  *
@@ -20,11 +21,26 @@ public class CalendarUtils {
         }
 
         boolean isSameDay = false;
-        if (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA)
-                && calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)
-                && calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)) {
+        if (calendar1.get(ERA) == calendar2.get(ERA)
+                && calendar1.get(YEAR) == calendar2.get(YEAR)
+                && calendar1.get(DAY_OF_YEAR) == calendar2.get(DAY_OF_YEAR)) {
             isSameDay = true;
         }
         return isSameDay;
+    }
+    
+    /**
+     * 
+     * <p>Remove information about time from the given Calendar object, leaving only the date information. </p>
+     * 
+     * @param calendar 
+     * @return Trimmed calendar. 
+     */
+    public static Calendar trim(Calendar calendar){
+         calendar.set(HOUR_OF_DAY, 0);
+         calendar.set(MINUTE, 0);
+         calendar.set(SECOND, 0);
+         calendar.set(MILLISECOND, 0);
+         return calendar; 
     }
 }

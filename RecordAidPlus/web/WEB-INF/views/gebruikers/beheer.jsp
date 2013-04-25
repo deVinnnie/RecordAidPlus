@@ -8,8 +8,8 @@
 <script type="text/javascript">
 $(document).ready(function()
     {
-        $('#gebruikersTabel').dataTable();
-    } );
+        datatable("#gebruikersTabel"); 
+    });
 </script>
 <h1>Gebruikers Beheren</h1>
 <table id="gebruikersTabel">

@@ -130,6 +130,14 @@ public class Gebruiker implements Serializable,UserDetails
         this.achternaam = naam;
     }
 
+    public void setEmailadres(String emailadres) {
+        this.emailadres = emailadres;
+    }
+
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
+
 
     /**
      * Setter om de voornaam van de gebruiker te veranderen.

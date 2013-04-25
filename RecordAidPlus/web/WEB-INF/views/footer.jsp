@@ -4,7 +4,7 @@
     Author     : Maxime
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {

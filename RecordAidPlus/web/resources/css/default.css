@@ -26,6 +26,7 @@ body p{
 }
 
 h1, h2, h3, h4{
+    margin-top: 0; 
     color: black;
     font-family: "Century Gothic";
 }
@@ -122,7 +123,7 @@ div p a:hover{
 input[type="text"], 
 input[type="password"]{
     width: 221px;
-    background: transparent url('bgtb.jpg') no-repeat;
+    background: transparent url('images/bgtb.jpg') no-repeat;
     color : #747862;
     height:20px;
     border:0;
@@ -131,7 +132,7 @@ input[type="password"]{
 }
 
 textarea{
-    background-image:url(bgta.jpg);
+    background-image:url('images/bgta.jpg');
     background-repeat:repeat-x;
     border:1px solid #d1c7ac;
 
@@ -140,6 +141,8 @@ textarea{
     margin-right:4px;
     margin-bottom:8px;
     font-family:tahoma, arial, sans-serif;
+    
+    resize: none;
 }
 
 td{
@@ -175,11 +178,6 @@ td{
     background-color: #EE5757;
     color: white;
     font-weight: bold;
-}
-
-#formReserveer
-{
-    margin-bottom: 40px;
 }
 
 .detailTable
@@ -220,4 +218,36 @@ img.logo{
 #auth{ 
     text-align: right;
     font-size: 1.2em; 
+}
+
+#preview{
+    border: 1px solid #4E6CA3; 
+    padding: 0.5em; 
+}
+
+#formChooseItem{
+    float: left; 
+    padding-right: 2em; 
+    margin-right: 2em; 
+    border-right: 1px solid black; 
+}
+
+#calendar_wrapper{
+    float: left; 
+}
+
+#calendar{
+    max-width: 700px; 
+}
+
+.clearfix{
+    clear: both; 
+}
+
+.fc-event-title{
+    font-size: 20px !important; 
+}
+
+.fc-event-time{
+    font-size:15px !important;   
 }

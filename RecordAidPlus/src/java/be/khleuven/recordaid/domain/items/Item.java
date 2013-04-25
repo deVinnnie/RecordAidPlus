@@ -1,26 +1,26 @@
-package be.khleuven.recordaid.domain;
+package be.khleuven.recordaid.domain.items;
 
+import be.khleuven.recordaid.domain.DomainException;
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotEmpty;
-
+import java.util.*; 
+import javax.persistence.*; 
+import static be.khleuven.recordaid.util.CalendarUtils.*; 
 
 /**
- * Klasse die een item omschrijft dat gebruikt wordt door RecordAid om opnames
- * te doen. De klasse item bestaat zodat op de website items gereserveerd kunnen
- * worden op bepaalde tijdstippen.
+ * Klasse die een item omschrijft dat gebruikt wordt door RecordAid om opnames te doen. 
+ * 
+ * De klasse item bestaat zodat op de website items gereserveerd kunnen worden op bepaalde tijdstippen.
  *
  * @author Hannes
  */
 @Entity
-public class Item implements Serializable
+public class Item extends Identifiable implements Serializable
 {
-    @Id
-    @NotNull
-    @NotEmpty
-    private String naam;
+    private String naam="";
+   
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+    private List<ReservatieDag> reservatieDagen = new ArrayList<ReservatieDag>(); 
 
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
@@ -38,7 +38,7 @@ public class Item implements Serializable
      */
     public Item(String naam) throws DomainException
     {
-        setNaam(naam);
+        this.setNaam(naam);
     }
 
     /**
@@ -70,6 +70,23 @@ public class Item implements Serializable
     public String getNaam()
     {
         return naam;
+    }
+    
+    public void addReservatie(Reservatie reservatie)throws DomainException{
+        //Check if there are already reservation for the given day. 
+        //Else create a new ReservatieDag object. 
+        Calendar dag = (Calendar) reservatie.getSlot().getBeginTime().clone();
+        dag = trim(dag); //Remove time. 
+        ReservatieDag reservatieDag = new ReservatieDag(dag); 
+        
+        if(this.reservatieDagen.contains(reservatieDag)){
+            int index = reservatieDagen.indexOf(reservatieDag);
+            this.reservatieDagen.get(index).addReservatie(reservatie); 
+        }
+        else{
+            reservatieDag.addReservatie(reservatie);
+            this.reservatieDagen.add(reservatieDag);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">

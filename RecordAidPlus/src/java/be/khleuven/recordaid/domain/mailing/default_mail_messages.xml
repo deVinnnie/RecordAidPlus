@@ -3,41 +3,65 @@
     <message>
         <subject>Validatie RecordAid account</subject>
         <content>
-            <![CDATA[
-            Beste <gebruiker_voornaam> \<br\>\<br\>
-            Dank u om de tijd te nemen om bij RecordAid een account aan te maken!
-            Met deze validatie code kan je jouw account activeren: \<b\> <validatie_code> \</b\>\<br\>
-            Valideren kan via volgende link: \<a href='http://recordaid.khleuven.be/valideren.jsp'\>Valideren\</a\> \<br\>\<br\>
-            Met vriendelijke groeten,\<br\>
-            Het RecordAid Team
-            ]]>
+<![CDATA[Beste $gebruiker_voornaam$ <br><br>
+Dank u om de tijd te nemen om bij RecordAid een account aan te maken!
+Met deze validatie code kan je jouw account activeren: <b>$validatie_code$</b><br>
+Valideren kan via volgende link: <a href='http://recordaid.khleuven.be/login/valideren'>Valideren</a><br><br>
+Met vriendelijke groeten,<br>
+Het RecordAid Team]]>
         </content>
     </message>
     
     <message>
         <subject>Aanmelding nieuwe buddy</subject>
         <content>
-            <![CDATA[
-            Student <gebruiker_voornaam> <gebruiker_achternaam>
-            heeft via de website opgegeven dat hij buddy wil worden. <br><br>
-            Je kan gebruiker.getVoornaam() contacteren op volgend e-mail adres:<b> gebruiker.getEmailadres()</b>
-            ]]>
+<![CDATA[Student $gebruiker_voornaam$ $gebruiker_achternaam$ heeft via de website opgegeven dat hij buddy wil worden. <br><br>
+Je kan $gebruiker_voornaam$ contacteren op volgend e-mail adres:<b>$gebruiker_email$</b>]]>
         </content>
     </message>
 
     <message>
         <subject>Antwoord op uw vraag</subject>
         <content>
-            <![CDATA[
-            Beste faq.getGebruiker().getVoornaam()<br><br>
-            De vraag die u recent stelde op onze website werd beantwoord.<br>
-            Wij hechten veel belang aan uw vragen! <br><br>
-            Onlangs stelde u volgende vraag:<br><b> faq.getVraag() </b><br><br>
-            Ons antwoord op uw vraag:<br><b> faq.getAntwoord() </b><br><br>
-            Met vriendelijke groeten,<br><br>Het RecordAid Team<br>
-            buddy.getVoornaam() buddy.getNaam() <br>
-            Is het antwoord niet duidelijk? Aarzel dan niet om te mailen naar: buddy.getEmailadres()
-            ]]>
+<![CDATA[Beste $gebruiker_voornaam$ <br><br>
+De vraag die u recent stelde op onze website werd beantwoord.<br>
+Wij hechten veel belang aan uw vragen!<br><br>
+Onlangs stelde u volgende vraag:<br><b>$faq_vraag$</b><br><br>
+Ons antwoord op uw vraag:<br><b>$faq_antwoord$</b><br><br>
+Met vriendelijke groeten,<br><br>
+Het RecordAid Team<br>
+$buddy_voornaam$ $buddy_achternaam$<br>
+Is het antwoord niet duidelijk? Aarzel dan niet om te mailen naar: $buddy_email$]]>
+        </content>
+    </message>
+    
+    <message>
+        <subject>Je hebt een nieuwe aanvraag toegewezen gekregen</subject>
+        <content>
+<![CDATA[Hey $buddy_voornaam$ !<br>
+Je bent aangewezen door een RecordAid kernlid om een opname op te volgen.<br>
+Hieronder vind je de details van de opname:<br>
+Vak: $aanvraag_ood$<br>
+Datum: $aanvraag_datum$<br>
+Beginuur: $aanvraag_beginuur$ uur.<br>
+Lokaal: $aanvraag_lokaal$<br>
+Huidige status: $aanvraag_status$<br><br>
+E-mail aanvrager: $aanvraag_aanvrager_email$<br><br>
+Met vriendelijke groeten,<br><br>Het RecordAid Team]]>  
+        </content>
+    </message>
+    
+     <message>
+        <subject>Aanvraag lesopname</subject>
+        <content>
+<![CDATA[Beste, <br><br>
+Student <b>$aanvraag_aanvrager_voornaam$ $aanvraag_aanvrager_achternaam</b> 
+heeft een aanvraag ingediend om de les $aanvraag.getOptenemenVak()$ te laten opnemen door RecordAid.<br>
+De reden die de student opgegeven heeft is volgende: $aanvraag_reden$ <br>
+Zou u ons kunnen laten weten of we deze les mogen opnemen?
+<br><br>Met vriendelijke groeten,<br>
+Het RecordAid Team
+}]]>  
         </content>
     </message>
 </messages>

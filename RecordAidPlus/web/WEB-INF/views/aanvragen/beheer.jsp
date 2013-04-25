@@ -14,7 +14,7 @@
         <script type="text/javascript"> 
             $(document).ready(function()
             {
-                $('#aanvragen_tabel').dataTable();
+                datatable("#aanvragen_tabel");
             });
             </script>
         <table id="aanvragen_tabel">

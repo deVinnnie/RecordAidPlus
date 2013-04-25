@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <h1>Home</h1>
 
 <h2>Wat is RecordAid?</h2>
@@ -10,7 +10,6 @@
     Screencasts zijn opnames van het beeldscherm en de stem van de lector.
     Dit is ideaal omdat, wanneer de student later de opname bekijkt, hij of zij dan gemakkelijk mee kan volgen
     wat er in de les gezien is en zo zijn achterstand door bepaalde omstandigheden kan inhalen.
-
 </p>
 
 <h2>Waarom RecordAid?</h2>
@@ -39,7 +38,7 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
-    datatable("opnames"); 
+    datatable("#opnames"); 
 });
 </script>
 <table id="opnames">

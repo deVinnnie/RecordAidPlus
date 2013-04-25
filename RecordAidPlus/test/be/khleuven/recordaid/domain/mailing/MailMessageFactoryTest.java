@@ -16,8 +16,14 @@ public class MailMessageFactoryTest {
     public void test_createMailMessages(){
         MailMessageFactory factory = new MailMessageFactory(); 
         List<MailMessage> messages = factory.createMailMessages(); 
-        assertEquals(2, messages.size()); 
+        assertEquals(3, messages.size()); 
         assertEquals("Validatie RecordAid account", messages.get(0).getSubject()); 
+    }
+    
+    @Test
+    public void test_whitespace_in_messages(){
+        MailMessageFactory factory = new MailMessageFactory(); 
+        List<MailMessage> messages = factory.createMailMessages(); 
         System.out.println(messages.get(0).getMessage()); 
     }
 }

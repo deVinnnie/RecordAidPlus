@@ -1,9 +1,13 @@
 package be.khleuven.recordaid.domain.mailing;
 
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
 import java.util.Map;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import org.stringtemplate.v4.ST;
 
 /**
@@ -11,15 +15,20 @@ import org.stringtemplate.v4.ST;
  * @author Vincent Ceulemans
  */
 @Entity
-public class MailMessage implements Serializable {
-    @Id
-    private Long id;
-    
+public class MailMessage extends Identifiable implements Serializable {
     /*ST = StringTemplate: Library for templating with Strings.*/
+    @Column(columnDefinition = "CLOB")
     private String message; 
+    
     private String subject; 
     
+    @OneToOne
+    private SubjectPrefix subjectPrefix; 
+    
+    //@Transient = Variable is not part of persitence 
+    @Transient
     private String recipient; 
+    @Transient
     private String sender; 
     
     public MailMessage(){}
@@ -30,12 +39,13 @@ public class MailMessage implements Serializable {
     }
     
     public void setContext(Map<String, String> context){
-        ST subjectTemplate = new ST(subject);
-        ST messageTemplate = new ST(message); 
+        ST subjectTemplate = new ST("$subject_prefix$ " +subject, '$', '$');
+        ST messageTemplate = new ST(message, '$', '$'); 
         for(Map.Entry<String, String> entry : context.entrySet()){
             messageTemplate.add(entry.getKey(), entry.getValue()); 
             subjectTemplate.add(entry.getKey(), entry.getValue()); 
         }
+        subjectTemplate.add("subject_prefix", subjectPrefix.getSubject_prefix()); 
         this.message = messageTemplate.render(); 
         this.subject = subjectTemplate.render(); 
     }
@@ -56,14 +66,6 @@ public class MailMessage implements Serializable {
         return subject; 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getRecipient() {
         return recipient;
     }
@@ -78,5 +80,13 @@ public class MailMessage implements Serializable {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public SubjectPrefix getSubjectPrefix() {
+        return subjectPrefix;
+    }
+
+    public void setSubjectPrefix(SubjectPrefix subjectPrefix) {
+        this.subjectPrefix = subjectPrefix;
     }
 }

@@ -16,11 +16,22 @@ import java.util.logging.Logger;
  * @author Vincent Ceulemans
  */
 public class CalendarPropertyEditor extends PropertyEditorSupport {
+    private String format = "yyyy-MM-dd"; 
+    
+    public CalendarPropertyEditor(){
+        super(); 
+    }
+
+    public CalendarPropertyEditor(String format) {
+        super(); 
+        this.format = format;
+    }
+    
     @Override
     public void setAsText(String text) {
         try {
             Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd"); 
+            SimpleDateFormat fmt = new SimpleDateFormat(format); 
             calendar.setTime(fmt.parse(text)); 
             setValue(calendar);
         } catch (ParseException ex) {
@@ -30,7 +41,7 @@ public class CalendarPropertyEditor extends PropertyEditorSupport {
     
     @Override
     public String getAsText(){
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd"); 
+        SimpleDateFormat fmt = new SimpleDateFormat(format); 
         Calendar calendar = (Calendar) this.getValue(); 
         String text = fmt.format(calendar.getTime()); 
         return text;

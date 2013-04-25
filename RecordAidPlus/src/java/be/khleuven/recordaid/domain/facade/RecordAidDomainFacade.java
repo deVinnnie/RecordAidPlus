@@ -1,10 +1,8 @@
 package be.khleuven.recordaid.domain.facade;
 
-import be.khleuven.recordaid.domain.gebruiker.Dossier;
-import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
-import be.khleuven.recordaid.domain.gebruiker.Rollen;
-import be.khleuven.recordaid.domain.mailing.AbstractMailHandler;
-import be.khleuven.recordaid.domain.mailing.MailHandlerDummy;
+import be.khleuven.recordaid.domain.items.*;
+import be.khleuven.recordaid.domain.gebruiker.*;
+import be.khleuven.recordaid.domain.mailing.*;
 import be.khleuven.recordaid.domain.forum.*;
 import be.khleuven.recordaid.domain.aanvragen.*;
 import be.khleuven.recordaid.database.DatabaseException;
@@ -157,7 +155,7 @@ public class RecordAidDomainFacade
         commonDb.remove(gebruiker);
     }
 
-    public void updateGebruiker(Gebruiker gebruiker) throws DatabaseException
+    public void updateGebruiker(Gebruiker gebruiker)
     {
         commonDb.edit(gebruiker); 
     }
@@ -178,20 +176,10 @@ public class RecordAidDomainFacade
     {
         commonDb.create(item); 
     }
-
-    public void removeItem(Item item)
+    
+    public Item findItem(Long id)
     {
-        commonDb.remove(item);
-    }
-
-    public void removeItem(String naam)
-    {
-        commonDb.remove(naam);
-    }
-
-    public Item findItem(String naam)
-    {
-        return commonDb.find(Item.class,naam);
+        return commonDb.find(Item.class,id);
     }
 
     public void updateItem(Item item)
@@ -281,15 +269,26 @@ public class RecordAidDomainFacade
     {
         return reservatieDB.getReservaties();
     }
-
-    public Collection<Reservatie> getReservaties(Calendar datum)
+    
+    public Collection<ReservatieDag> getReservaties(long itemId)
     {
-        return reservatieDB.getReservaties(datum);
+        return reservatieDB.getReservaties(commonDb.find(Item.class, itemId)); 
     }
 
     public Collection<Reservatie> getReservaties(Calendar datum, Item item)
     {
         return reservatieDB.getReservaties(datum, item);
+    }
+    
+    public Collection<Reservatie> getReservaties(Calendar start, Calendar end, Item item)
+    {
+        return reservatieDB.getReservaties(start, end, item);
+    }
+    
+    public Collection<Reservatie> getReservaties(Calendar start, Calendar end)
+    {
+        Collection<Reservatie> reservaties = reservatieDB.getReservaties(start, end);
+        return reservaties; 
     }
 
     public Support findSupport(long id) throws DatabaseException
@@ -446,5 +445,18 @@ public class RecordAidDomainFacade
 
     public OpnameMoment findOpnameMoment(long id) {
         return this.commonDb.find(OpnameMoment.class, id); 
+    }
+    
+    public List<MailMessage> findMailMessages(){
+        return commonDb.findAll(MailMessage.class); 
+    }
+
+    public MailMessage findMailMessage(long id) {
+        return commonDb.find(MailMessage.class, id);
+    }
+    
+    public SubjectPrefix getSubjectPrefix(){
+        long id =1; 
+        return commonDb.find(SubjectPrefix.class, id); 
     }
 }

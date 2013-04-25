@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
@@ -16,13 +16,13 @@
         <link rel="stylesheet" type="text/css" href="${resources}/css/footer.css" />
         <tiles:useAttribute id="styles" name="styles" classname="java.util.List" />
         <c:forEach items="${styles}" var="style">
-            <link rel="stylesheet" type="text/css" href="${resources}${style}"></script>
+            <link rel="stylesheet" type="text/css" href="${resources}${style}"/>
         </c:forEach>
         <tiles:useAttribute id="scripts" name="scripts" classname="java.util.List" />
         <c:forEach items="${scripts}" var="script">
         <script type="text/javascript" src="${resources}${script}"></script>
         </c:forEach>
-        <!--<link rel="shortcut icon" href=""/>-->
+        <link rel="shortcut icon" href="${resources}/images/fav_icon.png"/>
     </head>
     <body>
         <div id="content">

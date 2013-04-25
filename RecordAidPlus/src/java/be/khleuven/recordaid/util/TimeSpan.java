@@ -2,11 +2,7 @@ package be.khleuven.recordaid.util;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
+import javax.persistence.*; 
 
 /**
  *
@@ -34,6 +30,7 @@ public class TimeSpan implements Serializable {
         this.setEndTime(endTime);
     }
    
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public void setBeginYear(int year){
         this.beginTime.set(Calendar.YEAR, year);
     } 
@@ -96,5 +93,58 @@ public class TimeSpan implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    //</editor-fold>
+    
+    /**
+     * Determine whether two TimeSpan instances overlap each other.  
+     * 
+     * @param otherTimeSpan
+     * @return True when 
+     */
+    
+    public boolean isOverlapping(TimeSpan otherTimeSpan){
+        boolean isOverlapping = true; 
+        
+        int compareBeginToBegin = this.getBeginTime().compareTo(otherTimeSpan.getBeginTime());
+        int compareEndToEnd = this.getEndTime().compareTo(otherTimeSpan.getEndTime());
+        int compareBeginToEnd = this.getBeginTime().compareTo(otherTimeSpan.getEndTime());
+        int compareEndToBegin = this.getEndTime().compareTo(otherTimeSpan.getBeginTime());
+        
+        if(compareBeginToBegin < 0 && compareEndToBegin <= 0 && compareBeginToEnd <= 0 && compareEndToEnd < 0){
+            isOverlapping = false; 
+        }
+        else if(compareBeginToBegin > 0 && compareEndToBegin >= 0 && compareBeginToEnd >= 0 && compareEndToEnd > 0){
+            isOverlapping = false; 
+        }
+        return isOverlapping; 
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + (this.beginTime != null ? this.beginTime.hashCode() : 0);
+        hash = 29 * hash + (this.endTime != null ? this.endTime.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TimeSpan other = (TimeSpan) obj;
+        if (this.beginTime != other.beginTime && (this.beginTime == null || !this.beginTime.equals(other.beginTime))) {
+            return false;
+        }
+        if (this.endTime != other.endTime && (this.endTime == null || !this.endTime.equals(other.endTime))) {
+            return false;
+        }
+        return true;
     }
 }

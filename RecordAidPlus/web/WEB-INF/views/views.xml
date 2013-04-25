@@ -13,30 +13,35 @@
         <put-list-attribute name="scripts">
             <add-attribute value="/js/jquery/jquery-1.9.1.min.js"/>
             <add-attribute value="/js/jquery/jquery-ui.min.js"/>
+            <add-attribute value="/js/DataTables-1.9.4/js/jquery.dataTables.min.js"/>
+            <add-attribute value="/js/helpfuncties.js"/>
         </put-list-attribute>
         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/css/blitzer/jquery-ui-1.10.1.custom.min.css"/>
-        </put-list-attribute>
-    </definition>
-    
-    <definition name="base.datatables" extends="base.jquery">
-        <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/js/DataTables-1.9.4/js/jquery.dataTables.min.js"/>
-            <add-attribute value="/js/datatable.js"/>
-        </put-list-attribute>
-         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/js/DataTables-1.9.4/css/jquery.dataTables.css"/>
             <add-attribute value="/css/datatables.css"/>
         </put-list-attribute>
     </definition>
     
-    <definition name="base.beheer" extends="base.datatables">
+    <definition name="base.beheer" extends="base.jquery">
         <put-attribute name="content" value="/WEB-INF/views/beheer_template.jsp"/>
     </definition>
+    <!--End Templates-->
     
-    <definition name="/home" extends="base.datatables">
+    <definition name="/items/reservaties" template="/WEB-INF/views/items/reservaties.jsp">
+    </definition>
+    
+    <definition name="/home" extends="base.jquery">
         <put-attribute name="title" value="home.title"/>
         <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
+    </definition>
+    
+    <definition name="/login/registreren" extends="base.jquery">
+        <put-attribute name="title" value="login.registreren.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/login/registreren.jsp"/>
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/js/registreervalidatie.js"/>
+        </put-list-attribute>
     </definition>
     
     <!--Aanvragen-->
@@ -54,7 +59,7 @@
     </definition>
     
     <!--Opnames-->
-      <definition name="/opnames/editor" extends="base.jquery">
+    <definition name="/opnames/editor" extends="base.jquery">
         <put-attribute name="title" value="opnames.editor.title"/>
         <put-attribute name="content" value="/WEB-INF/views/opnames/editor.jsp"/>
     </definition>
@@ -63,8 +68,23 @@
     <definition name="/items/reserveer" extends="base.jquery">
         <put-attribute name="title" value="items.reserveer.title"/>
         <put-attribute name="content" value="/WEB-INF/views/items/reserveer.jsp" />
+        <put-list-attribute name="styles" inherit="true">
+            <add-attribute value="/css/fullcalendar.css"/>
+        </put-list-attribute>
         <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/js/reserveren.js"/>
+            <add-attribute value="/js/jquery/fullcalendar.min.js"/>
+            <add-attribute value="/js/reservaties.js"/>
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="/items/beheer" extends="base.beheer">
+        <put-attribute name="title" value="items.beheer.title"/>
+        <put-attribute name="beheer_content" value="/WEB-INF/views/items/beheer.jsp" cascade="true"/>
+        <put-list-attribute name="styles" inherit="true">
+            <add-attribute value="/css/fullcalendar.css"/>
+        </put-list-attribute>
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/js/jquery/fullcalendar.min.js"/>
         </put-list-attribute>
     </definition>
     
@@ -81,6 +101,7 @@
     </definition>
     
     <!--Admin Pages-->
+    <!--Note: use cascade="true" so that the attributes are available to all levels.-->
     <definition name="/beheer" extends="base.beheer">
         <put-attribute name="title" value="beheer.title"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/beheer.jsp" cascade="true"/>

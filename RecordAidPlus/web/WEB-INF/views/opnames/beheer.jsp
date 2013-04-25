@@ -6,7 +6,7 @@
 <script>
 $(document).ready(function()
 {
-    datatable("opnames"); 
+    datatable("#opnames"); 
 }); 
 </script>
 <table id="opnames">
