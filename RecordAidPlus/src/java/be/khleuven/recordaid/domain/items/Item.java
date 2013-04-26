@@ -140,4 +140,14 @@ public class Item extends Identifiable implements Serializable
         return this.naam;
     }
     // </editor-fold>
+
+    public void removeReservatie(Reservatie reservatie) throws DomainException {
+        Calendar dag = (Calendar) reservatie.getSlot().getBeginTime().clone();
+        dag = trim(dag); //Remove time. 
+        ReservatieDag reservatieDag = new ReservatieDag(dag); 
+        if(this.reservatieDagen.contains(reservatieDag)){
+            int index = reservatieDagen.indexOf(reservatieDag);
+            this.reservatieDagen.get(index).removeReservatie(reservatie);
+        }
+    }
 }

@@ -459,4 +459,8 @@ public class RecordAidDomainFacade
         long id =1; 
         return commonDb.find(SubjectPrefix.class, id); 
     }
+    
+    public Reservatie findReservatie(long id){
+        return commonDb.find(Reservatie.class, id); 
+    }
 }

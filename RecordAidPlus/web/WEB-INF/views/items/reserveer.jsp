@@ -64,10 +64,16 @@
         <div id="calendar_wrapper">
             <p>Klik of selecteer een slot om een reservatie toe te voegen.</p>
             <springforms:form modelAttribute="nieuweReservatie">
-                <springforms:input type="hidden" name="startTime" id="startTime" path="slot.beginTime"/>
-                <springforms:input type="hidden" name="endTime" id="endTime" path="slot.endTime"/>
+                <springforms:input type="hidden" id="startTime" path="slot.beginTime"/>
+                <springforms:input type="hidden" id="endTime" path="slot.endTime"/>
                 <input type="submit" value="Opslaan"/>
             </springforms:form>
+                
+            <form method="GET" action="<s:url value="/items/reserveer/verwijder"/>">
+                <input type="hidden" name="reservatie" id="reservatie"/>
+                <input type="hidden" name="selected_item" id="selected_item" value="${selectedItem.id}"/>
+                <input id="remove_button" type="submit" value="Verwijder" disabled="disabled"/>
+            </form>
             
             <div id="calendar"></div>
         </div>

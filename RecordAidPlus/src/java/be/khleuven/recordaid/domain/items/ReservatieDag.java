@@ -70,4 +70,11 @@ public class ReservatieDag extends Identifiable{
     public void setDag(Calendar dag) {
         this.dag = trim(dag);
     }
+
+    public void removeReservatie(Reservatie reservatie) throws DomainException {
+        if (!this.reservaties.contains(reservatie)) {
+            throw new DomainException("The given Reservatie does not exist in this context."); 
+        }
+        this.reservaties.remove(reservatie);
+    }
 }

@@ -1,6 +1,7 @@
 //FullCalendar plugin
 var calendar;
 var events=new Array(); 
+var clickedEvent; 
 
 function initCalendar(id, title, url/*, createUrl*/) {
     calendar = $(id).fullCalendar({
@@ -128,6 +129,18 @@ function initCalendar(id, title, url/*, createUrl*/) {
             $("#endTime").val(endTime); 
             
             calendar.fullCalendar('unselect');
+        },
+        eventClick: function(event, jsEvent, view){
+            if(clickedEvent!=null){
+                clickedEvent.backgroundColor = ''; 
+            }
+            clickedEvent = event; 
+            if(event.removable){
+                $("#reservatie").val(event.id);
+                $("#remove_button").removeAttr("disabled");
+            }
+            event.backgroundColor = 'rgb(39, 0, 247)';
+            calendar.fullCalendar('rerenderEvents');
         },
         events: url, 
         eventColor : "rgba(255, 92, 0,0.6)"

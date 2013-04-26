@@ -1,6 +1,7 @@
 package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.database.DatabaseException;
+import be.khleuven.recordaid.domain.DomainException;
 import be.khleuven.recordaid.domain.items.*; 
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
@@ -98,6 +99,21 @@ public class ItemController
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         }  
         return "redirect:/items/reserveer?selected_item="+itemID; 
+    }
+    
+    @RequestMapping(value="/reserveer/verwijder", params={"reservatie","selected_item"},method= RequestMethod.GET)
+    public String addReservatie(@RequestParam("reservatie") long reservatie, @RequestParam("selected_item") long selectedItem){
+        Reservatie findReservatie = domainFacade.findReservatie(reservatie);
+        if(findReservatie.getGebruiker().equals(this.getCurrentDossier().getGebruiker())){
+            try {
+                Item item = domainFacade.findItem(selectedItem); 
+                item.removeReservatie(findReservatie);
+                domainFacade.edit(item);
+            } catch (DomainException ex) {
+                Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        return "redirect:/items/reserveer?selected_item="+selectedItem; 
     }
     
     @RequestMapping(value="/reservaties", params="item")
