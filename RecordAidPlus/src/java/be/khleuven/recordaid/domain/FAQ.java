@@ -1,6 +1,7 @@
 package be.khleuven.recordaid.domain;
 
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -13,7 +14,7 @@ import javax.persistence.OneToOne;
  * @author Maxime Van den Kerkhof
  */
 @Entity
-public class FAQ extends Identifiable
+public class FAQ extends Identifiable implements Serializable
 {
     private String vraag;
     private String antwoord;

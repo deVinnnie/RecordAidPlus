@@ -3,11 +3,7 @@ package be.khleuven.recordaid.domain.mailing;
 import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
 import java.util.Map;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import javax.persistence.*; 
 import org.stringtemplate.v4.ST;
 
 /**
@@ -22,6 +18,9 @@ public class MailMessage extends Identifiable implements Serializable {
     
     private String subject; 
     
+    @Column(unique=true)
+    private String description; 
+    
     @OneToOne
     private SubjectPrefix subjectPrefix; 
     
@@ -30,26 +29,22 @@ public class MailMessage extends Identifiable implements Serializable {
     private String recipient; 
     @Transient
     private String sender; 
+    @Transient
+    private Map<String, String> context; 
     
     public MailMessage(){}
     
-    public MailMessage(String subject, String message){
+    public MailMessage(String subject, String message, String description){
         this.subject = subject; 
         this.message = message; 
+        this.description = description; 
     }
     
     public void setContext(Map<String, String> context){
-        ST subjectTemplate = new ST("$subject_prefix$ " +subject, '$', '$');
-        ST messageTemplate = new ST(message, '$', '$'); 
-        for(Map.Entry<String, String> entry : context.entrySet()){
-            messageTemplate.add(entry.getKey(), entry.getValue()); 
-            subjectTemplate.add(entry.getKey(), entry.getValue()); 
-        }
-        subjectTemplate.add("subject_prefix", subjectPrefix.getSubject_prefix()); 
-        this.message = messageTemplate.render(); 
-        this.subject = subjectTemplate.render(); 
+        this.context = context; 
     }
     
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public void setMessage(String message){
         this.message = message; 
     }
@@ -88,5 +83,31 @@ public class MailMessage extends Identifiable implements Serializable {
 
     public void setSubjectPrefix(SubjectPrefix subjectPrefix) {
         this.subjectPrefix = subjectPrefix;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    //</editor-fold>
+    
+    public String renderSubject(){
+        ST subjectTemplate = new ST("$subject_prefix$ " +subject, '$', '$');
+        for(Map.Entry<String, String> entry : this.context.entrySet()){
+             subjectTemplate.add(entry.getKey(), entry.getValue()); 
+        }
+        subjectTemplate.add("subject_prefix", subjectPrefix.getSubject_prefix());
+        return subjectTemplate.render(); 
+    }
+    
+    public String renderMessage(){
+        ST messageTemplate = new ST(message, '$', '$'); 
+        for(Map.Entry<String, String> entry : context.entrySet()){
+            messageTemplate.add(entry.getKey(), entry.getValue()); 
+        }
+        return messageTemplate.render(); 
     }
 }

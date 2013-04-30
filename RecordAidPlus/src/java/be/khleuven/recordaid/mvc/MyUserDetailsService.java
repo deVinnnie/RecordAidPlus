@@ -33,6 +33,12 @@ public class MyUserDetailsService implements UserDetailsService{
         return u;
     }
     
+    public void changePassword(Gebruiker gebruiker, String wachtwoord){
+        String hash = this.passwordEncoder.encode(wachtwoord);
+        gebruiker.setWachtwoordHash(hash);
+        domainFacade.edit(gebruiker);
+    }
+    
     public void createUser(Gebruiker gebruiker, String wachtwoord, String wachtwoordConfirmation)throws DomainException, DatabaseException{
         Rollen rol = Rollen.STUDENT; 
         if (gebruiker.getEmailadres().matches("^.+@khleuven.be$")) {

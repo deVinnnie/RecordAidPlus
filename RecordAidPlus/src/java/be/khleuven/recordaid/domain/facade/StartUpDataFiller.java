@@ -1,17 +1,19 @@
 package be.khleuven.recordaid.domain.facade;
 
-import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
-import be.khleuven.recordaid.domain.gebruiker.Rollen;
+import be.khleuven.recordaid.domain.gebruiker.*; 
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*;
-import be.khleuven.recordaid.domain.aanvragen.OpnameMethode;
+import be.khleuven.recordaid.domain.aanvragen.DagAanvraag;
+import be.khleuven.recordaid.domain.gebruiker.Dossier;
+import be.khleuven.recordaid.opnames.OpnameMethode;
 import be.khleuven.recordaid.domain.items.*;
-import be.khleuven.recordaid.domain.mailing.MailMessage;
-import be.khleuven.recordaid.domain.mailing.MailMessageFactory;
-import be.khleuven.recordaid.domain.mailing.SubjectPrefix;
+import be.khleuven.recordaid.domain.mailing.*; 
+import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.util.TimeSpan;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +46,7 @@ public class StartUpDataFiller {
 
             for (String mail : mails) {
                 Lector lector = new Lector(mail);
-                this.facade.addLector(lector);
+                this.facade.create(lector);
             }
         } catch (Exception e) {
             System.out.println("**Exception Occured:");
@@ -55,16 +57,18 @@ public class StartUpDataFiller {
             //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(15);
             //String wachtwoord = passwordEncoder.encode("geheim"); 
             //System.out.println(wachtwoord); 
-            String wachtwoord = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
+
             //Create Admin user
+            String wachtwoord = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
             Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", wachtwoord);
             g.valideer();
-            this.facade.addGebruiker(g);
+            this.facade.create(g);
 
             //Create a dummy user
-            Gebruiker g2 = new Gebruiker(Rollen.STUDENT, "dummy", "Dummy", "Dummy", wachtwoord);
+            String wachtwoord2 = "$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW.";
+            Gebruiker g2 = new Gebruiker(Rollen.STUDENT, "dummy@khleuven.be", "Dummy", "Dummy", wachtwoord2);
             g2.valideer();
-            this.facade.addGebruiker(g2);
+            this.facade.create(g2);
         } catch (Exception e) {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
@@ -80,7 +84,7 @@ public class StartUpDataFiller {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
-        
+
         try {
             //Items
             Item item1 = new Item("Item1");
@@ -102,13 +106,13 @@ public class StartUpDataFiller {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
-        
+
         try {
-            SubjectPrefix prefix = new SubjectPrefix(); 
+            SubjectPrefix prefix = new SubjectPrefix();
             prefix.setId(1);
             facade.create(prefix);
             prefix = facade.getSubjectPrefix();
-            
+
             MailMessageFactory factory = new MailMessageFactory();
             List<MailMessage> messages = factory.createMailMessages();
 
@@ -118,6 +122,35 @@ public class StartUpDataFiller {
             }
         } catch (Exception e) {
             System.out.println("**Exception Occured:");
+            e.printStackTrace();
+        }
+
+        try {
+            Dossier dossier = facade.getDossier(facade.getGebruiker("dummy@khleuven.be"));
+            DagAanvraag aanvraag = new DagAanvraag(dossier, facade.getDepartement("G&T"));
+            Calendar instance = Calendar.getInstance();
+            instance.set(2013, Calendar.MARCH, 12, 0, 0);
+            aanvraag.setLesDatum(instance);
+
+            Calendar start = (Calendar) instance.clone();
+            start.set(2013, Calendar.MARCH, 12, 10, 0);
+
+            Calendar end = (Calendar) start.clone();
+            end.set(2013, Calendar.MARCH, 12, 12, 0);
+
+            TimeSpan timespan = new TimeSpan(start, end);
+            Departement departement = facade.getDepartement("G&T"); 
+            OpnameMethode methode = facade.getOpnameMethodes().get(0); 
+            Lector lector = facade.getLector("lector@khleuven.be"); 
+            aanvraag.addOpnameMoment(new OpnameMoment("Wiskunde", new Lokaal("304",departement), "3Tx2", timespan,lector,methode));
+            aanvraag = facade.create(aanvraag); 
+            dossier.addAanvraag(aanvraag);
+            facade.edit(dossier); 
+            facade.edit(aanvraag); 
+        } catch (DomainException ex) {
+            Logger.getLogger(StartUpDataFiller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }

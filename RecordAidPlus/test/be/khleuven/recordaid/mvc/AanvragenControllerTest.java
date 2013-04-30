@@ -4,6 +4,8 @@
  */
 package be.khleuven.recordaid.mvc;
 
+import be.khleuven.recordaid.opnames.OpnameMethode;
+import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.database.jpa.*; 
@@ -12,10 +14,8 @@ import be.khleuven.recordaid.domain.aanvragen.*;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.util.TimeSpan;
 import java.util.Calendar;
-import java.util.Collection;
 import javax.persistence.EntityManager;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import static org.mockito.Mockito.*;
 import org.springframework.ui.ModelMap;
@@ -41,7 +41,8 @@ public class AanvragenControllerTest {
                 new JpaGebruikerDao(entityManager), 
                 new JpaAanvragenDao(entityManager), 
                 new JpaReservatieDao(entityManager), 
-                new JpaDepartementDao(entityManager)
+                new JpaDepartementDao(entityManager), 
+                new JpaMailDao(entityManager)
                 ); 
         aanvragenController = new AanvragenController(domainFacade); 
     }
@@ -61,8 +62,9 @@ public class AanvragenControllerTest {
         DagAanvraag aanvraag = new DagAanvraag(dossier, departement, lesDatum); 
         aanvragenController.nieuweAanvraag(aanvraag, null, new ModelMap()); 
         
-        OpnameMoment opnameMoment = new OpnameMoment("OOD", new Lokaal("310", departement), "2", new TimeSpan(lesDatum, lesDatum), new OpnameMethode("Test")); 
+        OpnameMoment opnameMoment = new OpnameMoment("OOD", new Lokaal("310", departement), "2", 
+                new TimeSpan(lesDatum, lesDatum), new Lector("lector@khleuven.be"),new OpnameMethode("Test")); 
         
-        aanvragenController.addNieuweOpname(opnameMoment, null, aanvraag.getId(), "Gereed");
+        aanvragenController.addNieuwOpnameMoment(opnameMoment, null, aanvraag, "Gereed");
     }
 }

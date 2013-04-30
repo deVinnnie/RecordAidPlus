@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.util;
+package be.khleuven.recordaid.util.propertyeditors;
 
 import be.khleuven.recordaid.domain.Departement;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;

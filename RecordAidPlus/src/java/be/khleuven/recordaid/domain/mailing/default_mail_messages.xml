@@ -10,6 +10,7 @@ Valideren kan via volgende link: <a href='http://recordaid.khleuven.be/login/val
 Met vriendelijke groeten,<br>
 Het RecordAid Team]]>
         </content>
+        <description>validatie_gebruiker</description>
     </message>
     
     <message>
@@ -18,6 +19,7 @@ Het RecordAid Team]]>
 <![CDATA[Student $gebruiker_voornaam$ $gebruiker_achternaam$ heeft via de website opgegeven dat hij buddy wil worden. <br><br>
 Je kan $gebruiker_voornaam$ contacteren op volgend e-mail adres:<b>$gebruiker_email$</b>]]>
         </content>
+        <description>aanmelding_nieuwe_buddy</description>
     </message>
 
     <message>
@@ -33,6 +35,7 @@ Het RecordAid Team<br>
 $buddy_voornaam$ $buddy_achternaam$<br>
 Is het antwoord niet duidelijk? Aarzel dan niet om te mailen naar: $buddy_email$]]>
         </content>
+        <description>antwoord_faq</description>
     </message>
     
     <message>
@@ -49,6 +52,7 @@ Huidige status: $aanvraag_status$<br><br>
 E-mail aanvrager: $aanvraag_aanvrager_email$<br><br>
 Met vriendelijke groeten,<br><br>Het RecordAid Team]]>  
         </content>
+        <description>toewijzing_aanvraag</description>
     </message>
     
      <message>
@@ -63,5 +67,6 @@ Zou u ons kunnen laten weten of we deze les mogen opnemen?
 Het RecordAid Team
 }]]>  
         </content>
+        <description>aanvraag_goedkeuring_lector</description>
     </message>
 </messages>

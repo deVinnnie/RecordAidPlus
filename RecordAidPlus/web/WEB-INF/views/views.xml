@@ -40,7 +40,7 @@
         <put-attribute name="title" value="login.registreren.title"/>
         <put-attribute name="content" value="/WEB-INF/views/login/registreren.jsp"/>
         <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/js/registreervalidatie.js"/>
+            <add-attribute value="/js/registreren.js"/>
         </put-list-attribute>
     </definition>
     
@@ -53,9 +53,22 @@
         </put-list-attribute>
     </definition>
     
+     <definition name="/aanvragen/nieuw_multi" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.nieuw_multi.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw_multi.jsp" />
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/js/multi_aanvraag.js"/>
+        </put-list-attribute>
+    </definition>
+    
     <definition name="/aanvragen/nieuwe_opname" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw.title"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuwe_opname.jsp" />
+    </definition>
+    
+    <definition name="/aanvragen/mijnaanvragen" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.mijnaanvragen.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/mijnaanvragen.jsp" />
     </definition>
     
     <!--Opnames-->
@@ -85,6 +98,7 @@
         </put-list-attribute>
         <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/jquery/fullcalendar.min.js"/>
+            <add-attribute value="/js/items.js"/>
         </put-list-attribute>
     </definition>
     
@@ -113,10 +127,14 @@
     </definition>
     
     <!--Normal Pages-->
+    <definition name="/gegevens/*/*" extends="template">
+        <put-attribute name="title" value="{1}.{2}.{3}.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/gegevens/{1}/{2}.jsp" />
+    </definition>
+    
     <definition name="/*/*" extends="template">
         <put-attribute name="title" value="{1}.{2}.title"/>
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
-    
     <!--End Common-->
 </tiles-definitions>

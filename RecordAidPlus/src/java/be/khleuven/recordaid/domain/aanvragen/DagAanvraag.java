@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.aanvragen;
 
+import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.*; 
 import be.khleuven.recordaid.util.CalendarUtils;
@@ -17,6 +18,8 @@ public class DagAanvraag extends AbstractAanvraag
 {   
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar lesDatum = Calendar.getInstance(); 
+    
+    private boolean voorHeleReeks = false; 
     
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
@@ -50,6 +53,18 @@ public class DagAanvraag extends AbstractAanvraag
         return this.lesDatum;
     }
 
+    public void setLesDatum(Calendar lesDatum) {
+        this.lesDatum = lesDatum;
+    }
+
+    public boolean isVoorHeleReeks() {
+        return voorHeleReeks;
+    }
+
+    public void setVoorHeleReeks(boolean voorHeleReeks) {
+        this.voorHeleReeks = voorHeleReeks;
+    }
+    
     @Override
     public void addOpnameMoment(OpnameMoment opnameMoment) throws DomainException{
         if(!(CalendarUtils.isSameDay(lesDatum, opnameMoment.getBeginTijdstip())
@@ -57,5 +72,10 @@ public class DagAanvraag extends AbstractAanvraag
             throw new DomainException("Opamemoment valt niet op zelfde dag als aanvraag."); 
         }
         super.addOpnameMoment(opnameMoment);
+    }
+
+    @Override
+    public Calendar getDefaultOpnameMomentDag() {
+        return (Calendar) this.lesDatum.clone(); 
     }
 }

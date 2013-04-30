@@ -12,12 +12,12 @@
         <title><fmt:message key="title"/> | <fmt:message key="${title}"/></title>
         <s:url value="/resources" var="resources"/>
         <!--<link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.css" />-->
-        <link rel="stylesheet" type="text/css" href="${resources}/css/default.css" />
-        <link rel="stylesheet" type="text/css" href="${resources}/css/footer.css" />
+        <!--<link rel="stylesheet" type="text/css" href="${resources}/css/reset.css" />-->
         <tiles:useAttribute id="styles" name="styles" classname="java.util.List" />
         <c:forEach items="${styles}" var="style">
             <link rel="stylesheet" type="text/css" href="${resources}${style}"/>
         </c:forEach>
+        <link rel="stylesheet" type="text/css" href="${resources}/css/default.css" />
         <tiles:useAttribute id="scripts" name="scripts" classname="java.util.List" />
         <c:forEach items="${scripts}" var="script">
         <script type="text/javascript" src="${resources}${script}"></script>

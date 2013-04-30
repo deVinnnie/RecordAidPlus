@@ -1,8 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <h1>Home</h1>
-
 <h2>Wat is RecordAid?</h2>
 <p> 
     RecordAid is een project om studenten die niet aanwezig kunnen zijn in de les te
@@ -11,7 +11,6 @@
     Dit is ideaal omdat, wanneer de student later de opname bekijkt, hij of zij dan gemakkelijk mee kan volgen
     wat er in de les gezien is en zo zijn achterstand door bepaalde omstandigheden kan inhalen.
 </p>
-
 <h2>Waarom RecordAid?</h2>
 <p> 
     Er zijn verschillende hoofdredenen waarom studenten niet aanwezig kunnen zijn in de les
@@ -26,14 +25,12 @@
     <li><strong>Overmacht:</strong> De mensen van het openbaar vervoer staken wel eens graag of het durft wel eens te sneeuwen in België waardoor studenten niet op school geraken. Deze studenten missen dan misschien wel een zeer belangrijke les.</li>
     <li><strong>Combi-traject:</strong> Bepaalde studenten hebben nog vakken van vorige jaren of doen 2 studierichtingen tegelijk en missen hierdoor sommige lessen.</li>
 </ul>
-
 <h2>RecordAid buddy worden?</h2>
 <p> 
     RecordAid is momenteel op zoek naar meer mensen die dit project
     willen ondersteunen zodat we alle studenten kunnen helpen en meer lessen 
-    kunnen opnemen. Via de <a href="account.jsp">gebruikers-pagina</a> kan je opgeven dat je een buddy wil worden.
+    kunnen opnemen. Via de <a href="<s:url value="/gebruikers/account/"/>">gebruikers-pagina</a> kan je opgeven dat je een buddy wil worden.
 </p>
-
 <h2>Opnames</h2>
 <script type="text/javascript">
 $(document).ready(function()

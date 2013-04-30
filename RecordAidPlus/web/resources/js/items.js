@@ -1,5 +1,3 @@
-var verif = false;
-
 $("document").ready(function()
 {
     $("#naam").focus(disapearError);
@@ -7,7 +5,7 @@ $("document").ready(function()
     
     errorAnimation();
     
-    $("#formAddItem").submit(addItem);
+    $("#formAddItem").submit(checkNaam);
 });
 
 function checkNaam()
@@ -19,24 +17,11 @@ function checkNaam()
         $("#error").append("Dit is geen goede naam.");
         $("#naam").val("");
         $("#error").fadeIn("slow");
-        verif = false;
+        return false;
     }
     else
-    {
-        verif = true;
-    }
-}
-
-function addItem()
-{
-    checkNaam();
-    if(verif)
     {
         return true;
-    }
-    else
-    {
-        return false;
     }
 }
 

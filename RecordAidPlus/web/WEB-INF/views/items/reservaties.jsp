@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%--Generates a JSON feed used by the FullCalendar plugin to render events. --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>

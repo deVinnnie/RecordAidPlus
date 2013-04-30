@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.domain.aanvragen;
+package be.khleuven.recordaid.opnames;
 
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.*; 
@@ -33,24 +33,26 @@ public class OpnameMoment implements Serializable {
     @OneToOne
     private Gebruiker verantwoordelijke; 
     
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne
     private Lector lector = new Lector(); 
+    
+    @OneToOne
+    private Opname opname; 
     
     /**
      * Indicates wether this Opname is visible to other users. 
      */
-    private boolean zichtbaar = false; 
-    
-    //private Opname opname; 
+    private boolean zichtbaar = false;
 
     public OpnameMoment(){}
 
-    public OpnameMoment(String OOD, Lokaal lokaal, String reeks, TimeSpan tijdstip, OpnameMethode methode) {
+    public OpnameMoment(String OOD, Lokaal lokaal, String reeks, TimeSpan tijdstip, Lector lector, OpnameMethode methode) {
         this.OOD = OOD;
         this.lokaal = lokaal;
         this.reeks = reeks;
         this.tijdstip = tijdstip;
         this.methode = methode;
+        this.lector = lector; 
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -142,6 +144,14 @@ public class OpnameMoment implements Serializable {
 
     public void setZichtbaar(boolean zichtbaar) {
         this.zichtbaar = zichtbaar;
+    }
+
+    public Opname getOpname() {
+        return opname;
+    }
+
+    public void setOpname(Opname opname) {
+        this.opname = opname;
     }
     //</editor-fold>
 }

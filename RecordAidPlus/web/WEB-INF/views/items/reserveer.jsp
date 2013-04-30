@@ -3,7 +3,6 @@
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<!--Iedereen behalve studenten kunnen items reserveren-->
 <c:choose>
     <c:when test="${not empty items}">
         <s:url value="/items/reservaties?item=${selectedItem.id}" var="feed"/>
@@ -13,7 +12,7 @@
             <script type="text/javascript">
                 $("document").ready(function()
                 {
-                    datepicker("#datum_picker", "#datum", "");
+                    datepicker("#datum_picker", "#datum", new Date());
 
                     $("#datum_picker").change(function()
                     {
@@ -55,15 +54,18 @@
                     </tr>
                 </table>
             </form>
-
+            
+            <%--Only show the datepicker if an item if selected.--%>
             <c:if test="${not empty selectedItem}">
                 <div id="datum_picker"></div>
             </c:if>
         </div>
+            
+        <%--Show the reservation-tool if an item if selected.--%>
         <c:if test="${not empty selectedItem}">
         <div id="calendar_wrapper">
             <p>Klik of selecteer een slot om een reservatie toe te voegen.</p>
-            <springforms:form modelAttribute="nieuweReservatie">
+            <springforms:form modelAttribute="nieuweReservatie" method="POST">
                 <springforms:input type="hidden" id="startTime" path="slot.beginTime"/>
                 <springforms:input type="hidden" id="endTime" path="slot.endTime"/>
                 <input type="submit" value="Opslaan"/>

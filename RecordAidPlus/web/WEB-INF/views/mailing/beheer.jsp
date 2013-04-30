@@ -1,7 +1,8 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <h1>Mail</h1>
+<h2>Berichten</h2>
 <form method="GET">
     <table>
         <tr>
@@ -51,8 +52,7 @@
                 </tr>
                 <tr>
                     <td><label for="message">Inhoud</label></td>
-                    <td><springforms:textarea id="message"  
-                                          onkeyup="preview();" onchange="preview();" 
+                    <td><springforms:textarea id="message" onkeyup="preview();" onchange="preview();" 
                                           rows="15" cols="60" path="message"/></td>
                 </tr>
                 <tr>

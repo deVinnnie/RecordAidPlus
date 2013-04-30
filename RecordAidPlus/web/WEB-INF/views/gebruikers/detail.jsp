@@ -1,67 +1,49 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!--include file="paginaCheck/checkGeenStudentenLeerkrachtenBuddies.jsp" %>-->
-<h1>Details van ${gebruiker.voornaam} ${gebruiker.naam}</h1>
-<form method="POST" action="ActionServlet">
-    <table class="accountTable">
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form"%>
+<%--"paginaCheck/checkGeenStudentenLeerkrachtenBuddies.jsp" --%>
+<h1>Details van <c:out value="${gebruiker.voornaam} ${gebruiker.achternaam}"/></h1>
+<a href="<s:url value="/gebruikers/valideer?emailadres=${gebruiker.emailadres}"/>">Valideren</a>
+<a href="<s:url value="/gebruikers/devalideer?emailadres=${gebruiker.emailadres}"/>">Devalideren</a>
+<a href="<s:url value="/gebruikers/wachtwoord_reset?emailadres=${gebruiker.emailadres}"/>">Wachtwoord wijzigen naar temp</a>
+<springforms:form  modelAttribute="gebruiker" method="POST">
+    <table>
         <tr>
             <td>Voornaam</td>
-            <td><input class="tb" type="text" name="voornaam" value="${gebruiker.voornaam}"/></td>
+            <td><springforms:input type="text" path="voornaam"/></td>
         </tr>
         <tr>
-            <td>Naam</td>
-            <td><input class="tb" type="text" name="naam" value="${gebruiker.naam}"/></td>
+            <td>Achternaam</td>
+            <td><springforms:input type="text" path="achternaam"/></td>
         </tr>
         <tr>
-            <td>Emailadres</td>
+            <td>E-mailadres</td>
             <td>${gebruiker.emailadres}</td>
         </tr>
         <tr>
             <td>Rol</td>
-            <td><select name="rol">
-                    <option <c:if test="${gebruiker.rol == 'STUDENT'}">selected</c:if>>STUDENT</option>
-                    <option <c:if test="${gebruiker.rol == 'LEERKRACHT'}">selected</c:if>>LEERKRACHT</option>
-                    <option <c:if test="${gebruiker.rol == 'OPLEIDINGSHOOFD'}">selected</c:if>>OPLEIDINGSHOOFD</option>
-                    <option <c:if test="${gebruiker.rol == 'BUDDY'}">selected</c:if>>BUDDY</option>
-                    <option <c:if test="${gebruiker.rol == 'KERNLID'}">selected</c:if>>KERNLID</option>
-                    <option <c:if test="${gebruiker.rol == 'ADMIN'}">selected</c:if>>ADMIN</option>
-                    </select></td>
-            </tr>
-            <tr>
-                <td>Gevalideerd</td>
-                <td>${gebruiker.gevalideerd}</td>
+            <td><springforms:select path="rol">
+                    <springforms:options/>
+                </springforms:select>
+            </td>
         </tr>
         <tr>
+            <td>Gevalideerd</td>
             <td>
-                <input type="hidden" name="gebruiker" value="${gebruiker.emailadres}"/>
-                <input type="hidden" name="action" value="gebruikerDetail"/>
-                &nbsp;
+                <c:choose>
+                    <c:when test="${gebruiker.gevalideerd}">
+                        Ja
+                    </c:when>
+                    <c:otherwise>
+                        Nee
+                    </c:otherwise>
+                </c:choose>
             </td>
-            <td><input type="submit" name="action2" value="Gebruiker bijwerken"/></td>
         </tr>
         <tr>
-            <td>
-                <input type="hidden" name="gebruiker" value="${gebruiker.emailadres}"/>
-                <input type="hidden" name="action" value="gebruikerDetail"/>
-                &nbsp;
-            </td>
-            <td><input type="submit" name="action2" value="Gebruiker valideren"/></td>
-        </tr>
-        <tr>
-            <td>
-                <input type="hidden" name="gebruiker" value="${gebruiker.emailadres}"/>
-                <input type="hidden" name="action" value="gebruikerDetail"/>
-                &nbsp;
-            </td>
-            <td><input type="submit" name="action2" value="Gebruiker devalideren"/></td>
-        </tr>
-        <tr>
-            <td>
-                <input type="hidden" name="gebruiker" value="${gebruiker.emailadres}"/>
-                <input type="hidden" name="action" value="gebruikerDetail"/>
-                &nbsp;
-            </td>
-            <td><input type="submit" name="action2" value="Wachtwoord wijzigen naar temp"/></td>
+            <td></td>
+            <td><input type="submit" name="action" value="Bijwerken"/></td>
         </tr>
     </table>
-</form>
+</springforms:form>

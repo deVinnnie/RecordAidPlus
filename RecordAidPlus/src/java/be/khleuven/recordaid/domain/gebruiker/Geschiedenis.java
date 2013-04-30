@@ -2,11 +2,7 @@ package be.khleuven.recordaid.domain.gebruiker;
 
 import java.io.Serializable;
 import java.util.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 /**
  * This class holds a series of events. 
@@ -33,7 +29,7 @@ public class Geschiedenis implements Serializable{
         return this.gebeurtenissen.get(i);
     }
     
-    public List<Gebeurtenis> getGebeurtenises(){
+    public List<Gebeurtenis> getGebeurtenissen(){
         return this.gebeurtenissen; 
     }
 

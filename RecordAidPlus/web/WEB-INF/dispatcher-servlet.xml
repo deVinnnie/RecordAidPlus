@@ -55,7 +55,7 @@
     <bean name="indexController" class="org.springframework.web.servlet.mvc.ParameterizableViewController"/>
     
     <!--Use converters-->
-    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+    <!--<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
                 <bean class="be.khleuven.recordaid.util.ItemConverter">
@@ -64,5 +64,5 @@
                 <bean class="be.khleuven.recordaid.util.CalendarFormatter"/>
             </set>
         </property>
-    </bean>
+    </bean>-->
 </beans>

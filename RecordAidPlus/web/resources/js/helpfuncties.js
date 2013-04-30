@@ -20,18 +20,10 @@ function datatable(id) {
     );
 }
 
-function datepicker(id) {
-    $(id).datepicker({
-        dateFormat: "yy-mm-dd",
-        dayNamesMin: dagenShort,
-        firstDay: 1,
-        monthNames: maanden,
-        showOtherMonths: true,
-        minDate: new Date()
-    });
-}
-
 function datepicker(id, altField, startDate) {
+    //Set a default value of no argument for startDate is given. 
+    startDate = startDate || new Date();
+    
     $(id).datepicker({
         dateFormat: "yy-mm-dd",
         dayNamesMin: dagenShort,

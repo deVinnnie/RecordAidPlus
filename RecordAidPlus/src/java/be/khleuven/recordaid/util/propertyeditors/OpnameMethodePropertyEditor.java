@@ -1,6 +1,6 @@
-package be.khleuven.recordaid.util;
+package be.khleuven.recordaid.util.propertyeditors;
 
-import be.khleuven.recordaid.domain.aanvragen.OpnameMethode;
+import be.khleuven.recordaid.opnames.OpnameMethode;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import java.beans.PropertyEditorSupport;
 

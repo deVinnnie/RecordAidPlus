@@ -1,15 +1,19 @@
 package be.khleuven.recordaid.mvc;
 
+import be.khleuven.recordaid.util.propertyeditors.CalendarPropertyEditor;
+import be.khleuven.recordaid.util.propertyeditors.OpnameMethodePropertyEditor;
+import be.khleuven.recordaid.util.propertyeditors.DepartementPropertyEditor;
+import be.khleuven.recordaid.opnames.OpnameMethode;
+import be.khleuven.recordaid.opnames.OpnameLijst;
+import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.*; 
-import be.khleuven.recordaid.domain.aanvragen.*; 
 import be.khleuven.recordaid.util.*; 
 import java.util.*; 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.AutoPopulatingList;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*; 

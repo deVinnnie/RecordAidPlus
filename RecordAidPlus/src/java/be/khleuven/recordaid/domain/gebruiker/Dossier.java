@@ -1,7 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
 import be.khleuven.recordaid.domain.aanvragen.AbstractAanvraag;
-import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import java.io.Serializable;
 import javax.persistence.*; 
 import java.util.*; 
@@ -21,6 +20,9 @@ public class Dossier implements Serializable {
     
     @OneToMany(mappedBy="dossier",cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<AbstractAanvraag> aanvragen = new ArrayList<AbstractAanvraag>();
+    
+    @OneToOne
+    private Gebruiker verantwoordelijke; 
     
     public Dossier(){}
     
@@ -46,6 +48,7 @@ public class Dossier implements Serializable {
 
     public void addAanvraag(AbstractAanvraag aanvraag) {
         this.aanvragen.add(aanvraag);
+        aanvraag.setDossier(this);
         this.geschiedenis.addGebeurtenis(new Gebeurtenis(
                 "Nieuwe aanvraag toegevoegd", gebruiker)
                 );
@@ -69,4 +72,12 @@ public class Dossier implements Serializable {
         }
         return aanvraag;
     }   
+
+    public Gebruiker getVerantwoordelijke() {
+        return verantwoordelijke;
+    }
+
+    public void setVerantwoordelijke(Gebruiker verantwoordelijke) {
+        this.verantwoordelijke = verantwoordelijke;
+    }
 }

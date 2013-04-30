@@ -1,12 +1,11 @@
 package be.khleuven.recordaid.mvc;
 
-import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.DomainException;
 import be.khleuven.recordaid.domain.items.*; 
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
-import be.khleuven.recordaid.util.CalendarPropertyEditor;
+import be.khleuven.recordaid.util.propertyeditors.CalendarPropertyEditor;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -64,8 +63,8 @@ public class ItemController
         if (bindingResult.hasErrors()) {
         } else {
             try {
-                domainFacade.addItem(newItem);
-            } catch (DatabaseException ex) {
+                domainFacade.create(newItem);
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 model.addAttribute("error", ex.getMessage());
             }
@@ -103,7 +102,7 @@ public class ItemController
     
     @RequestMapping(value="/reserveer/verwijder", params={"reservatie","selected_item"},method= RequestMethod.GET)
     public String addReservatie(@RequestParam("reservatie") long reservatie, @RequestParam("selected_item") long selectedItem){
-        Reservatie findReservatie = domainFacade.findReservatie(reservatie);
+        Reservatie findReservatie = domainFacade.getReservatie(reservatie);
         if(findReservatie.getGebruiker().equals(this.getCurrentDossier().getGebruiker())){
             try {
                 Item item = domainFacade.findItem(selectedItem); 

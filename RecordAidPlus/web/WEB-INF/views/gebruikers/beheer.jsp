@@ -1,10 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<!--<link type="text/css" rel="stylesheet" href="DataTables-1.9.4/media/css/jquery.dataTables.css"/>
-<link type="text/css" rel="stylesheet" href="DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css"/>
-<script type="text/javascript" src="DataTables-1.9.4/media/js/jquery.js"></script>
--->
 <script type="text/javascript">
 $(document).ready(function()
     {
@@ -21,6 +17,7 @@ $(document).ready(function()
             <th>Rol</th>
             <th>Gevalideerd</th>
             <th>Details</th>
+            <th>Dossier</th>
         </tr>
     </thead>
     <tbody>
@@ -31,7 +28,8 @@ $(document).ready(function()
                 <td>${gebruiker.emailadres}</td>
                 <td>${gebruiker.rol}</td>
                 <td>${gebruiker.gevalideerd}</td>
-                <td><a href="<s:url value="/gebruikers/detail"/>&emailadres=${gebruiker.emailadres}">Details</a></td>
+                <td><a href="<s:url value="/gebruikers/detail"/>?emailadres=${gebruiker.emailadres}">Details</a></td>
+                <td><a href="<s:url value="/gebruikers/dossier"/>?gebruiker=${gebruiker.emailadres}">Dossier</a></td>
             </tr>
         </c:forEach>
     </tbody>

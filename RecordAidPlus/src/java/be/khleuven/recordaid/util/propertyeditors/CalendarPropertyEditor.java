@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.util;
+package be.khleuven.recordaid.util.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;

@@ -32,9 +32,9 @@
 </c:choose>
 
 <h2>Voeg een nieuw item toe</h2>
-<c:if test="${error!=null}">
-    <p class="error">${error}</p>
-</c:if>
+<%--<c:if test="${error!=null}">--%>
+    <p id="error" class="error">${error}</p>
+<%--</c:if>--%>
 
 <springforms:form id="formAddItem" method="POST" modelAttribute="newItem">
     <table>

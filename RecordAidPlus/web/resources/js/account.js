@@ -1,7 +1,6 @@
 $("document").ready(function()
     {
         $("#form_updateAccount").submit(checkAccountUpdate);
-    
         boodschapAnimaties();
     });
 
@@ -20,18 +19,14 @@ function checkAccountUpdate()
     else if($("#nieuw_ww1").val().length < 3)
     {
         $("#wachtwoord_fout_error").empty();
-        $("#wachtwoord_fout_error").append("Het nieuwe wachtwoord moet minstens drie charakters lang zijn.");
+        $("#wachtwoord_fout_error").append("Het nieuwe wachtwoord moet minstens drie tekens lang zijn.");
         
         boodschapAnimaties();
         
         return false;
     }
-    else
-    {
-        return true;
-    }
+    return true;
 }
-
 
 function boodschapAnimaties()
 {

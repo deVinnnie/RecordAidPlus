@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.domain.aanvragen;
+package be.khleuven.recordaid.opnames;
 
 import java.io.Serializable;
 import javax.persistence.*; 

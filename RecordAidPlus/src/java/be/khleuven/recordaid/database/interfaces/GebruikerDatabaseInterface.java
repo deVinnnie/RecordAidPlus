@@ -14,16 +14,6 @@ import java.util.Collection;
  */
 public interface GebruikerDatabaseInterface
 {
-    /**
-     * Geeft een gebruiker terug op basis van zijn emailadres. Gooit een
-     * DatabaseException indien de gebruiker niet bestaat.
-     *
-     * @param emailadres Het emailadres van de gebruiker, dit is uniek voor elke
-     * gebruiker.
-     * @return De gebruiker met het emailadres, indien deze bestaat, of null als de gebruiker niet bestaat. 
-     */
-    public Gebruiker getGebruiker(String emailadres);
-
     public Gebruiker getGebruikerByValidatiecode(String validatiecode);
 
     /**

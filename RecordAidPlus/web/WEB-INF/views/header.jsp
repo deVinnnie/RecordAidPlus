@@ -1,25 +1,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="templates" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <s:url value="/resources" var="resources"/>
 <div id="head">
+    <div id="auth">
     <security:authorize access="isAuthenticated()">
-        <div id="auth">
-            <a class="link" href="<s:url value="/gebruikers/account"/>"><security:authentication property="principal.username"/></a>
-            <a class="link" href="<s:url value="/static/j_spring_security_logout"/>">Logout</a>
-        </div>
+            <a href="<s:url value="/gebruikers/account"/>"><security:authentication property="principal.username"/></a>
+            <a href="<s:url value="/static/j_spring_security_logout"/>">Logout</a>
     </security:authorize>
-
     <security:authorize access="isAnonymous()">
-        <div id="auth">
-           <a class="link" href="<s:url value="/login"/>">Login</a>
-        </div>
+           <a href="<s:url value="/login"/>">Login</a>
+           <a href="<s:url value="/login/registreren"/>">Registeren</a>
     </security:authorize>
+    </div>
     <img class="logo" src="${resources}/images/recordaid_logo.png" alt="RecordAid logo"/>
 </div>
-
 <div id="navigation">
     <ul id="navlist">
         <li><a href="<s:url value="/home"/>">Home</a></li>
@@ -34,11 +29,6 @@
         </security:authorize>
         <security:authorize access="hasRole('KERNLID') or hasRole('ADMIN')">
             <li><a href="<s:url value="/beheer"/>">Beheer</a></li>
-            <!--<li><a href="<s:url value="/aanvragen/beheer"/>">Aanvragen-beheer</a></li>
-            <li><a href="<s:url value="/faq/beheer"/>">FAQ-beheer</a></li>
-            <li><a href="<s:url value="/gebruikers/beheer"/>">Gebruiker-beheer</a></li>
-            <li><a href="<s:url value="/items/beheer"/>">Item-beheer</a></li>
-            <li><a href="<s:url value="/opnames/beheer"/>">Opname-beheer</a></li>-->
         </security:authorize>
     </ul>
 </div>

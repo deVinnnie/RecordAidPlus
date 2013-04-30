@@ -14,20 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Hannes
  */
 @Repository("gebruikersDao")
-@Transactional()
+@Transactional
 public class JpaGebruikerDao extends JpaAbstractDao implements GebruikerDatabaseInterface
 {
     public JpaGebruikerDao(){}
 
     public JpaGebruikerDao(EntityManager entityManager) {
         super(entityManager);
-    }
-
-    @Override
-    public Gebruiker getGebruiker(String emailadres)
-    {
-        Gebruiker gebruiker = getEntityManager().find(Gebruiker.class, emailadres);
-        return gebruiker;
     }
 
     @Override

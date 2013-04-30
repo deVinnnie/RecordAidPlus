@@ -1,5 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -12,6 +12,7 @@
         <li><a href="<s:url value="/items/beheer"/>">Items</a></li>
         <li><a href="<s:url value="/opnames/beheer"/>">Opnames</a></li>
         <li><a href="<s:url value="/mailing/beheer"/>">Mail</a></li>
+        <li><a href="<s:url value="/gegevens/beheer"/>">Gegevens</a></li>
     </ul>
 </div>
 <div id="beheer">

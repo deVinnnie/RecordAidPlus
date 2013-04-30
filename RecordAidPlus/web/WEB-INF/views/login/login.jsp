@@ -1,9 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!--<head>
-    <script type="text/javascript" src="JavaScript/loginValidatie.js" ></script>
-</head>-->
 <h1>Inloggen</h1>
 <c:if test="${loginrequired != null}">
     <p class="error">Om deze pagina te bekijken moet u ingelogd zijn.</p>

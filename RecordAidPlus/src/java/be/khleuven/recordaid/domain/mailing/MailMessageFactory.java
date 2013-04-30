@@ -26,7 +26,8 @@ public class MailMessageFactory {
             for(Element element : children){
                 MailMessage message = new MailMessage(
                     element.getChild("subject").getText(), 
-                    element.getChild("content").getText()
+                    element.getChild("content").getText(), 
+                    element.getChild("description").getText()
                 ); 
                 mailMessages.add(message);
             }

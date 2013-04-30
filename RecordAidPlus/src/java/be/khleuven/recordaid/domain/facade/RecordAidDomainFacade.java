@@ -1,15 +1,16 @@
 package be.khleuven.recordaid.domain.facade;
 
+import be.khleuven.recordaid.opnames.*; 
 import be.khleuven.recordaid.domain.items.*;
 import be.khleuven.recordaid.domain.gebruiker.*;
 import be.khleuven.recordaid.domain.mailing.*;
-import be.khleuven.recordaid.domain.forum.*;
 import be.khleuven.recordaid.domain.aanvragen.*;
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.database.interfaces.*; 
 import be.khleuven.recordaid.domain.*; 
 import java.util.*; 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  * Klasse die fungeert als een facade voor alle database klassen. 
@@ -25,8 +26,9 @@ public class RecordAidDomainFacade
     private AanvraagDatabaseInterface aanvraagDB;
     private ReservatieDatabaseInterface reservatieDB;
     private DepartementDatabaseInterface departementDb; 
+    private MailDatabaseInterface mailDb; 
     
-    private AbstractMailHandler mailing;
+    private AbstractMailHandler mailHandler;
 
     /**
      * Constructor om een nieuwe RecordAidDomainFacade aan te maken.
@@ -34,7 +36,7 @@ public class RecordAidDomainFacade
     public RecordAidDomainFacade()
     {
         //mailing = new SendMail(this.servletContext.getRealPath("/WEB-INF"));
-        mailing = new MailHandlerDummy(); 
+        mailHandler = new MailHandlerDummy(); 
     }
 
     @Autowired
@@ -44,17 +46,19 @@ public class RecordAidDomainFacade
             GebruikerDatabaseInterface gebruikerDB,
             AanvraagDatabaseInterface aanvraagDB, 
             ReservatieDatabaseInterface reservatieDB, 
-            DepartementDatabaseInterface departementDb) {
+            DepartementDatabaseInterface departementDb, 
+            MailDatabaseInterface mailDb) {
         this.commonDb = commonDb; 
         this.faqDB = faqDB;
         this.gebruikerDB = gebruikerDB;
         this.aanvraagDB = aanvraagDB;
         this.reservatieDB = reservatieDB;
         this.departementDb = departementDb; 
+        this.mailDb = mailDb; 
         
         //Watch out!! The init method intializes some default but real entities. 
         //You don't want to accidently send a mail to them!
-        mailing = new MailHandlerDummy(); 
+        mailHandler = new MailHandlerDummy(); 
         
         try{
             this.init();
@@ -102,37 +106,10 @@ public class RecordAidDomainFacade
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Forum">
-    public void addForumTopic(ForumTopic topic)
-    {
-        commonDb.create(topic);
-    }
-
-    public ForumTopic findForumTopic(long id)
-    {
-        return commonDb.find(ForumTopic.class, id);
-    }
-
-    public void updateForumTopic(ForumTopic topic)
-    {
-        commonDb.edit(topic);
-    }
-
-    public void removeForumTopic(long topicID)
-    {
-        commonDb.remove(commonDb.find(ForumTopic.class, topicID));
-    }
-
-    public Collection<ForumTopic> getForumTopics()
-    {
-        return commonDb.findAll(ForumTopic.class); 
-    }
-    //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Gebruikers">
     public Gebruiker getGebruiker(String emailadres)
     {
-        return gebruikerDB.getGebruiker(emailadres);
+        return commonDb.find(Gebruiker.class,emailadres);
     }
 
     public Gebruiker getGebruikerByValidatiecode(String validatiecode)
@@ -142,22 +119,21 @@ public class RecordAidDomainFacade
 
     public void addGebruiker(Gebruiker gebruiker) throws DatabaseException
     {
+        //Add user to database. 
         commonDb.create(gebruiker); 
-    }
-
-    public void removeGebruiker(String emailadres) throws DatabaseException
-    {
-        commonDb.remove(commonDb.find(Gebruiker.class, emailadres));
+        
+        //Send mail with Validation-code to the new user. 
+        MailMessage mailMessage = mailDb.getMailMessage("validatie_gebruiker"); 
+        Map<String, String> context = new HashMap<String, String>(); 
+        context.put("gebruiker_voornaam", gebruiker.getVoornaam());
+        context.put("validatie_code", gebruiker.getValidatieCode()); 
+        mailMessage.setContext(context); 
+        mailHandler.sendMessage(mailMessage);
     }
 
     public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException
     {
         commonDb.remove(gebruiker);
-    }
-
-    public void updateGebruiker(Gebruiker gebruiker)
-    {
-        commonDb.edit(gebruiker); 
     }
 
     public Collection<Gebruiker> getGebruikers()
@@ -169,22 +145,21 @@ public class RecordAidDomainFacade
     {
         return gebruikerDB.getGebruikers(rol);
     }
+    
+    public Dossier getDossier(Gebruiker gebruiker) {
+        Dossier dossier = commonDb.find(Dossier.class, gebruiker.getEmailadres()); 
+        if(dossier ==null){
+            dossier = new Dossier(gebruiker); 
+            dossier = commonDb.create(dossier); 
+        }
+        return dossier; 
+    }
     //</editor-fold >
 
-    //<editor-fold defaultstate="collapsed" desc="Items">
-    public void addItem(Item item) throws DatabaseException
-    {
-        commonDb.create(item); 
-    }
-    
+    //<editor-fold defaultstate="collapsed" desc="Items"> 
     public Item findItem(Long id)
     {
         return commonDb.find(Item.class,id);
-    }
-
-    public void updateItem(Item item)
-    {
-        commonDb.edit(item);
     }
 
     public Collection<Item> getItems()
@@ -193,40 +168,15 @@ public class RecordAidDomainFacade
     }
     //</editor-fold>
 
-    public void addMessage(Message message)
-    {
-        commonDb.create(message);
-    }
-
-    public Message findMessage(Long messageID)
-    {
-        return commonDb.find(Message.class, messageID);
-    }
-
-    public void updateMessage(Message message)
-    {
-        commonDb.edit(message);
-    }
-
-    public void removeMessage(Long messageID)
-    {
-        commonDb.remove(messageID);
-    }
-
-    public List<Message> getMessages()
-    {
-        return commonDb.findAll(Message.class); 
-    }
-
     //<editor-fold defaultstate="collapsed" desc="Aanvragen">
     public DagAanvraag addAanvraag(DagAanvraag aanvraag)
     {
         return commonDb.create(aanvraag); 
     }
     
-    public DagAanvraag findAanvraag(long id)
+    public AbstractAanvraag findAanvraag(long id)
     {
-        return commonDb.find(DagAanvraag.class, id);
+        return commonDb.find(AbstractAanvraag.class, id);
     }
 
     public void updateAanvraag(DagAanvraag aanvraag) throws DatabaseException
@@ -260,6 +210,7 @@ public class RecordAidDomainFacade
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Reservaties">
     public Reservatie getReservatie(long id)
     {
         return commonDb.find(Reservatie.class, id);
@@ -290,7 +241,9 @@ public class RecordAidDomainFacade
         Collection<Reservatie> reservaties = reservatieDB.getReservaties(start, end);
         return reservaties; 
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Support">
     public Support findSupport(long id) throws DatabaseException
     {
         return commonDb.find(Support.class, id); 
@@ -300,29 +253,103 @@ public class RecordAidDomainFacade
     {
         return commonDb.findAll(Support.class);
     }
+    //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Lectoren">
-    public Lector getLector(String emailadres){
-        return (Lector) commonDb.find(Lector.class,emailadres); 
+    public Lector getLector(String emailadres) {
+        Lector lector;
+        try {
+            lector = departementDb.getLector(emailadres);
+        } catch (EmptyResultDataAccessException ex) {
+            lector = new Lector(emailadres);
+            lector = commonDb.create(lector);
+        }
+        return lector;
     }
     
-    public void addLector(Lector lector) throws DatabaseException{
-        commonDb.create(lector); 
-    }
-    
-    public void removeLector(Lector lector) throws DatabaseException{
-        commonDb.remove(lector);
-        
-    }
-    public void updateLector(Lector lector) throws DatabaseException{
-        commonDb.edit(lector);
+    public void removeLector(Lector lector){
+        commonDb.remove(lector); 
     }
     
     public Collection<Lector> getLectoren(){
         return commonDb.findAll(Lector.class); 
     }
+    
+    public List<OpnameMoment> getLessenVanLector(Lector lector){
+        return departementDb.getLessenVanLector(lector);
+    }
     //</editor-fold>
-   
+
+    //<editor-fold defaultstate="collapsed" desc="Departementen">
+    public void addDepartement(Departement departement){
+        commonDb.create(departement);
+    }
+    
+    public List<Departement> getDepartementen(){
+        return this.departementDb.getAlleDepartementen(); 
+    }
+    
+    public Departement getDepartement(String naam) {
+        return commonDb.find(Departement.class, naam); 
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Common"> 
+    public <T> T create(T t){
+        return commonDb.create(t); 
+    }
+    
+    public <T> T edit(T t) {
+        return commonDb.edit(t); 
+    }
+    
+    public void remove(Object object){
+        commonDb.remove(object);
+    }
+    //</editor-fold>
+
+    public OpnameMethode findOpnameMethode(Long id){
+        return commonDb.find(OpnameMethode.class, id); 
+    }
+    
+    public List<OpnameMethode> getOpnameMethodes(){
+        return commonDb.findAll(OpnameMethode.class); 
+    }
+    
+    public List<OpnameMoment> getZichtbareOpnames(){
+        List<OpnameMoment> zichtbareOpnames = new ArrayList<OpnameMoment>(); 
+        List<OpnameMoment> alle = commonDb.findAll(OpnameMoment.class); 
+        for(OpnameMoment opnameMoment : alle){
+            if(opnameMoment.isZichtbaar()){
+                zichtbareOpnames.add(opnameMoment);
+            }
+        }
+        return zichtbareOpnames;
+    }
+
+    public List<OpnameMoment> getOpnames() {
+        return commonDb.findAll(OpnameMoment.class);
+    }
+
+    public OpnameMoment findOpnameMoment(long id) {
+        return this.commonDb.find(OpnameMoment.class, id); 
+    }
+    
+    //<editor-fold defaultstate="collapsed" desc="Mailing">
+    public List<MailMessage> findMailMessages(){
+        return commonDb.findAll(MailMessage.class); 
+    }
+
+    public MailMessage findMailMessage(long id) {
+        return commonDb.find(MailMessage.class, id);
+    }
+    
+    public SubjectPrefix getSubjectPrefix(){
+        long id =1; 
+        return commonDb.find(SubjectPrefix.class, id); 
+    }
+    //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public FAQDatabaseInterface getFaqDB() {
         return faqDB;
@@ -372,95 +399,12 @@ public class RecordAidDomainFacade
         this.departementDb = departementDb;
     }
 
-    public AbstractMailHandler getMailing() {
-        return mailing;
+    public AbstractMailHandler getMailHandler() {
+        return mailHandler;
     }
 
-    public void setMailing(AbstractMailHandler mailing) {
-        this.mailing = mailing;
+    public void setMailHandler(AbstractMailHandler mailing) {
+        this.mailHandler = mailing;
     }
     //</editor-fold>
-
-    public void addDepartement(Departement departement) {
-        commonDb.create(departement);
-    }
-    
-    public List<Departement> getDepartementen(){
-        return this.departementDb.getAlleDepartementen(); 
-    }
-
-    public Dossier getDossier(Gebruiker gebruiker) {
-        Dossier dossier = commonDb.find(Dossier.class, gebruiker.getEmailadres()); 
-        if(dossier ==null){
-            dossier = new Dossier(gebruiker); 
-            dossier = commonDb.create(dossier); 
-        }
-        return dossier; 
-    }
-
-    public Dossier updateDossier(Dossier dossier) throws DomainException{
-        return commonDb.edit(dossier); 
-    }
-    
-    //<editor-fold defaultstate="collapsed" desc="Common"> 
-    public <T> T create(T t){
-        return commonDb.create(t); 
-    }
-    
-    public <T> T edit(T t) {
-        return commonDb.edit(t); 
-    }
-    
-    public void remove(Object object){
-        commonDb.remove(object);
-    }
-    //</editor-fold>
-
-    public Departement getDepartement(String naam) {
-        return commonDb.find(Departement.class, naam); 
-    }
-    
-    public OpnameMethode findOpnameMethode(Long id){
-        return commonDb.find(OpnameMethode.class, id); 
-    }
-    
-    public List<OpnameMethode> getOpnameMethodes(){
-        return commonDb.findAll(OpnameMethode.class); 
-    }
-    
-    public List<OpnameMoment> getZichtbareOpnames(){
-        List<OpnameMoment> zichtbareOpnames = new ArrayList<OpnameMoment>(); 
-        List<OpnameMoment> alle = commonDb.findAll(OpnameMoment.class); 
-        for(OpnameMoment opnameMoment : alle){
-            if(opnameMoment.isZichtbaar()){
-                zichtbareOpnames.add(opnameMoment);
-            }
-        }
-        return zichtbareOpnames;
-    }
-
-    public List<OpnameMoment> getOpnames() {
-        return commonDb.findAll(OpnameMoment.class);
-    }
-
-    public OpnameMoment findOpnameMoment(long id) {
-        return this.commonDb.find(OpnameMoment.class, id); 
-    }
-    
-    public List<MailMessage> findMailMessages(){
-        return commonDb.findAll(MailMessage.class); 
-    }
-
-    public MailMessage findMailMessage(long id) {
-        return commonDb.find(MailMessage.class, id);
-    }
-    
-    public SubjectPrefix getSubjectPrefix(){
-        long id =1; 
-        return commonDb.find(SubjectPrefix.class, id); 
-    }
-    
-    public Reservatie findReservatie(long id){
-        return commonDb.find(Reservatie.class, id); 
-    }
 }

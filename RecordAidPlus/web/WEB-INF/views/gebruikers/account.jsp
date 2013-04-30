@@ -1,54 +1,49 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript" src="JavaScript/jquery.js" ></script>
-<script type="text/javascript" src="JavaScript/account.js" ></script>
+<!--<script type="text/javascript" src="JavaScript/account.js" ></script>-->
 <h1>Mijn account</h1>
-<form id="form_updateAccount" method="POST" action="ActionServlet">
-    <table class="accountTable">
-        <tr>
-            <td><label for="email">e-mailadres</label></td>
-            <td><label>${gebruiker.emailadres}</label></td>
-        </tr>
+<table>
+    <tr>
+        <td>E-mailadres</td>
+        <td>${gebruiker.emailadres}</td>
+    </tr>
+    <tr>
+        <td>Voornaam</td>
+        <td>${gebruiker.voornaam}</td>
+    </tr>
+    <tr>
+        <td>Achternaam</td>
+        <td>${gebruiker.achternaam}</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>${gebruiker.rol}</td>
+    </tr>
+</table>
 
-        <tr>
-            <td><label for="naam">Naam</label></td>
-            <td><label>${gebruiker.naam}</label></td>
-        </tr>
-
-        <tr>
-            <td><label for="voornaam">Voornaam</label></td>
-            <td><label>${gebruiker.voornaam}</label></td>
-        </tr>
-
-        <tr>
-            <td><label for="status">Status</label></td>
-            <td><label>${gebruiker.rol}</label></td>
-        </tr>
-    </table>
-
+    <h2>Wachtwoord wijzigen</h2>
     <p class="boodschap" id="wachtwoord_fout_error" style="color: red;">${wachtwoord_fout_error}</p>
     <p class="boodschap" id="wachtwoord_verandert_boodschap" style="color: green;">${wachtwoord_verandert_boodschap}</p>
-
+<form id="form_updateAccount" method="POST">
     <table>
         <tr>
             <td><label for="oud_ww">Oud wachtwoord</label></td>
-            <td><input type="password" id="oud_ww" name="oud_ww" class="tb"></td>
+            <td><input type="password" id="oud_ww" name="oud_ww"></td>
         </tr>
-
         <tr>
             <td><label for="nieuw_ww1">Nieuw wachtwoord</label></td>
             <td><input type="password" id="nieuw_ww1" name="nieuw_ww1" class="tb"></td>
         </tr>
-
         <tr>
             <td><label for="nieuw_ww2">Wachtwoord herhalen</label></td>
             <td><input type="password" id="nieuw_ww2" name="nieuw_ww2" class="tb"></td>
         </tr>
-
         <tr>
-            <td>&nbsp;</td>
-        <input type="hidden" name="action" value="update_password"/>
-        <td><input type="submit" value="Wachtwoord opslaan"/></td>
+            <td>&nbsp;</td>  
+            <td> 
+                <input type="hidden" name="action" value="update_password"/>
+                <input type="submit" value="Wachtwoord opslaan"/>
+            </td>
         </tr>
     </table>
 </form> 

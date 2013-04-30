@@ -12,6 +12,8 @@
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <intercept-url pattern="/items/beheer" access="hasAnyRole('ADMIN','KERNLID')"/>
+        <intercept-url pattern="/items/reserveer" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
+        <intercept-url pattern="/items/reservervaties" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
         <intercept-url pattern="/faq/beheer" access="hasAnyRole('ADMIN','KERNLID')"/>
         <intercept-url pattern="/gebruikers/beheer" access="hasAnyRole('ADMIN','KERNLID')"/>
         <intercept-url pattern="/aanvragen/beheer" access="hasAnyRole('ADMIN','KERNLID')"/> 

@@ -1,7 +1,6 @@
 package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
-import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,25 +43,24 @@ public class LoginController {
      
     @RequestMapping(value="/registreren", method = RequestMethod.POST)
     public String registreerNieuweGebruiker(
-            @Valid Gebruiker gebruiker, BindingResult bindingResult, 
+            @Valid Gebruiker nieuweGebruiker, BindingResult bindingResult, 
             @RequestParam("wachtwoord") String wachtwoord, 
             @RequestParam("wachtwoord_confirmation") String wachtwoordConfirmation, 
             ModelMap model
             ){
         try{
-            this.userDetailsService.createUser(gebruiker, wachtwoord, wachtwoordConfirmation);
+            this.userDetailsService.createUser(nieuweGebruiker, wachtwoord, wachtwoordConfirmation);
         }
         catch(Exception e){
             bindingResult.addError(new ObjectError("gebruik_bestaat_al", 
                     "Er is reeds een gebruiker geregistreerd met dit e-mailadres.")); 
-            model.addAttribute("nieuweGebruiker", gebruiker); 
+            model.addAttribute("nieuweGebruiker", nieuweGebruiker); 
         }
-        return "/login/registreren"; 
+        return "/login/login"; 
     }
     
     @RequestMapping
     public String showLoginForm(ModelMap model){
-        model.addAttribute("title", "Inloggen"); 
         return "/login/login"; 
     } 
     
@@ -77,7 +75,7 @@ public class LoginController {
         {
             Gebruiker gebruiker = domainFacade.getGebruikerByValidatiecode(validatieCode);
             gebruiker.valideer(validatieCode);
-            domainFacade.updateGebruiker(gebruiker);
+            domainFacade.edit(gebruiker);
             model.addAttribute("gelukt_melding", "Uw account is met succes gevalideert. U kan nu inloggen met uw nieuw account.");
             return "redirect:/login/login"; 
         }

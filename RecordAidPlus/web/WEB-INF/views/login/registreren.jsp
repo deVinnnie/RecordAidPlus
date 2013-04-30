@@ -1,7 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <h1>Registreren</h1>
-<p id="gebruiker_bestaat_error" class="error">${gebruiker_bestaat_error}</p>
+<springforms:errors path="*" cssClass="error"/>
 <springforms:form modelAttribute="nieuweGebruiker" id="registratieForm" method="POST">
     <table>
         <tr>
@@ -9,17 +9,17 @@
         </tr> 
         <tr>
             <td><label for="email">E-mail adres (KHLeuven)</label></td>
-            <td><springforms:input path="emailadres" type="text" id="email" name="email"/></td>
+            <td><springforms:input path="emailadres" type="text" id="emailadres"/></td>
             <td id="email_error" class="error"></td>
         </tr>
         <tr>
             <td><label for="voornaam">Voornaam</label></td>
-            <td><springforms:input path="voornaam" type="text" id="voornaam" name="voornaam"/></td>
+            <td><springforms:input path="voornaam" type="text" id="voornaam"/></td>
             <td id="voornaam_error" class="error"></td>
         </tr>
         <tr>
             <td><label for="naam">Achternaam</label></td>
-            <td><springforms:input path="achternaam" type="text" id="achternaam" name="achternaam"/></td>
+            <td><springforms:input path="achternaam" type="text" id="achternaam"/></td>
             <td id="naam_error" class="error"></td>
         </tr>
         <tr>

@@ -15,7 +15,7 @@ public class Support extends Identifiable
 {
     private String report; 
     
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne
     private Lokaal lokaal;
     
     @OneToOne
@@ -27,7 +27,7 @@ public class Support extends Identifiable
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
      */
-    protected Support(){}
+    public Support(){}
 
     /**
      * Constructor met parameters, dit is de constructor die gebruikt dient te
@@ -39,12 +39,12 @@ public class Support extends Identifiable
      */
     public Support(String report, Lokaal lokaal, Gebruiker zender)
     {
-        setReport(report);
-        setLokaal(lokaal);
-        setZender(zender);
+        this.setReport(report);
+        this.setLokaal(lokaal);
+        this.setZender(zender);
     }
 
-
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     /**
      * Geeft de omschrijving van het defect terug.
      *
@@ -108,6 +108,15 @@ public class Support extends Identifiable
         this.zender = zender;
     }
 
+    public Calendar getDatum() {
+        return datum;
+    }
+
+    public void setDatum(Calendar datum) {
+        this.datum = datum;
+    }
+    //</editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**
      * Methode die bepaalt wanneer 2 objecten hetzelfde zijn op basis van de

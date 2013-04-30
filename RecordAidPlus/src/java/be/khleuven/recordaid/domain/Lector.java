@@ -1,18 +1,18 @@
 package be.khleuven.recordaid.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  *
  * @author Vincent Ceulemans
  */
 @Entity
-public class Lector implements Serializable {
+public class Lector extends Identifiable implements Serializable {
     private String naam; 
     
-    @Id
+    @Column(unique=true)
     private String emailadres; 
     
     private boolean autonoomOpnemen = false; 

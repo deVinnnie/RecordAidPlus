@@ -32,7 +32,7 @@ public class Gebruiker implements Serializable,UserDetails
     private String voornaam;
     private String achternaam;
     
-    @Column(length=60)    
+    /*@Column(length=70)    */
     private String wachtwoordHash;
     
     private String validatieCode;

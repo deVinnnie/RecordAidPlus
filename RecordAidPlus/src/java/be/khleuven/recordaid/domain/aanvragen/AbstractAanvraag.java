@@ -1,9 +1,12 @@
 package be.khleuven.recordaid.domain.aanvragen;
 
+import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.Departement;
 import be.khleuven.recordaid.domain.DomainException;
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*; 
@@ -13,11 +16,7 @@ import javax.persistence.*;
  * @author Vincent Ceulemans
  */
 @Entity
-public abstract class AbstractAanvraag implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
+public abstract class AbstractAanvraag extends Identifiable implements Serializable {
     @OneToOne
     private Departement departement;  
 
@@ -30,13 +29,17 @@ public abstract class AbstractAanvraag implements Serializable {
     @Enumerated
     private Status status = Status.NIEUW;
     
-    /*
+    /**
     * Lijst van opnames die dienen gemaakt te worden. 
     */
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<OpnameMoment> opnameMomenten; 
+    private List<OpnameMoment> opnameMomenten = new ArrayList<OpnameMoment>(); 
     
+    @Column(columnDefinition = "CLOB")
     private String reden;
+    
+    @Column(columnDefinition = "CLOB")
+    private String opmerking; 
     
     public AbstractAanvraag(){
     }
@@ -44,14 +47,6 @@ public abstract class AbstractAanvraag implements Serializable {
     public AbstractAanvraag(Dossier dossier, Departement departement){
         this.dossier = dossier; 
         this.departement = departement; 
-    }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -94,6 +89,14 @@ public abstract class AbstractAanvraag implements Serializable {
     public void setStatus(Status status) {
         this.status = status;
     }
+    
+    public String getOpmerking() {
+        return opmerking;
+    }
+
+    public void setOpmerking(String opmerking) {
+        this.opmerking = opmerking;
+    }
     //</editor-fold>
     
     public void addOpnameMoment(OpnameMoment opnameMoment) throws DomainException{
@@ -103,4 +106,32 @@ public abstract class AbstractAanvraag implements Serializable {
     public List<OpnameMoment> getOpnameMomenten(){
         return this.opnameMomenten; 
     }
+    
+    /**
+     * Searches and retrieves the OpnameMoment with the given id. 
+     * 
+     * @param id The id of the OpnameMoment. 
+     * @return The OpnameMoment instance with the given id. Or null. 
+     */
+    public OpnameMoment getOpnameMoment(long id){
+        OpnameMoment opnameMoment=null; 
+        int i = 0; 
+        boolean gevonden = false;
+        while(i < this.getOpnameMomenten().size() && !gevonden){
+            if(this.getOpnameMomenten().get(i).getId() == id){
+                opnameMoment = this.getOpnameMomenten().get(i); 
+                gevonden = true; 
+            }
+            else{
+                i++; 
+            }
+        } 
+        return opnameMoment; 
+    }
+    
+    public void setOpnameMomenten(List<OpnameMoment> opnameMomenten){
+        this.opnameMomenten = opnameMomenten; 
+    }
+    
+    public abstract Calendar getDefaultOpnameMomentDag();
 }

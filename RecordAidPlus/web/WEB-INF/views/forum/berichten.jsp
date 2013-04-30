@@ -3,14 +3,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="../header.jsp" %>
 <%@include file="paginaCheck/checkGeenStudentenLeerkrachten.jsp" %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>RecordAid Forum</title>
-    </head>
-
-    <body>
+<title>RecordAid Forum</title>
         <h1>RecordAid Forum</h1>
         <div id="berichten">
             <c:choose>
@@ -22,11 +15,7 @@
                             <p>
                                 ${topic.messages[0].text}
                                 <br>
-
-                            </p>
-
-
-                            <c:choose>
+                            </p>   <c:choose>
                                 <c:when test="${fn:length(topic.messages) eq 1}">
                                     <p>Er heeft nog niemand geantwoord op dit bericht.</p>
                                 </c:when>
@@ -50,7 +39,3 @@
             </c:choose>
             <p><a href="ActionServlet?action=berichten&method=nieuw">Nieuw bericht plaatsen.</a></p>
         </div>
-
-        <%@include file="../footer.jsp" %>
-    </body>
-</html>

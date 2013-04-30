@@ -6,15 +6,12 @@ var wachtwoordConfirmatieOK = false;
 
 $("document").ready(function()
 {
-    $("#email").focus(hide).focusout(checkEmail);
+    $("#emailadres").focus(hide).focusout(checkEmail);
     $("#naam").focus(hide).focusout(checkAchternaam);
     $("#voornaam").focus(hide).focusout(checkVoornaam);
     $("#wachtwoord").focus(hide).focusout(checkWachtwoord);
     $("#wachtwoordConfirmation").focus(hide).focusout(checkWachtwoordConfirmation);
-    
-    gebruikerBestaatError();
-    
-    $("#registratieForm").submit(registreer_gebruiker);
+    $("#registratieForm").submit(registreer_gebruiker); 
 });
 
 function registreer_gebruiker()
@@ -28,27 +25,36 @@ function registreer_gebruiker()
             && wachtwoordOK && wachtwoordConfirmatieOK);
 }
 
-function gebruikerBestaatError()
-{   
-    $("#gebruiker_bestaat_error").hide().fadeIn("slow");
-}
-
-function gebruikerBestaatErrorDisapear()
-{
-    $("#gebruiker_bestaat_error").fadeOut("slow");
-}
-
 function checkEmail()
 {
     emailOK = true;
     $("#email_error").empty();
-    if(!($("#email").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@khleuven.be$/) 
-            || $("#email").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@student.khleuven.be$/)))
+    if(!($("#emailadres").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@khleuven.be$/) 
+            || $("#emailadres").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@student.khleuven.be$/)))
     {
         $("#email_error").hide()
             .append("Geen goed emailadres")
             .fadeIn("slow");
         emailOK = false;
+    }
+    else{
+        if($("#voornaam").val() =='' && $("#achternaam").val() == ''){
+               var arrayStrings = $("#emailadres").val().split('@');
+               var arrayNaam = arrayStrings[0].split('.'); 
+               var voornaam = arrayNaam[0]; 
+               var achternaam =""; 
+               for(var i = 1; i < arrayNaam.length; i++){
+                   if(i!==1){
+                       achternaam+=" "; 
+                   }
+                   achternaam += arrayNaam[i].charAt(0).toUpperCase() +arrayNaam[i].slice(1);; 
+               }
+               
+               voornaam = voornaam.charAt(0).toUpperCase() + voornaam.slice(1);
+               
+               $("#voornaam").val(voornaam);
+               $("#achternaam").val(achternaam); 
+           }
     }
 }
 
@@ -106,5 +112,4 @@ function checkWachtwoordConfirmation()
 
 function hide(event){
     $("#"+event.target.id+"_error").fadeOut("slow"); 
-    gebruikerBestaatErrorDisapear();
 }
