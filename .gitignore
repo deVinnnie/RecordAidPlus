@@ -19,3 +19,5 @@ RecordAidPlusWeb/web/WEB-INF/config.properties
 
 /RecordAidPlus/nbproject/private/
 /Test/nbproject/private/
+/RecordAidPlusWeb/target/
+/RecordAidPlus/target/
