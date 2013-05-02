@@ -13,7 +13,7 @@ import org.jdom.input.SAXBuilder;
  * @author Vincent Ceulemans
  */
 public class MailMessageFactory {
-    private String FILENAME = this.getClass().getResource("default_mail_messages.xml").toString(); 
+    private String FILENAME = getClass().getClassLoader().getResource("/META-INF/default_mail_messages.xml").toString(); 
     
     public List<MailMessage> createMailMessages(){
         List<MailMessage> mailMessages = new ArrayList<MailMessage>(); 

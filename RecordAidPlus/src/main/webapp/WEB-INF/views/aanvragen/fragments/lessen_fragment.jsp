@@ -7,18 +7,11 @@
     </c:when>
     <c:otherwise>
         <c:forEach var="opnameMoment" items="${aanvraag.opnameMomenten}">
-            <c:choose>
-                <c:when test="${empty opnameMoment.opname}">
-                    <c:set var="klasse" value="nietopgenomen"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="klasse" value="opgenomen"/>
-                </c:otherwise>
-            </c:choose>
+            
             <h3 class="les">
                 <fmt:formatDate value="${opnameMoment.beginTijdstip.time}" pattern="hh:mm" /> tot 
                 <fmt:formatDate value="${opnameMoment.eindTijdstip.time}" pattern="hh:mm" />  
-                <span class="${klasse}"></span>  
+                <%@include file="les_status_fragment.jsp" %>
             </h3>
             <table>
                 <tr>
@@ -57,6 +50,14 @@
                         </a>
                     </td>
                 </tr>
+                <c:if test="${not empty opnameMoment.opname}">
+                    <tr>
+                        <td>Opname</td>
+                        <td><c:out value="${opnameMoment.opname.locatie.medium}
+                               ${opnameMoment.opname.locatie.wegwijzer}"/>
+                        </td>
+                    </tr>
+                </c:if>
             </table>    
         </c:forEach>
     </c:otherwise>

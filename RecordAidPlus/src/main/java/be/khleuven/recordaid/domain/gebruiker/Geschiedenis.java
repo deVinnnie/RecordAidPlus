@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
@@ -10,19 +11,15 @@ import javax.persistence.*;
  * @author Vincent Ceulemans
  */
 @Entity
-public class Geschiedenis implements Serializable{
-    @ManyToMany
+public class Geschiedenis extends Identifiable implements Serializable{
+    @OneToMany
     private List<Gebeurtenis> gebeurtenissen = new ArrayList<Gebeurtenis>(); 
+    //Use stack for a last in, first out list. Because the history is in reverse chronological order. 
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    public Geschiedenis() {
-    }
+    public Geschiedenis() {}
     
     public void addGebeurtenis(Gebeurtenis gebeurtenis){
-        this.gebeurtenissen.add(gebeurtenis);
+        this.gebeurtenissen.add(0, gebeurtenis); 
     }        
     
     public Gebeurtenis getGebeurtenis(int i){
@@ -31,13 +28,5 @@ public class Geschiedenis implements Serializable{
     
     public List<Gebeurtenis> getGebeurtenissen(){
         return this.gebeurtenissen; 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

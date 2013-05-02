@@ -134,4 +134,9 @@ public abstract class AbstractAanvraag extends Identifiable implements Serializa
     }
     
     public abstract Calendar getDefaultOpnameMomentDag();
+    
+    /**
+     * Return a textual representation of the span of this request. 
+     */
+    public abstract String getTijdsbepaling(); 
 }

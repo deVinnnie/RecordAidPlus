@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <h1><c:out value="Dossier - ${dossier.gebruiker.voornaam} ${dossier.gebruiker.achternaam}"/></h1>
 Hoofdverantwoordelijke: <c:out value="${dossier.verantwoordelijke.voornaam} ${dossier.verantwoordelijke.achternaam}" default="Niemand"/>
 
@@ -14,6 +15,7 @@ Hoofdverantwoordelijke: <c:out value="${dossier.verantwoordelijke.voornaam} ${do
                         <th>Aanvraagdatum</th>
                         <th>Reden</th>
                         <th>Status</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +35,7 @@ Hoofdverantwoordelijke: <c:out value="${dossier.verantwoordelijke.voornaam} ${do
                         <td><fmt:formatDate value="${aanvraag.aanvraagDatum.time}" pattern="yyyy-MM-dd"/></td>
                         <td>${aanvraag.reden}</td>
                         <td>${aanvraag.status}</td>
+                        <td><a href="<s:url value="/aanvragen/detail?id=${aanvraag.id}"/>"/>Details</a></td>
                     </tr> 
                     </c:forEach>
                 </tbody>

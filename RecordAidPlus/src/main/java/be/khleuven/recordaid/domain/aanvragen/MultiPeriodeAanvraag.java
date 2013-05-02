@@ -3,6 +3,7 @@ package be.khleuven.recordaid.domain.aanvragen;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.gebruiker.*; 
 import be.khleuven.recordaid.util.TimeSpan;
+import java.text.SimpleDateFormat;
 import javax.persistence.*; 
 import java.util.*; 
 import org.springframework.util.AutoPopulatingList;
@@ -57,5 +58,13 @@ public class MultiPeriodeAanvraag extends AbstractAanvraag{
     @Override
     public Calendar getDefaultOpnameMomentDag() {
         return (Calendar) this.periode.getBeginTime().clone(); 
+    }
+    
+    @Override
+    public String getTijdsbepaling() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String result = dateFormat.format(getPeriode().getBeginTime().getTime()) + " <->" + 
+                dateFormat.format(getPeriode().getEndTime().getTime());
+        return result; 
     }
 }

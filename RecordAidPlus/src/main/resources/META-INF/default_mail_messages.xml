@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
+    <!--Opgepast met de CDATA tags: gebruik geen identatie. 
+    De indentatie wordt mee uitgelezen en getoont in de output.
+    (Vooral problematisch op de pagina om de boodschappen te wijzigen.-->
     <message>
         <subject>Validatie RecordAid account</subject>
         <content>
@@ -78,5 +81,30 @@ heeft een aanvraag ingediend om een les te laten opnemen.<br>
 <a href="$url$">Zie details.</a>]]>  
         </content>
         <description>nieuwe_aanvraag_melding</description>
+    </message>
+    
+    <message>
+           <subject>Goedkeuring Aanvraag</subject>
+        <content>
+<![CDATA[
+Beste $aanvraag_aanvrager_voornaam$, <br>
+Jouw aanvraag voor $aanvraag_datum$ werd goedgekeurd. <br>
+We nemen nu waar nodig contact op met de desbetreffende lectoren. 
+<br><br>Met vriendelijke groeten,<br>
+Het RecordAid Team]]> 
+        </content>
+        <description>goedkeuring_aanvraag</description>
+    </message>
+    <message>
+           <subject>Weigering Aanvraag</subject>
+        <content>
+<![CDATA[
+Beste $aanvraag_aanvrager_voornaam$, <br>
+Jouw aanvraag voor $aanvraag_datum$ werd geweigerd omwille van de volgende reden:<br>
+$weigering_reden$ 
+<br><br>Met vriendelijke groeten,<br>
+Het RecordAid Team]]> 
+        </content>
+        <description>weigering_aanvraag</description>
     </message>
 </messages>

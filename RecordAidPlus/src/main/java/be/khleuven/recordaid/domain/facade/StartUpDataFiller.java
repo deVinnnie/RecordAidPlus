@@ -4,6 +4,7 @@ import be.khleuven.recordaid.domain.gebruiker.*;
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.DagAanvraag;
+import be.khleuven.recordaid.domain.aanvragen.MultiPeriodeAanvraag;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.opnames.OpnameMethode;
 import be.khleuven.recordaid.domain.items.*;
@@ -149,6 +150,24 @@ public class StartUpDataFiller {
             facade.edit(aanvraag); 
         } catch (DomainException ex) {
             Logger.getLogger(StartUpDataFiller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        try {
+            Calendar instance = Calendar.getInstance();
+            Calendar start = (Calendar) instance.clone();
+            start.set(2013, Calendar.MARCH, 12, 10, 0);
+            Calendar end = (Calendar) start.clone();
+            end.set(2013, Calendar.MARCH, 12, 12, 0);
+           
+            Dossier dossier = facade.getDossier(facade.getGebruiker("dummy@khleuven.be"));
+            MultiPeriodeAanvraag aanvraag = new MultiPeriodeAanvraag(dossier, facade.getDepartement("G&T"));
+                    
+            aanvraag.setPeriode(new TimeSpan(start, end));
+
+            facade.addAanvraag(aanvraag); 
         }
         catch(Exception e){
             e.printStackTrace();

@@ -7,7 +7,7 @@ $(document).ready(function(){
     datepicker("#datum");
 }); 
 </script>
-<springforms:form id="aanvraagForm" modelAttribute="nieuweAanvraag" method="POST">
+<springforms:form id="aanvraagForm" modelAttribute="aanvraag" method="POST">
     <p>Alle velden zijn verplicht.</p>
     <table>
         <tr>

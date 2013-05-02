@@ -230,6 +230,13 @@ public class Gebruiker implements Serializable,UserDetails
     {
         return wachtwoordHash;
     }
+    
+    /**
+     * Returns the name and surname combined. 
+     */
+    public String getVolledigeNaam(){
+        return this.voornaam + " " + this.achternaam; 
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">

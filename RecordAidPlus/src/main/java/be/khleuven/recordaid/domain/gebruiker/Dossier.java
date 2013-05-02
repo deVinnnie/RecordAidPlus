@@ -48,9 +48,7 @@ public class Dossier implements Serializable {
 
     public void addAanvraag(AbstractAanvraag aanvraag) {
         this.aanvragen.add(aanvraag);
-        this.geschiedenis.addGebeurtenis(new Gebeurtenis(
-                "Nieuwe aanvraag toegevoegd", gebruiker)
-                );
+        this.addGebeurtenis("Nieuwe aanvraag toegevoegd", gebruiker);
     }
     
     public List<AbstractAanvraag> getAanvragen(){
@@ -78,5 +76,10 @@ public class Dossier implements Serializable {
 
     public void setVerantwoordelijke(Gebruiker verantwoordelijke) {
         this.verantwoordelijke = verantwoordelijke;
+    }
+    
+    public void addGebeurtenis(String gebeurtenis, Gebruiker  betrokkenGebruiker){
+        Gebeurtenis g = new Gebeurtenis(gebeurtenis, betrokkenGebruiker); 
+        this.geschiedenis.addGebeurtenis(g);
     }
 }

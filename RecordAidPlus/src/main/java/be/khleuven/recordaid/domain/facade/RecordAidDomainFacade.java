@@ -171,22 +171,19 @@ public class RecordAidDomainFacade
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Aanvragen">
-    public AbstractAanvraag addAanvraag(AbstractAanvraag aanvraag)
+    public AbstractAanvraag addAanvraag(AbstractAanvraag aanvraag) throws DomainException
     {
         aanvraag = commonDb.create(aanvraag); 
         Dossier dossier = aanvraag.getDossier(); 
         dossier.addAanvraag(aanvraag);
         commonDb.edit(dossier); 
         
-        //Verzend mail naar recordaid met de boodschap dat een nieuwe aanvraag is toegevoegd.  
-        MailMessage mailMessage = mailDb.getMailMessage("nieuwe_aanvraag_melding"); 
+        //Verzend mail naar recordaid met de boodschap dat een nieuwe aanvraag is toegevoegd. 
         Map<String, String> context = new HashMap<String, String>(); 
         context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
         context.put("aanvraag_aanvrager_achternaam", dossier.getGebruiker().getAchternaam()); 
         context.put("url", this.url+"RecordAidPlus/aanvraag/detail?id="+aanvraag.getId()); 
-        mailMessage.setContext(context); 
-        mailHandler.sendMessage(mailMessage);
-        
+        this.sendMail("nieuwe_aanvraag_melding", context);
         return aanvraag;  
     }
     
@@ -210,9 +207,9 @@ public class RecordAidDomainFacade
         commonDb.remove(aanvraag);
     }
 
-    public Collection<DagAanvraag> getAanvragen()
+    public Collection<AbstractAanvraag> getAanvragen()
     {
-        return commonDb.findAll(DagAanvraag.class); 
+        return commonDb.findAll(AbstractAanvraag.class); 
     }
 
     public Collection<DagAanvraag> getAanvragen(Status status)
@@ -423,4 +420,69 @@ public class RecordAidDomainFacade
         this.mailHandler = mailing;
     }
     //</editor-fold>
+
+    /**
+     * Keurt de gegeven aanvraag goed door de RecordAid-kern. 
+     * Het RecordAid-team aanvaard de moeilijke taak om de aanvrager bij te staan. 
+     * Hierna moeten de lectoren (misschien) nog hun goedkeuring geven. 
+     * Deze methode vervult nog enkele randactiviteiten: Het aanvullen van de geschiedenis 
+     * en het sturen van een mail naar de aanvrager. 
+     * 
+     * @param aanvraag De aanvraag die dient aanvaard te worden. 
+     * @param initiator De gebruiker die de goedkeuring initialiseerd. (Hij/zij die op de knop drukt) 
+     */
+    public void aanvaardAanvraag(AbstractAanvraag aanvraag, Gebruiker initiator) throws DomainException{
+        //Verander de status 
+        aanvraag.setStatus(Status.GOEDGEKEURD_DOOR_KERN);
+        this.edit(aanvraag); 
+        
+        //Voeg deze gebeurtenis toe aan de geschiedenis
+        Dossier dossier = aanvraag.getDossier(); 
+        dossier.addGebeurtenis("Aanvraag is goedgekeurd door de kern.", initiator);
+        this.edit(dossier); 
+        
+        //Stuur mail naar de aanvrager met de boodschap dat de aanvraag goedgekeurd is. 
+        Map<String, String> context = new HashMap<String, String>(); 
+        context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
+        context.put("aanvraag_datum", aanvraag.getTijdsbepaling()); 
+        this.sendMail("goedkeuring_aanvraag", context);
+    }
+    
+    /**
+     * Markeer de gegeven aanvraag als geweigerd. RecordAid zal deze aanvraag niet behandelen. 
+     * Deze methode vervult bovendien de volgende randactiviteiten: Het aanvullen van de geschiedenis en
+     * het versturen van een mail naar de aanvrager met de boodschap dat zijn aanvraag geweigerd is 
+     * en eventueel de reden waarom zijn aanvraag geweigerd is. 
+     * @param aanvraag De betrokken aanvraag. 
+     * @param initiator De gebruiker die de aanvraag weigerde. 
+     * @param reden De reden waarom de aanvraag genegeerd werd. Deze wordt gebruikt die de mail die naar de aanvrager wordt verstuurd.
+     */
+    public void weigerAanvraag(AbstractAanvraag aanvraag, Gebruiker initiator, String reden) throws DomainException{
+        //Weiger aanvraag. 
+        aanvraag.setStatus(Status.AFGEKEURD);
+        this.edit(aanvraag); 
+        
+        //Voeg deze gebeurtenis toe aan de geschiedenis
+        Dossier dossier = aanvraag.getDossier(); 
+        dossier.addGebeurtenis("Aanvraag is afgekeurd door de kern.", initiator);
+        this.edit(dossier); 
+        
+        //Stuur mail naar de aanvrager met de boodschap dat de aanvraag afgekeurd is. 
+        Map<String, String> context = new HashMap<String, String>(); 
+        context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
+        context.put("aanvraag_datum", aanvraag.getTijdsbepaling()); 
+        context.put("weigering_reden", reden);  
+        this.sendMail("weigering_aanvraag", context); 
+    }
+    
+    private void sendMail(String message_key, Map<String, String> context) throws DomainException{
+        try{
+            MailMessage mailMessage = mailDb.getMailMessage(message_key);
+            mailMessage.setContext(context); 
+            mailHandler.sendMessage(mailMessage);
+        }
+        catch(Exception e){
+            throw new DomainException(e.getMessage(), e); 
+        }
+    }
 }

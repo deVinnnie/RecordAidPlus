@@ -17,7 +17,7 @@
         <table id="aanvragen_tabel">
             <thead>
                 <tr>
-                    <th>Lesdatum</th>
+                    <th>Lesdatum/Periode</th>
                     <th>Aantal Lessen</th>
                     <th>Aanvrager</th>
                     <th>Status</th>
@@ -27,7 +27,9 @@
             <tbody>
                 <c:forEach var="aanvraag" items="${aanvragen}" >
                     <tr align=center >
-                        <td><fmt:formatDate value="${aanvraag.lesDatum.time}" pattern="yyyy-MM-dd" /></td>
+                        <td>
+                        <%@include file="fragments/aanvraag_datum.jsp" %>
+                        </td>
                         <td><c:out value="${aanvraag.opnameMomenten.size()}"/></td>
                         <td>
                             <a href="<s:url value="/gebruikers/dossier?gebruiker=${aanvraag.dossier.gebruiker.emailadres}"/>">

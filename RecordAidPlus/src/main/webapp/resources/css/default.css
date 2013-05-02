@@ -4,7 +4,6 @@
 
 html{
     overflow-y: scroll; 
-    overflow-x: hidden; 
 }
 
 body{
@@ -247,21 +246,49 @@ les{
     float: left;
 }
 
-.opgenomen,
-.nietopgenomen{
+.lesstatus
+{
     display: inline-block; 
     width:10px;
     height:10px; 
 }
 
-.opgenomen{
+.lesstatus.opgenomen{
     background-color: #0F0; 
 }
 
-.nietopgenomen{
+.lesstatus.nietopgenomen{
     background-color: #F00; 
 }
 
+.lesstatus.toegewezen{
+    background-color: #f89406; 
+    
+}
+
+#aanvraag_algemeen{
+    width:40%;
+    margin-right: 10%; 
+    float: left; 
+}
+
+#aanvraag_algemeen table{
+    width: 100%; 
+}
+
+#aanvraag_lessen{
+    width: 50%; 
+    float: right; 
+}
+
+#subnav ul{
+    list-style: none; 
+    padding: 0;
+}
+
+/*
+*    Footer
+*/
 .footer{
     border-top: 1px solid #ddd;
     background-color: transparent;

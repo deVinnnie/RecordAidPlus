@@ -4,6 +4,7 @@ import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.*; 
 import be.khleuven.recordaid.util.CalendarUtils;
+import java.text.SimpleDateFormat;
 import java.util.*; 
 import javax.persistence.*; 
 
@@ -77,5 +78,11 @@ public class DagAanvraag extends AbstractAanvraag
     @Override
     public Calendar getDefaultOpnameMomentDag() {
         return (Calendar) this.lesDatum.clone(); 
+    }
+
+    @Override
+    public String getTijdsbepaling() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(this.lesDatum.getTime());
     }
 }

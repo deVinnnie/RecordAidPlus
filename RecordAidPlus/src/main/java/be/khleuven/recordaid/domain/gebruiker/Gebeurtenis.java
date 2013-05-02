@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
-import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.*; 
@@ -10,11 +10,7 @@ import javax.persistence.*;
  * @author Vincent Ceulemans
  */
 @Entity
-public class Gebeurtenis implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
+public class Gebeurtenis extends Identifiable implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar tijdstip = Calendar.getInstance(); 
     
@@ -23,14 +19,6 @@ public class Gebeurtenis implements Serializable {
     
     private String message; 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
     public Gebeurtenis(){}
     
     public Gebeurtenis(String message, Gebruiker betrokkenGebruiker){

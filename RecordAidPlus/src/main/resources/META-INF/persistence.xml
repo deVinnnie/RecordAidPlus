@@ -5,15 +5,9 @@
     <jta-data-source>jdbc/RecordAid</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <!--<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/RecordAid;create=true"/>
-      <property name="javax.persistence.jdbc.password" value="app"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.user" value="app"/>-->
       <!--<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.DerbyPlatform"/>-->
       <!--<property name="eclipselink.logging.level" value="FINE"/>-->
-      <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-      <!--<property name="hibernate.hbm2ddl.import_files" value="/META-INF/import.sql"/>-->
-      <property name="eclipselink.ddl-generation" value="none"/>
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
     </properties>
   </persistence-unit>
 </persistence>

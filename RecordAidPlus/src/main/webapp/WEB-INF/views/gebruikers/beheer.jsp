@@ -4,11 +4,11 @@
 <script type="text/javascript">
 $(document).ready(function()
     {
-        datatable("#gebruikersTabel"); 
+        datatable("#tabel"); 
     });
 </script>
 <h1>Gebruikers Beheren</h1>
-<table id="gebruikersTabel">
+<table id="tabel">
     <thead>
         <tr>
             <th>Voornaam</th>
@@ -27,9 +27,16 @@ $(document).ready(function()
                 <td>${gebruiker.achternaam}</td>
                 <td>${gebruiker.emailadres}</td>
                 <td>${gebruiker.rol}</td>
-                <td>${gebruiker.gevalideerd}</td>
-                <td><a href="<s:url value="/gebruikers/detail"/>?emailadres=${gebruiker.emailadres}">Details</a></td>
-                <td><a href="<s:url value="/gebruikers/dossier"/>?gebruiker=${gebruiker.emailadres}">Dossier</a></td>
+                <td><c:choose>
+                        <c:when test="${gebruiker.gevalideerd}">
+                            Ja
+                        </c:when>
+                        <c:otherwise>
+                            Nee
+                        </c:otherwise>
+                    </c:choose></td>
+                <td><a href="<s:url value="/gebruikers/detail?emailadres=${gebruiker.emailadres}"/>">Details</a></td>
+                <td><a href="<s:url value="/gebruikers/dossier?gebruiker=${gebruiker.emailadres}"/>">Dossier</a></td>
             </tr>
         </c:forEach>
     </tbody>

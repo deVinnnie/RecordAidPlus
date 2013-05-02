@@ -9,6 +9,6 @@
 <%@include file="fragments/lessen_fragment.jsp"%>
 <h2>Bevestigen</h2>
 <form method="POST">
-    <input type="submit" value="Ok"/>
-    <input type="submit" value="Annuleren"/>
+    <input type="submit" name="action" value="Ok"/>
+    <input type="submit" name="action" value="Annuleren"/>
 </form>
