@@ -93,10 +93,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Opname methode</td>
-                        <td>${opnameMoment.methode.beschrijving}</td>
-                    </tr>
-                    <tr>
                         <td>Lector</td>
                         <td>
                             <springforms:input path="opnameMomenten[${counter.index}].lector.emailadres" type="text"/>

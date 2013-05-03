@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.database.interfaces;
 
-import be.khleuven.recordaid.domain.*; 
+import be.khleuven.recordaid.domain.departement.*; 
 import be.khleuven.recordaid.opnames.OpnameMoment;
 import java.util.*; 
 

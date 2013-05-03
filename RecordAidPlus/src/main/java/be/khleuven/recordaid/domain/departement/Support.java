@@ -1,6 +1,8 @@
-package be.khleuven.recordaid.domain;
+package be.khleuven.recordaid.domain.departement;
 
+import be.khleuven.recordaid.domain.Identifiable;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.*; 
 
@@ -11,7 +13,7 @@ import javax.persistence.*;
  * @author Koen
  */
 @Entity
-public class Support extends Identifiable
+public class Support extends Identifiable implements Serializable
 {
     private String report; 
     

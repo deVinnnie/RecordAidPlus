@@ -15,7 +15,11 @@ public class Opname extends Identifiable implements Serializable {
     
     @Enumerated
     private OpnameStatus status; 
+    
+    @OneToOne
+    private OpnameMethode methode; 
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Locatie getLocatie() {
         return locatie;
     }
@@ -31,4 +35,13 @@ public class Opname extends Identifiable implements Serializable {
     public void setStatus(OpnameStatus status) {
         this.status = status;
     }
+    
+    public OpnameMethode getMethode() {
+        return methode;
+    }
+
+    public void setMethode(OpnameMethode methode) {
+        this.methode = methode;
+    }
+    //</editor-fold>
 }   

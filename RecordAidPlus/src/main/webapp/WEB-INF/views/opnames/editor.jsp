@@ -14,24 +14,24 @@ $(document).ready(function(){
     <table>    
         <tr>
             <td><label for="OOD">OOD</label></td>
-            <td><springforms:input path="OOD" autofocus="true" type="text" name="OOD" id="OOD"/></td>
+            <td><springforms:input path="OOD" autofocus="true" type="text" id="OOD"/></td>
             <td id="vak_error" class="error">
                 <springforms:errors path="OOD" cssClass="error"/>
             </td>
         </tr>
         <tr>
             <td><label for="datum">Datum</label></td>
-            <td><springforms:input path="tijdstip.beginTime" name="datum" id="datum"/></td>
+            <td><springforms:input path="tijdstip.beginTime" id="datum"/></td>
             <td id="datum_error" class="error"></td>
         </tr>
         <tr>
             <td><label for="zichtbaar">Zichtbaar</label></td>
-            <td><springforms:checkbox path="zichtbaar" id="zichtbaar" name="zichtbaar"/></td>
+            <td><springforms:checkbox path="zichtbaar" id="zichtbaar"/></td>
         </tr>
         <tr>
             <td><label for="lector">Lector (E-mailadres)</label></td> 
             <td>
-                <springforms:input path="lector.emailadres" type="text" name="lector" id="lector" list="lectoren"/>
+                <springforms:input path="lector" type="text" name="lector" id="lector" list="lectoren"/>
                 <datalist id="lectoren">
                     <c:forEach items="${alleLectoren}" var="lector">
                         <option value="${lector.emailadres}"/>

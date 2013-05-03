@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.util.propertyeditors;
 
-import be.khleuven.recordaid.domain.Lector;
+import be.khleuven.recordaid.domain.departement.Lector;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import java.beans.PropertyEditorSupport;
 

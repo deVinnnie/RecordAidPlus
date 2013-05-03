@@ -39,7 +39,7 @@ public class OpnameMethodePropertyEditor extends PropertyEditorSupport {
     public String getAsText(){
         if(this.getValue()!=null){
             OpnameMethode opnameMethode = (OpnameMethode) this.getValue(); 
-            return opnameMethode.getId().toString();
+            return opnameMethode.getId()+"";
         }
         else{
             return ""; 

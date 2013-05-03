@@ -2,6 +2,7 @@ package be.khleuven.recordaid.database.interfaces;
 
 import be.khleuven.recordaid.domain.aanvragen.*; 
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.opnames.*; 
 import java.util.Collection;
 
 
@@ -29,4 +30,6 @@ public interface AanvraagDatabaseInterface{
      * @return Een collection<Aanvraag> van aanvragen.
      */
     public Collection<DagAanvraag> getAanvragenToegewezenLid(Gebruiker toegewezenLid);
+    
+    public Collection<Opname> getOpnames(OpnameMethode opnameMethode); 
 }

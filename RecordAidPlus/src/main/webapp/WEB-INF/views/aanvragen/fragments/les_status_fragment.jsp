@@ -1,6 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:choose>
+    <c:when test="${aanvraag.isAfgekeurd()}">
+        <c:set var="klasse" value="afgekeurd"/>
+        <c:set var="titel" value="Afgekeurd"/>
+    </c:when>
     <c:when test="${not empty opnameMoment.verantwoordelijke}">
         <c:set var="klasse" value="toegewezen"/>
         <c:set var="titel" value="Toegewezen"/>

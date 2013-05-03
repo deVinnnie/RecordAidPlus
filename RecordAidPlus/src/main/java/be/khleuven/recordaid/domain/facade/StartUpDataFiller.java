@@ -1,5 +1,8 @@
 package be.khleuven.recordaid.domain.facade;
 
+import be.khleuven.recordaid.domain.departement.Lector;
+import be.khleuven.recordaid.domain.departement.Departement;
+import be.khleuven.recordaid.domain.departement.Lokaal;
 import be.khleuven.recordaid.domain.gebruiker.*; 
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*;
@@ -77,8 +80,8 @@ public class StartUpDataFiller {
 
         try {
             //Opnamemethodes
-            OpnameMethode opnameMethode = new OpnameMethode("Scherm");
-            OpnameMethode opnameMethode2 = new OpnameMethode("Scherm/Bord en Lector");
+            OpnameMethode opnameMethode = new OpnameMethode("Scherm", "Scherm");
+            OpnameMethode opnameMethode2 = new OpnameMethode("Scherm/Bord en Lector", "Scherm/Bord en Lector");
             facade.create(opnameMethode);
             facade.create(opnameMethode2);
         } catch (Exception e) {
@@ -141,9 +144,8 @@ public class StartUpDataFiller {
 
             TimeSpan timespan = new TimeSpan(start, end);
             Departement departement = facade.getDepartement("G&T"); 
-            OpnameMethode methode = facade.getOpnameMethodes().get(0); 
             Lector lector = facade.getLector("lector@khleuven.be"); 
-            aanvraag.addOpnameMoment(new OpnameMoment("Wiskunde", new Lokaal("304",departement), "3Tx2", timespan,lector,methode));
+            aanvraag.addOpnameMoment(new OpnameMoment("Wiskunde", new Lokaal("304",departement), "3Tx2", timespan,lector));
             aanvraag = facade.create(aanvraag); 
             dossier.addAanvraag(aanvraag);
             facade.edit(dossier); 

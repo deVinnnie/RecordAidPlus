@@ -11,6 +11,7 @@ public enum Rollen
 {
     STUDENT,
     LEERKRACHT,
+    BEGELEIDER, 
     OPLEIDINGSHOOFD,
     BUDDY,
     KERNLID,

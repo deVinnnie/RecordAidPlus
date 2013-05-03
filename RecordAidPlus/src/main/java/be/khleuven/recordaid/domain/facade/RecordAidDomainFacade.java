@@ -1,5 +1,8 @@
 package be.khleuven.recordaid.domain.facade;
 
+import be.khleuven.recordaid.domain.departement.Support;
+import be.khleuven.recordaid.domain.departement.Lector;
+import be.khleuven.recordaid.domain.departement.Departement;
 import be.khleuven.recordaid.opnames.*; 
 import be.khleuven.recordaid.domain.items.*;
 import be.khleuven.recordaid.domain.gebruiker.*;
@@ -20,6 +23,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
  */
 public class RecordAidDomainFacade
 {
+    //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  
     private String url = "http://recordaid.khleuven.be/";
     
     private CommonDatabaseInterface commonDb; 
@@ -68,7 +72,8 @@ public class RecordAidDomainFacade
         catch(Exception e){
             //Move along, nothing to see here. 
         }
-    }    
+    }   
+    //</editor-fold>  
     
     /**
      * Put some test data in the database.
@@ -119,18 +124,16 @@ public class RecordAidDomainFacade
         return gebruikerDB.getGebruikerByValidatiecode(validatiecode);
     }
 
-    public void addGebruiker(Gebruiker gebruiker) throws DatabaseException
+    public void addGebruiker(Gebruiker gebruiker) throws DatabaseException, DomainException
     {
         //Add user to database. 
         commonDb.create(gebruiker); 
         
         //Send mail with Validation-code to the new user. 
-        MailMessage mailMessage = mailDb.getMailMessage("validatie_gebruiker"); 
         Map<String, String> context = new HashMap<String, String>(); 
         context.put("gebruiker_voornaam", gebruiker.getVoornaam());
         context.put("validatie_code", gebruiker.getValidatieCode()); 
-        mailMessage.setContext(context); 
-        mailHandler.sendMessage(mailMessage);
+        this.sendMail("validatie_gebruiker", context);
     }
 
     public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException
@@ -281,7 +284,12 @@ public class RecordAidDomainFacade
     }
     
     public void removeLector(Lector lector){
-        commonDb.remove(lector); 
+        List<OpnameMoment> lessenVanLector = this.getLessenVanLector(lector); 
+        for(OpnameMoment opnameMoment : lessenVanLector){
+            opnameMoment.setLector(null);
+            this.edit(opnameMoment); 
+        }
+        this.remove(lector); 
     }
     
     public Collection<Lector> getLectoren(){
@@ -433,7 +441,7 @@ public class RecordAidDomainFacade
      */
     public void aanvaardAanvraag(AbstractAanvraag aanvraag, Gebruiker initiator) throws DomainException{
         //Verander de status 
-        aanvraag.setStatus(Status.GOEDGEKEURD_DOOR_KERN);
+        aanvraag.setStatus(Status.GOEDGEKEURD);
         this.edit(aanvraag); 
         
         //Voeg deze gebeurtenis toe aan de geschiedenis
@@ -484,5 +492,20 @@ public class RecordAidDomainFacade
         catch(Exception e){
             throw new DomainException(e.getMessage(), e); 
         }
+    }
+    
+    public void sendMailNaarGeintreseerden(MailMessage mailMessage){
+        
+    }
+
+    public void removeOpnameMethode(OpnameMethode opnameMethode) {
+        Collection<Opname> opnames = this.aanvraagDB.getOpnames(opnameMethode); 
+        
+        for (Opname opname : opnames) {
+            opname.setMethode(null);
+            this.edit(opname); 
+        }
+        
+        this.remove(opnameMethode);
     }
 }

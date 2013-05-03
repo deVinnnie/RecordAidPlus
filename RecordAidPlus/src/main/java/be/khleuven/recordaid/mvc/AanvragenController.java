@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.mvc;
 
+import be.khleuven.recordaid.domain.departement.*; 
 import be.khleuven.recordaid.util.propertyeditors.*;
 import be.khleuven.recordaid.opnames.*;
 import be.khleuven.recordaid.domain.gebruiker.*;
@@ -75,7 +76,6 @@ public class AanvragenController {
 
         model.addAttribute("nieuweOpname", opnameMoment);
         model.addAttribute("alleLectoren", domainFacade.getLectoren());
-        model.addAttribute("opnameMethodes", domainFacade.getOpnameMethodes());
         return "/aanvragen/nieuwe_opname";
     }
 
@@ -139,10 +139,15 @@ public class AanvragenController {
 
     @RequestMapping(value = "/bevestig_aanvraag", method = RequestMethod.POST)
     public String bevestigAanvraag(@ModelAttribute("aanvraag") AbstractAanvraag aanvraag,
-            ModelMap model) {
+            ModelMap model, @RequestParam("action") String action) {
         try {
-            aanvraag = domainFacade.addAanvraag(aanvraag);
-            return "redirect:/aanvragen/detail?succes&id=" + aanvraag.getId();
+            if(action.equals("Ok")){
+                aanvraag = domainFacade.addAanvraag(aanvraag);
+                return "redirect:/aanvragen/detail?succes&id=" + aanvraag.getId();
+            }
+            else{
+                return "redirect:/home";  
+            }
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -156,6 +161,7 @@ public class AanvragenController {
             @RequestParam("aanvraag") long aanvraag,
             @RequestParam("opnamemoment") long opnamemoment) {
         model.addAttribute("nieuweOpname", new Opname());
+        model.addAttribute("opnameMethodes", domainFacade.getOpnameMethodes()); 
         return "/aanvragen/koppel_opname";
     }
 
@@ -300,6 +306,7 @@ public class AanvragenController {
     }
 
     //</editor-fold>
+    
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.registerCustomEditor(Calendar.class, new CalendarPropertyEditor());

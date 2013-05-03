@@ -262,8 +262,11 @@ les{
 }
 
 .lesstatus.toegewezen{
-    background-color: #f89406; 
-    
+    background-color: #f89406;    
+}
+
+.lesstatus.afgekeurd{
+    background-color: #bbb; 
 }
 
 #aanvraag_algemeen{

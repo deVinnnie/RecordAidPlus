@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.domain;
+package be.khleuven.recordaid.domain.departement;
 
 import java.io.Serializable;
 import java.util.*;
@@ -25,6 +25,7 @@ public class Departement implements Serializable {
         this.actief = actief; 
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public String getNaam() {
         return naam;
     }
@@ -47,5 +48,28 @@ public class Departement implements Serializable {
 
     public void setLokalen(List<Lokaal> lokalen) {
         this.lokalen = lokalen;
+    }
+
+    //</editor-fold>
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.naam != null ? this.naam.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Departement other = (Departement) obj;
+        if ((this.naam == null) ? (other.naam != null) : !this.naam.equals(other.naam)) {
+            return false;
+        }
+        return true;
     }
 }

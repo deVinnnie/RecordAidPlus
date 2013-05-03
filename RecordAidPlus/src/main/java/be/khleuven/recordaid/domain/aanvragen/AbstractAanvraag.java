@@ -2,7 +2,7 @@ package be.khleuven.recordaid.domain.aanvragen;
 
 import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
-import be.khleuven.recordaid.domain.Departement;
+import be.khleuven.recordaid.domain.departement.Departement;
 import be.khleuven.recordaid.domain.DomainException;
 import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
@@ -139,4 +139,13 @@ public abstract class AbstractAanvraag extends Identifiable implements Serializa
      * Return a textual representation of the span of this request. 
      */
     public abstract String getTijdsbepaling(); 
+    
+    public boolean isAfgekeurd(){
+        if(this.status.equals(Status.AFGEKEURD)){
+            return true; 
+        }
+        else{
+            return false; 
+        }
+    }
 }

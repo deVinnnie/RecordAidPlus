@@ -55,14 +55,14 @@
             </springforms:select>
             </td>
         </tr>
-        <tr>
+        <%--<tr>
             <td><label for="methode">Opname methode</label> </td>
             <td>
             <springforms:select path="methode" name="methode" id="methode">
                 <springforms:options items="${opnameMethodes}" itemValue="id" itemLabel="beschrijving"/>
             </springforms:select>
             </td>
-        </tr>
+        </tr>--%>
         <tr>
             <td><label for="lector">Email lector</label></td> 
             <td>

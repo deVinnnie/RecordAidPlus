@@ -65,7 +65,7 @@ Met vriendelijke groeten,<br><br>Het RecordAid Team]]>
 Student <b>$aanvraag_aanvrager_voornaam$ $aanvraag_aanvrager_achternaam</b> 
 heeft een aanvraag ingediend om de les $aanvraag.getOptenemenVak()$ te laten opnemen door RecordAid.<br>
 De reden die de student opgegeven heeft is volgende: $aanvraag_reden$ <br>
-Zou u ons kunnen laten weten of we deze les mogen opnemen?
+Zou u ons via deze <a href="$url$">link</a> kunnen laten weten of we deze les mogen opnemen?
 <br><br>Met vriendelijke groeten,<br>
 Het RecordAid Team]]>  
         </content>

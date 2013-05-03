@@ -108,6 +108,12 @@
         <put-attribute name="content" value="/WEB-INF/views/faq/faq.jsp" />
     </definition>
     
+    <!--Mailing-->
+    <definition name="/mailing/maillijst" extends="base.jquery">
+        <put-attribute name="title" value="mailing.maillijst.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/mailing/maillijst.jsp" />
+    </definition>
+    
     <!--Common-->
     <definition name="/error" extends="template">
         <put-attribute name="title" value="error.title"/>

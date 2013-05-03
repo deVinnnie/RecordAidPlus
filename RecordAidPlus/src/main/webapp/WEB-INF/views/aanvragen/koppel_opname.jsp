@@ -13,6 +13,14 @@
             <td><springforms:input type="text" path="locatie.wegwijzer"/></td>
         </tr>
         <tr>
+            <td>Op welke manier werd de opname gedaan?</td>
+            <td>
+                <springforms:select path="methode">
+                    <springforms:options itemValue="id" itemLabel="naam" items="${opnameMethodes}"/>
+                </springforms:select>
+            </td>
+        </tr>
+        <tr>
             <td>Status</td>
             <td>
                 <springforms:select path="status">
@@ -20,10 +28,6 @@
                 </springforms:select>
             </td>
         </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Opslaan"</td>
-        </tr>
-        
     </table>
+    <input type="submit" value="Opslaan"/>
 </springforms:form>

@@ -10,9 +10,7 @@ package be.khleuven.recordaid.domain.aanvragen;
 public enum Status
 {
     NIEUW,
-    GOEDGEKEURD_DOOR_KERN,
-    GOEDGEKEURD_VOOR_OPNAME,
-    OPGENOMEN,
-    BESCHIKBAAR,
+    GOEDGEKEURD, 
+    AFGEHANDELD,
     AFGEKEURD;
 }

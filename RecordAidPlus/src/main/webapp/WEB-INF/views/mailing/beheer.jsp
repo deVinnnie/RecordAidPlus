@@ -1,8 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <h1>Mail</h1>
 <h2>Berichten</h2>
+<a href="<s:url value="/mailing/maillijst"/>">Nieuw bericht versturen naar maillijst</a>
 <form method="GET">
     <table>
         <tr>

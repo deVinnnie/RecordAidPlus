@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
+import be.khleuven.recordaid.util.ValidatieCodeGenerator;
 import java.io.Serializable;
 import java.util.*; 
 import javax.persistence.*; 
@@ -37,6 +38,8 @@ public class Gebruiker implements Serializable,UserDetails
     private String validatieCode;
     private boolean gevalideerd = false;
 
+    private boolean geinteresseerd = false; 
+    
     /**
      * Constructor met parameters, dit is de constructor die gebruikt dient te
      * worden om een nieuwe Gebruiker aan te maken.
@@ -237,7 +240,16 @@ public class Gebruiker implements Serializable,UserDetails
     public String getVolledigeNaam(){
         return this.voornaam + " " + this.achternaam; 
     }
+
     // </editor-fold>
+    
+    public boolean isGeinteresseerd() {
+        return geinteresseerd;
+    }
+
+    public void setGeinteresseerd(boolean geinteresseerd) {
+        this.geinteresseerd = geinteresseerd;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**

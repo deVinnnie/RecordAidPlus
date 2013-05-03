@@ -1,5 +1,6 @@
-package be.khleuven.recordaid.domain;
+package be.khleuven.recordaid.domain.departement;
 
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

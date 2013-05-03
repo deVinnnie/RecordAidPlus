@@ -1,10 +1,11 @@
 package be.khleuven.recordaid.opnames;
 
+import be.khleuven.recordaid.domain.departement.*; 
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.*; 
-import be.khleuven.recordaid.util.TimeSpan;
+import be.khleuven.recordaid.util.*; 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.*; 
 import javax.persistence.*; 
 
 /**
@@ -12,11 +13,7 @@ import javax.persistence.*;
  * @author Vincent Ceulemans
  */
 @Entity
-public class OpnameMoment implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
+public class OpnameMoment extends Identifiable implements Serializable {    
     private String OOD; 
     
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -27,8 +24,8 @@ public class OpnameMoment implements Serializable {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private TimeSpan tijdstip; 
     
-    @OneToOne
-    private OpnameMethode methode; 
+    @OneToMany
+    private List<OpnameMethode> mogelijkeOpnameMethodes = new ArrayList<OpnameMethode>(); 
     
     @OneToOne
     private Gebruiker verantwoordelijke; 
@@ -39,6 +36,8 @@ public class OpnameMoment implements Serializable {
     @OneToOne
     private Opname opname; 
     
+    private String toegangsCode = ValidatieCodeGenerator.generateValidatieCode(); 
+    
     /**
      * Indicates wether this Opname is visible to other users. 
      */
@@ -46,12 +45,11 @@ public class OpnameMoment implements Serializable {
 
     public OpnameMoment(){}
 
-    public OpnameMoment(String OOD, Lokaal lokaal, String reeks, TimeSpan tijdstip, Lector lector, OpnameMethode methode) {
+    public OpnameMoment(String OOD, Lokaal lokaal, String reeks, TimeSpan tijdstip, Lector lector) {
         this.OOD = OOD;
         this.lokaal = lokaal;
         this.reeks = reeks;
         this.tijdstip = tijdstip;
-        this.methode = methode;
         this.lector = lector; 
     }
     
@@ -88,14 +86,6 @@ public class OpnameMoment implements Serializable {
         this.tijdstip = tijdstip;
     }
 
-    public OpnameMethode getMethode() {
-        return methode;
-    }
-
-    public void setMethode(OpnameMethode methode) {
-        this.methode = methode;
-    }
-
     public Gebruiker getVerantwoordelijke() {
         return verantwoordelijke;
     }
@@ -110,14 +100,6 @@ public class OpnameMoment implements Serializable {
 
     public void setLector(Lector lector) {
         this.lector = lector;
-    }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
     
     /**
@@ -153,5 +135,59 @@ public class OpnameMoment implements Serializable {
     public void setOpname(Opname opname) {
         this.opname = opname;
     }
+    
+    public String getToegangsCode() {
+        return toegangsCode;
+    }
+
+    public void setToegangsCode(String toegangsCode) {
+        this.toegangsCode = toegangsCode;
+    }
+    
+    public List<OpnameMethode> getMogelijkeOpnameMethodes() {
+        return mogelijkeOpnameMethodes;
+    }
+
+    public void setMogelijkeOpnameMethodes(List<OpnameMethode> mogelijkeOpnameMethodes) {
+        this.mogelijkeOpnameMethodes = mogelijkeOpnameMethodes;
+    }
+
     //</editor-fold>
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + (this.OOD != null ? this.OOD.hashCode() : 0);
+        hash = 17 * hash + (this.lokaal != null ? this.lokaal.hashCode() : 0);
+        hash = 17 * hash + (this.reeks != null ? this.reeks.hashCode() : 0);
+        hash = 17 * hash + (this.tijdstip != null ? this.tijdstip.hashCode() : 0);
+        hash = 17 * hash + (this.lector != null ? this.lector.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final OpnameMoment other = (OpnameMoment) obj;
+        if ((this.OOD == null) ? (other.OOD != null) : !this.OOD.equals(other.OOD)) {
+            return false;
+        }
+        if (this.lokaal != other.lokaal && (this.lokaal == null || !this.lokaal.equals(other.lokaal))) {
+            return false;
+        }
+        if ((this.reeks == null) ? (other.reeks != null) : !this.reeks.equals(other.reeks)) {
+            return false;
+        }
+        if (this.tijdstip != other.tijdstip && (this.tijdstip == null || !this.tijdstip.equals(other.tijdstip))) {
+            return false;
+        }
+        if (this.lector != other.lector && (this.lector == null || !this.lector.equals(other.lector))) {
+            return false;
+        }
+        return true;
+    }
 }

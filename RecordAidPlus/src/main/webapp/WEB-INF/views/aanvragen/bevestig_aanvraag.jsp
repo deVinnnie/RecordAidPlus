@@ -3,12 +3,22 @@
 <h1>Bevestig Aanvraag</h1>
 <p>Ziet dit er goed uit?</p>
 <%--Toon details van deze aanvraag.--%>
-<%@include file="fragments/aanvraag_detail_fragment.jsp"%>
+<div id="aanvraag_algemeen">
+    <%@include file="fragments/aanvraag_detail_fragment.jsp"%>
+</div>
 <%--Toon de lessen (OpnameMomenten) verbonden met deze aanvraag.--%>
-<h2>Lessen</h2>
-<%@include file="fragments/lessen_fragment.jsp"%>
+
+
+
+<div id="aanvraag_lessen">
+    <h2>Lessen</h2>
+    <%@include file="fragments/lessen_fragment.jsp"%>
+</div>
+<div class="clearfix"></div>
+
 <h2>Bevestigen</h2>
 <form method="POST">
     <input type="submit" name="action" value="Ok"/>
     <input type="submit" name="action" value="Annuleren"/>
 </form>
+

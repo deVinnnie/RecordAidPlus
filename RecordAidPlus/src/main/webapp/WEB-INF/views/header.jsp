@@ -24,9 +24,6 @@
         <security:authorize access="isAuthenticated() and not hasRole('STUDENT')">
             <li><a href="<s:url value="/items/reserveer"/>">Reserveren</a></li>
         </security:authorize>
-        <security:authorize access="isAuthenticated() and not hasRole('STUDENT') and not hasRole('LEERKRACHT')">
-            <li><a href="<s:url value="/forum"/>">Berichten</a></li>
-        </security:authorize>
         <security:authorize access="hasRole('KERNLID') or hasRole('ADMIN')">
             <li><a href="<s:url value="/beheer"/>">Beheer</a></li>
         </security:authorize>

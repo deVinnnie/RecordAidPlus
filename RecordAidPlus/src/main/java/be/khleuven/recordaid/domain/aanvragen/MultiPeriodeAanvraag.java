@@ -1,5 +1,7 @@
 package be.khleuven.recordaid.domain.aanvragen;
 
+import be.khleuven.recordaid.domain.departement.Lector;
+import be.khleuven.recordaid.domain.departement.Departement;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.gebruiker.*; 
 import be.khleuven.recordaid.util.TimeSpan;

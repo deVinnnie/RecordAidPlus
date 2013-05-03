@@ -1,5 +1,7 @@
 package be.khleuven.recordaid.database.jpa;
 
+import be.khleuven.recordaid.domain.departement.Lector;
+import be.khleuven.recordaid.domain.departement.Departement;
 import be.khleuven.recordaid.database.interfaces.DepartementDatabaseInterface;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.opnames.OpnameMoment;

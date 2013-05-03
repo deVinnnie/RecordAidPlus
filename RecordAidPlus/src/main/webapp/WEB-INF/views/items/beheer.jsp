@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
- <!--<script type="text/javascript" src="JavaScript/items.js"></script>-->
 <h1>Items beheren</h1>
 <h2>Huidige items</h2>
 <c:choose>
@@ -32,9 +31,7 @@
 </c:choose>
 
 <h2>Voeg een nieuw item toe</h2>
-<%--<c:if test="${error!=null}">--%>
-    <p id="error" class="error">${error}</p>
-<%--</c:if>--%>
+<p id="error" class="error">${error}</p>
 
 <springforms:form id="formAddItem" method="POST" modelAttribute="newItem">
     <table>
@@ -50,51 +47,51 @@
         </tr>
     </table>
 </springforms:form>
-    
-    <s:url value="/items/reservaties" var="feed"/>
-    <script type="text/javascript">
-        $("document").ready(function(){
-            var calendar = $("#reservaties").fullCalendar({
-        header:{
-            left:   'title',
-            center: 'month,agendaWeek,agendaDay',
-            right:  'today prev,next'
-        }, 
-        defaultView: "agendaWeek",
-        monthNames: maanden,
-        dayNames: dagen,
-        dayNamesShort: dagenShort,
-        timeFormat: {
-            // for agendaWeek and agendaDay
-            agenda: 'HH:mm{ - HH:mm}', // 5:00 - 6:30
 
-            // for all other views
-            '': 'HH:mm:tt'            // 7p
-        },
-        titleFormat: {
-            month: 'MMMM yyyy', // September 2009
-            week: "d[ MMMM yyyy]{ '-' d MMMM yyyy}", // Sep 7 - 13 2009
-            day: 'dddd d MMMM yyyy'                  // Tuesday, Sep 8, 2009
-        },
-        buttonText: {
-            prev: '&lsaquo;', // <
-            next: '&rsaquo;', // >
-            prevYear: '&laquo;', // <<
-            nextYear: '&raquo;', // >>
-            today: 'Vandaag',
-            month: 'Maand',
-            week: 'Week',
-            day: 'Dag'},
-        allDaySlot: false,
-        snapMinutes: 10,
-        minTime: 7,
-        maxTime: 23,
-        firstHour: 7,
-        axisFormat: 'HH:mm',
-        events: "${feed}"
-    });
+<s:url value="/items/reservaties" var="feed"/>
+<script type="text/javascript">
+    $("document").ready(function() {
+        var calendar = $("#reservaties").fullCalendar({
+            header: {
+                left: 'title',
+                center: 'month,agendaWeek,agendaDay',
+                right: 'today prev,next'
+            },
+            defaultView: "agendaWeek",
+            monthNames: maanden,
+            dayNames: dagen,
+            dayNamesShort: dagenShort,
+            timeFormat: {
+                // for agendaWeek and agendaDay
+                agenda: 'HH:mm{ - HH:mm}', // 5:00 - 6:30
+
+                // for all other views
+                '': 'HH:mm:tt'            // 7p
+            },
+            titleFormat: {
+                month: 'MMMM yyyy', // September 2009
+                week: "d[ MMMM yyyy]{ '-' d MMMM yyyy}", // Sep 7 - 13 2009
+                day: 'dddd d MMMM yyyy'                  // Tuesday, Sep 8, 2009
+            },
+            buttonText: {
+                prev: '&lsaquo;', // <
+                next: '&rsaquo;', // >
+                prevYear: '&laquo;', // <<
+                nextYear: '&raquo;', // >>
+                today: 'Vandaag',
+                month: 'Maand',
+                week: 'Week',
+                day: 'Dag'},
+            allDaySlot: false,
+            snapMinutes: 10,
+            minTime: 7,
+            maxTime: 23,
+            firstHour: 7,
+            axisFormat: 'HH:mm',
+            events: "${feed}"
         });
-    </script>
-    <h2>Reservaties</h2>
-    <div id="reservaties">
-    </div>
+    });
+</script>
+<h2>Reservaties</h2>
+<div id="reservaties">
+</div>

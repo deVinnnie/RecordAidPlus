@@ -22,6 +22,7 @@ public class MailingController {
     public MailingController(){
     }
     
+    //<editor-fold defaultstate="collapsed" desc="Beheer">
     @RequestMapping("/beheer")
     public String showMailingBeheer(ModelMap model){
         model.addAttribute("messages", domainFacade.findMailMessages()); 
@@ -41,4 +42,22 @@ public class MailingController {
         domainFacade.edit(selectedMessage); 
         return "redirect:/mailing/beheer?selected_message="+selectedMessage.getId();
     }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Maillijst">
+    @RequestMapping(value="/maillijst", method= RequestMethod.GET)
+    public String showMaillistForm(ModelMap model){
+        model.addAttribute("subjectPrefix", domainFacade.getSubjectPrefix()); 
+        return "/mailing/maillijst"; 
+    }
+    
+    @RequestMapping(value="/maillijst",params={"onderwerp", "bericht"}, method= RequestMethod.POST)
+    public String sendMaillijstMessage(@RequestParam("onderwerp") String onderwerp, 
+            @RequestParam("bericht") String bericht){
+        MailMessage mailMessage = new MailMessage(onderwerp, bericht, ""); 
+        mailMessage.setSubjectPrefix(domainFacade.getSubjectPrefix());
+        domainFacade.sendMailNaarGeintreseerden(mailMessage);
+        return "redirect:/mailing/beheer"; 
+    }
+    //</editor-fold>
 }

@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.mvc;
 
-import be.khleuven.recordaid.domain.Support;
+import be.khleuven.recordaid.domain.departement.Support;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

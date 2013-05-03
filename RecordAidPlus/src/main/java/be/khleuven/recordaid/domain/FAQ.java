@@ -27,9 +27,7 @@ public class FAQ extends Identifiable implements Serializable
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
      */
-    public FAQ()
-    {
-    }
+    public FAQ(){}
 
 
     /**
@@ -216,5 +214,3 @@ public class FAQ extends Identifiable implements Serializable
         return "vraag=" + vraag + "\nantwoord=" + antwoord;
     }
 }
-
-

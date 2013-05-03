@@ -1,18 +1,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <c:choose>
     <c:when test="${empty aanvraag.opnameMomenten}">
         <p>Er zijn nog geen lessen toegevoegd.</p>
     </c:when>
     <c:otherwise>
         <c:forEach var="opnameMoment" items="${aanvraag.opnameMomenten}">
-            
             <h3 class="les">
                 <fmt:formatDate value="${opnameMoment.beginTijdstip.time}" pattern="hh:mm" /> tot 
                 <fmt:formatDate value="${opnameMoment.eindTijdstip.time}" pattern="hh:mm" />  
                 <%@include file="les_status_fragment.jsp" %>
             </h3>
+            <a href="<s:url value="/opnames/opname_goedkeuren?toegangscode=${opnameMoment.toegangsCode}&opname=${opnameMoment.id}&aanvraag=${aanvraag.id}"/>">
+                Link voor Lector
+            </a>
             <table>
                 <tr>
                     <td>OOD</td>
@@ -36,10 +39,6 @@
                             <td>Niemand Toegewezen</td>
                         </c:otherwise>
                     </c:choose>
-                </tr>
-                <tr>
-                    <td>Opname methode</td>
-                    <td>${opnameMoment.methode.beschrijving}</td>
                 </tr>
                 <tr>
                     <td>Lector</td>

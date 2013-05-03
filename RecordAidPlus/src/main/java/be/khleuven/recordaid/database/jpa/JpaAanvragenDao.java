@@ -4,7 +4,9 @@ import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.aanvragen.Status;
 import be.khleuven.recordaid.domain.aanvragen.DagAanvraag;
 import be.khleuven.recordaid.database.interfaces.AanvraagDatabaseInterface;
-import be.khleuven.recordaid.domain.*; 
+import be.khleuven.recordaid.opnames.Opname;
+import be.khleuven.recordaid.opnames.OpnameMethode;
+import be.khleuven.recordaid.opnames.OpnameMoment;
 import java.util.*; 
 import javax.persistence.*; 
 import org.springframework.stereotype.Repository;
@@ -41,4 +43,12 @@ public class JpaAanvragenDao extends JpaAbstractDao implements AanvraagDatabaseI
         Collection<DagAanvraag> aanvragen = query.getResultList();
         return (List<DagAanvraag>) aanvragen;
     }  
+    
+    @Override
+    public Collection<Opname> getOpnames(OpnameMethode opnameMethode){
+        Query query = getEntityManager().createQuery("SELECT x FROM Opname x WHERE x.methode = :methode");
+        query.setParameter("methode", opnameMethode);
+        Collection<Opname> opnames = query.getResultList();
+        return opnames;    
+    }
 }

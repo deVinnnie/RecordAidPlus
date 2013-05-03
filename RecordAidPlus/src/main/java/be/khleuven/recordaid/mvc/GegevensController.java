@@ -1,6 +1,6 @@
 package be.khleuven.recordaid.mvc;
 
-import be.khleuven.recordaid.domain.Lector;
+import be.khleuven.recordaid.domain.departement.Lector;
 import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import java.util.List;
@@ -28,14 +28,7 @@ public class GegevensController {
     @RequestMapping(value="/lectoren/verwijder", params="lector")
     public String verwijderLector(@RequestParam("lector") String lector){
         Lector gevondenLector = domainFacade.getLector(lector); 
-        if(gevondenLector != null){
-            List<OpnameMoment> lessenVanLector = domainFacade.getLessenVanLector(gevondenLector); 
-            for(OpnameMoment opnameMoment : lessenVanLector){
-                opnameMoment.setLector(null);
-                domainFacade.edit(opnameMoment); 
-            }
-            domainFacade.removeLector(gevondenLector);
-        }
+        domainFacade.removeLector(gevondenLector);
         return "redirect:/gegevens/beheer";
     }
     

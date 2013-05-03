@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.domain.gebruiker;
+package be.khleuven.recordaid.util;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

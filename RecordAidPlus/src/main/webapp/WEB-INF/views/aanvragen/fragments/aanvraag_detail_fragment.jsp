@@ -22,7 +22,7 @@
             Nee
         </c:otherwise>
     </c:choose>
-    </td>
+        </td>
     </tr>
 </c:if>
 <c:if test="${type eq 'MultiPeriodeAanvraag'}">
@@ -33,6 +33,7 @@
     </td>
     </tr>
 </c:if>
+    
 <tr>
     <td>Status</td>
     <td>${aanvraag.status}</td>

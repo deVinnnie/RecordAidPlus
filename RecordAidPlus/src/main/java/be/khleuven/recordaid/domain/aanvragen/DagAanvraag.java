@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.aanvragen;
 
+import be.khleuven.recordaid.domain.departement.Departement;
 import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.*; 
