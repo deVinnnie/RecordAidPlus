@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <article>
     <h1>Voorstelling</h1>
-    <div>
+    <div>    
         <p>RecordAid bestaat uit drie grote groepen. De Buddy&#8217;s, de vertegenwoordigers en de kern.</p>
         <ul>
             <li>De <strong>Buddy&#8217;s</strong> zijn de mensen die leerlingen/lectoren helpen bij het opnemen van een presentatie/les. Ook wanneer een medestudent niet aanwezig kan zijn in de les, kunnen ze aan de lector vragen om de les op te nemen. (Volledige beschrijving takenpakket vindt u <a href="http://recordaid.khleuven.be/buddies" title="Buddies">hier</a>.)</li>

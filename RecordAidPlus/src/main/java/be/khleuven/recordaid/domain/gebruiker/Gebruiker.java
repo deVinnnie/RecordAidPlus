@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * gebruiker, en aan de hand van het type gebruiker wordt ook bepaald wat deze
  * gebruiker wel en niet kan.
  *
- * @author Hannes
+ * @author Hannes, Vincent
  */
 @Entity
 public class Gebruiker implements Serializable, UserDetails {
@@ -58,6 +58,22 @@ public class Gebruiker implements Serializable, UserDetails {
 
     public Gebruiker() {
         this.rollen.add(Rollen.STUDENT);
+    }
+    
+    public Gebruiker(String emailadres){
+        this.setEmailadres(emailadres);
+        String[] split = emailadres.split("@"); //Results in voornaam.achternaam|khleuven.be
+        String[] split2 = split[0].split("\\."); //Results in voornaam | achternaam
+        this.setVoornaam(split2[0]); 
+        String achternaam=""; 
+        for(int i =1; i<split2.length; i++){
+            if(i > 1){
+                //Do not add space for the first part. 
+                achternaam+=" "; 
+            }
+            achternaam += split2[i]; 
+        }
+        this.setAchternaam(achternaam); 
     }
 
     /**

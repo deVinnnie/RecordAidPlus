@@ -13,14 +13,22 @@ import org.jdom.input.SAXBuilder;
  * @author Vincent Ceulemans
  */
 public class MailMessageFactory {
-    private String FILENAME = getClass().getClassLoader().getResource("/META-INF/default_mail_messages.xml").toString(); 
+    private String filename; 
+
+    public MailMessageFactory() {
+        this.filename = getClass().getClassLoader().getResource("/META-INF/default_mail_messages.xml").toString();
+    }
+
+    public MailMessageFactory(String filename) {
+        this.filename = filename; 
+    }
     
     public List<MailMessage> createMailMessages(){
         List<MailMessage> mailMessages = new ArrayList<MailMessage>(); 
         
         try {
             SAXBuilder builder = new SAXBuilder(false); 
-            Document doc =builder.build(FILENAME);
+            Document doc =builder.build(filename);
             Element rootElement = doc.getRootElement();
             List<Element> children = rootElement.getChildren(); 
             

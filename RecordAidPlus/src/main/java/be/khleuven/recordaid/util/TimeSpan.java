@@ -17,9 +17,9 @@ import javax.persistence.*;
 public class TimeSpan extends Identifiable implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar beginTime = Calendar.getInstance();
+    private Calendar beginTime; 
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar endTime = Calendar.getInstance();
+    private Calendar endTime;
 
     public TimeSpan() {}
 
@@ -112,7 +112,7 @@ public class TimeSpan extends Identifiable implements Serializable {
     }
 
     public void setEndTime(Calendar endTime) throws DomainException {
-        if (endTime.after(this.beginTime)) {
+        if (endTime.before(this.beginTime)) {
             throw new DomainException("Eindtijdstip kan niet vroeger zijn dan begintijdstip.");
         }
         this.endTime = endTime;

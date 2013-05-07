@@ -102,14 +102,15 @@ public class RecordAidDomainFacade {
 
     //<editor-fold defaultstate="collapsed" desc="Gebruikers">
     public Gebruiker getGebruiker(String emailadres) {
-        return commonDb.find(Gebruiker.class, emailadres);
+        Gebruiker gebruiker = commonDb.find(Gebruiker.class, emailadres);
+        return gebruiker; 
     }
 
     public Gebruiker getGebruikerByValidatiecode(String validatiecode) {
         return gebruikerDB.getGebruikerByValidatiecode(validatiecode);
     }
 
-    public void addGebruiker(Gebruiker gebruiker) throws DatabaseException, DomainException {
+    public void addGebruiker(Gebruiker gebruiker) throws DomainException {
         //Add user to database. 
         commonDb.create(gebruiker);
 
@@ -120,6 +121,27 @@ public class RecordAidDomainFacade {
         this.sendMail("validatie_gebruiker", gebruiker.getEmailadres(), context);
     }
 
+    /**
+     * Een nieuwe gebruiker wordt aangemaakt in opdracht van een andere gebruiker. 
+     * Dit is het geval bij begeleiders die een aanvraag willen plaatsen voor studenten die nog niet geregistreerd zijn. 
+     * De mail die verstuurd wordt naar de student bevat een tijdelijk wachtwoord. 
+     */
+    public void addGebruiker(Gebruiker gebruiker, Gebruiker begeleider) throws DomainException {
+        if(!begeleider.getRollen().contains(Rollen.BEGELEIDER)){
+            throw new DomainException("Enkel begeleiders kunnen nieuwe gebruikers aanmaken.");
+        }
+        
+        //Add user to database. 
+        commonDb.create(gebruiker);
+
+        //Send mail with Validation-code to the new user. 
+        Map<String, String> context = new HashMap<String, String>();
+        context.put("gebruiker_voornaam", gebruiker.getVoornaam());
+        context.put("validatie_code", gebruiker.getValidatieCode());
+        context.put("tijdelijk_wachtwoord", gebruiker.getValidatieCode());
+        this.sendMail("validatie_gebruiker_indirect", gebruiker.getEmailadres(), context);
+    }
+    
     public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException {
         commonDb.remove(gebruiker);
     }

@@ -27,6 +27,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/aanvragen")
 @SessionAttributes({"aanvraag", "nieuweOpname", "nieuweMultiAanvraag"})
 public class AanvragenController extends AbstractController{
+    public AanvragenController() {
+    }
+
+    public AanvragenController(RecordAidDomainFacade domainFacade) {
+        super(domainFacade);
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Creation">
     @RequestMapping("/nieuw")
@@ -173,9 +179,13 @@ public class AanvragenController extends AbstractController{
     public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag, 
                                     @RequestParam("student") String student) {
         try {
-            Gebruiker gebruiker = domainFacade.getGebruiker(student); 
-            aanvraag.setDossier(domainFacade.getDossier(gebruiker));
             Gebruiker begeleider = this.getCurrentDossier().getGebruiker(); 
+            Gebruiker gebruiker = domainFacade.getGebruiker(student); 
+            if(gebruiker == null){
+                domainFacade.addGebruiker(new Gebruiker(student)  ,begeleider);
+            }
+            aanvraag.setDossier(domainFacade.getDossier(gebruiker));
+            
             
             domainFacade.addMultiPeriodeAanvraag(aanvraag, begeleider);
             return "redirect:/aanvragen/detail?id=" + aanvraag.getId();

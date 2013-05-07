@@ -352,3 +352,8 @@ ul{
     padding: 0; 
     margin: 0;
 }
+
+article ul{
+    list-style:square;   
+    margin: 0 0 1.625em 2.5em; 
+}

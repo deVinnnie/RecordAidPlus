@@ -15,7 +15,21 @@ Het RecordAid Team]]>
         </content>
         <description>validatie_gebruiker</description>
     </message>
-    
+        <message>
+        <subject>Validatie RecordAid account</subject>
+        <content>
+<![CDATA[Beste $gebruiker_voornaam$ <br><br>
+Er is automatisch een account voor jouw gemaakt. 
+Met deze validatie code kan je jouw account activeren: <b>$validatie_code$</b><br>
+Valideren kan via volgende link: <a href='http://recordaid.khleuven.be/login/valideren'>Valideren</a><br><br>
+Je tijdelijke wachtwoord is: $tijdelijk_wachtwoord$.
+Je kan dit na validatie veranderen 
+Met vriendelijke groeten,<br>
+Het RecordAid Team]]>
+        </content>
+        <description>validatie_gebruiker_indirect</description>
+    </message>
+
     <message>
         <subject>Aanmelding nieuwe buddy</subject>
         <content>

@@ -8,6 +8,41 @@
     <packaging>war</packaging>
 
     <name>RecordAidPlus</name>
+    <!--<profiles>
+        <profile>
+            <id>dbunit</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>dbunit-maven-plugin</artifactId>
+                        <version>1.0-beta-3</version>
+                        
+                        <dependencies>
+                            <dependency>
+                                <groupId>hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                                <version>${hsqldb.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dataTypeFactoryName>
+                            <url>jdbc:hsqldb:file:${project.basedir}/target/db/build;shutdown=true</url>
+                            <driver>org.hsqldb.jdbcDriver</driver>
+                            <username>sa</username>
+                            <password></password>
+                            <type>CLEAN_INSERT</type>
+                            <src>src/test/data/stub.xml</src>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>-->
+
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -195,6 +230,26 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
             <scope>runtime</scope>
+        </dependency>
+   
+        <!--Testing-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>  
+            <version>1.9.5</version> 
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.4.7</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
