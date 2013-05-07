@@ -2,7 +2,6 @@ package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.domain.DomainException;
 import be.khleuven.recordaid.domain.items.*; 
-import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.util.propertyeditors.CalendarPropertyEditor;
@@ -11,7 +10,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,14 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/items")
-public class ItemController 
-{
-    @Autowired
-    RecordAidDomainFacade domainFacade;
-    
-    public ItemController(){
-    }
-    
+public class ItemController extends AbstractController{
     @RequestMapping(value={"/","/beheer"},method=RequestMethod.GET)
     public String listItems(ModelMap model)
     {
@@ -146,17 +137,6 @@ public class ItemController
         Collection<Reservatie> reservaties =  domainFacade.getReservaties(start, end); 
         model.addAttribute("reservaties",reservaties); 
         return "/items/reservaties"; 
-    }
-    
-    /**
-     * Fetches the dossier of the current user in this session. 
-     * 
-     * @return The dossier of the current user. 
-     */
-    private Dossier getCurrentDossier(){
-        Gebruiker gebruiker = (Gebruiker) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Dossier dossier = domainFacade.getDossier(gebruiker); 
-        return dossier; 
     }
     
     @InitBinder

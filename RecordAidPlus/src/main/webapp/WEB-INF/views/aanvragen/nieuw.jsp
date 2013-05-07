@@ -7,17 +7,16 @@ $(document).ready(function(){
     datepicker("#datum");
 }); 
 </script>
-<springforms:form id="aanvraagForm" modelAttribute="aanvraag" method="POST">
-    <p>Alle velden zijn verplicht.</p>
+<springforms:form modelAttribute="aanvraag" method="POST">
     <table>
         <tr>
             <td><label for="datum">Datum</label></td>
-            <td><springforms:input path="lesDatum" id="datum"/></td>
+            <td><springforms:input path="lesDatum" id="datum" required="required"/></td>
             <td id="datum_error" class="error"></td>
         </tr>
         <tr>
             <td><label for="reden">Reden</label></td>
-            <td><springforms:textarea path="reden" id="reden" rows="6" cols="50"/></td>
+            <td><springforms:textarea path="reden" id="reden" rows="6" cols="50" required="required"/></td>
             <td><springforms:errors path="reden" id="reden_error" cssClass="error"/></td>
         </tr>
         <tr>
@@ -30,7 +29,9 @@ $(document).ready(function(){
             <td>
                 <springforms:select path="departement.naam" id="departement">
                     <c:forEach var="departement" items="${departementen}">
-                        <option value="${departement.naam}" <c:if test="${not departement.actief}">disabled</c:if>><c:out value="${departement.naam}"/></option>
+                        <option value="${departement.naam}" <c:if test="${not departement.actief}">disabled</c:if>>
+                            <c:out value="${departement.naam}"/>
+                        </option>
                     </c:forEach>
                 </springforms:select>
             </td>

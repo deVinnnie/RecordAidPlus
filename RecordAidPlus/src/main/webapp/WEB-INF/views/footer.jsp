@@ -1,9 +1,3 @@
-<%-- 
-    Document   : footer
-    Created on : Mar 4, 2013, 9:18:58 PM
-    Author     : Maxime
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <div id="fb-root"></div>

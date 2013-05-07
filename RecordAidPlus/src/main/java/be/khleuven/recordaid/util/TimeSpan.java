@@ -1,73 +1,98 @@
 package be.khleuven.recordaid.util;
 
+import be.khleuven.recordaid.domain.DomainException;
+import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.*; 
+import javax.persistence.*;
 
 /**
  *
- * Encapsulates two Calendar objects to represent a period between two points in time. 
- * 
+ * Encapsulates two Calendar objects to represent a period between two points in
+ * time.
+ *
  * @author Vincent Ceulemans
  */
 @Entity
-public class TimeSpan implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
+public class TimeSpan extends Identifiable implements Serializable {
+
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar beginTime = Calendar.getInstance(); 
-    
+    private Calendar beginTime = Calendar.getInstance();
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar endTime = Calendar.getInstance(); 
-   
-    public TimeSpan(){
+    private Calendar endTime = Calendar.getInstance();
+
+    public TimeSpan() {}
+
+    public TimeSpan(Calendar beginTime, Calendar endTime) throws DomainException {
+        this.setEndTime(endTime);
+        this.setBeginTime(beginTime);
     }
 
-    public TimeSpan(Calendar beginTime, Calendar endTime) {
-        this.setBeginTime(beginTime);
-        this.setEndTime(endTime);
-    }
-   
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public void setBeginYear(int year){
+    public void setBeginYear(int year) throws DomainException {
+        if (year > this.getEndTime().get(Calendar.YEAR)) {
+            throw new DomainException("Begintijdstip kan niet later zijn dan eindtijdstip.");
+        }
         this.beginTime.set(Calendar.YEAR, year);
-    } 
-    
-    public void setBeginHour(int hour){
+    }
+
+    public void setBeginHour(int hour) throws DomainException {
+        Calendar clone = (Calendar) this.beginTime.clone(); 
+        clone.set(Calendar.HOUR, hour);
+        if (clone.after(this.getEndTime())) {
+            throw new DomainException("Begintijdstip kan niet later zijn dan eindtijdstip.");
+        }
         this.beginTime.set(Calendar.HOUR, hour);
     }
-    
-    public int getBeginHour(){
-        return this.beginTime.get(Calendar.HOUR); 
+
+    public int getBeginHour() {
+        return this.beginTime.get(Calendar.HOUR);
     }
-    
-    public void setBeginMinute(int minute){
+
+    public void setBeginMinute(int minute) throws DomainException {
+        Calendar clone = (Calendar) this.beginTime.clone(); 
+        clone.set(Calendar.MINUTE, minute);
+        if (clone.after(this.getEndTime())) {
+            throw new DomainException("Begintijdstip kan niet later zijn dan eindtijdstip.");
+        }
         this.beginTime.set(Calendar.MINUTE, minute);
     }
-    
-    public int getBeginMinute(){
+
+    public int getBeginMinute() {
         return this.beginTime.get(Calendar.MINUTE);
     }
-    
-    public void setEndYear(int year){
+
+    public void setEndYear(int year) throws DomainException {
+        if (year < this.getBeginTime().get(Calendar.YEAR)) {
+            throw new DomainException("Eindtijdstip kan niet vroeger zijn dan begintijdstip.");
+        }
         this.endTime.set(Calendar.YEAR, year);
+        
     }
-    
-    public void setEndHour(int hour){
+
+    public void setEndHour(int hour) throws DomainException {
+        Calendar clone = (Calendar) this.endTime.clone(); 
+        clone.set(Calendar.HOUR, hour);
+        if (clone.before(this.beginTime)) {
+            throw new DomainException("Eindtijdstip kan niet vroeger zijn dan begintijdstip.");
+        }
         this.endTime.set(Calendar.HOUR, hour);
     }
-     
-    public int getEndHour(){
-        return this.endTime.get(Calendar.HOUR); 
-    } 
-    
-    public void setEndMinute(int minute){
+
+    public int getEndHour() {
+        return this.endTime.get(Calendar.HOUR);
+    }
+
+    public void setEndMinute(int minute) throws DomainException {
+        Calendar clone = (Calendar) this.endTime.clone(); 
+        clone.set(Calendar.MINUTE, minute);
+        if (clone.before(this.beginTime)) {
+            throw new DomainException("Eindtijdstip kan niet vroeger zijn dan begintijdstip.");
+        }
         this.endTime.set(Calendar.MINUTE, minute);
     }
-    
-    public int getEndMinute(){
+
+    public int getEndMinute() {
         return this.endTime.get(Calendar.MINUTE);
     }
 
@@ -75,7 +100,10 @@ public class TimeSpan implements Serializable {
         return beginTime;
     }
 
-    public void setBeginTime(Calendar beginTime) {
+    public void setBeginTime(Calendar beginTime) throws DomainException {
+        if (beginTime.after(this.endTime)) {
+            throw new DomainException("Begintijdstip kan niet later zijn dan eindtijdstip.");
+        }
         this.beginTime = beginTime;
     }
 
@@ -83,45 +111,36 @@ public class TimeSpan implements Serializable {
         return endTime;
     }
 
-    public void setEndTime(Calendar endTime) {
+    public void setEndTime(Calendar endTime) throws DomainException {
+        if (endTime.after(this.beginTime)) {
+            throw new DomainException("Eindtijdstip kan niet vroeger zijn dan begintijdstip.");
+        }
         this.endTime = endTime;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     //</editor-fold>
-    
+
     /**
-     * Determine whether two TimeSpan instances overlap each other.  
-     * 
+     * Determine whether two TimeSpan instances overlap each other.
+     *
      * @param otherTimeSpan
-     * @return True when 
+     * @return True when
      */
-    
-    public boolean isOverlapping(TimeSpan otherTimeSpan){
-        boolean isOverlapping = true; 
-        
+    public boolean isOverlapping(TimeSpan otherTimeSpan) {
+        boolean isOverlapping = true;
+
         int compareBeginToBegin = this.getBeginTime().compareTo(otherTimeSpan.getBeginTime());
         int compareEndToEnd = this.getEndTime().compareTo(otherTimeSpan.getEndTime());
         int compareBeginToEnd = this.getBeginTime().compareTo(otherTimeSpan.getEndTime());
         int compareEndToBegin = this.getEndTime().compareTo(otherTimeSpan.getBeginTime());
-        
-        if(compareBeginToBegin < 0 && compareEndToBegin <= 0 && compareBeginToEnd <= 0 && compareEndToEnd < 0){
-            isOverlapping = false; 
+
+        if (compareBeginToBegin < 0 && compareEndToBegin <= 0 && compareBeginToEnd <= 0 && compareEndToEnd < 0) {
+            isOverlapping = false;
+        } else if (compareBeginToBegin > 0 && compareEndToBegin >= 0 && compareBeginToEnd >= 0 && compareEndToEnd > 0) {
+            isOverlapping = false;
         }
-        else if(compareBeginToBegin > 0 && compareEndToBegin >= 0 && compareBeginToEnd >= 0 && compareEndToEnd > 0){
-            isOverlapping = false; 
-        }
-        return isOverlapping; 
+        return isOverlapping;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 5;

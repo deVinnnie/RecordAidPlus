@@ -21,17 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/opnames")
-public class OpnameController {
-
-    @Autowired
-    private RecordAidDomainFacade domainFacade;
-
-    public OpnameController() {
-    }
-
-    public OpnameController(RecordAidDomainFacade domainFacade) {
-        this.domainFacade = domainFacade;
-    }
+public class OpnameController extends AbstractController {
 
     //<editor-fold defaultstate="collapsed" desc="Bewerken">
     @RequestMapping(value = "/editor")
@@ -67,6 +57,18 @@ public class OpnameController {
     @RequestMapping(value = "/verwijdermethode", params = "id", method = RequestMethod.POST)
     public String removeOpnameMethode(@RequestParam("id") long id) throws DomainException {
         domainFacade.removeOpnameMethode(domainFacade.findOpnameMethode(id));
+        return "redirect:/opnames/beheer";
+    }
+    
+    @RequestMapping(value = "/nieuw_opnamemethode", method = RequestMethod.GET)
+    public String showNieuwOpnameMethode(ModelMap model){
+        model.addAttribute("opnameMethode",new OpnameMethode()); 
+        return "/opnames/nieuw_opnamemethode";
+    }
+    
+    @RequestMapping(value = "/nieuw_opnamemethode", method = RequestMethod.POST)
+    public String addNieuwOpnameMethode(@Valid OpnameMethode opnameMethode){
+        domainFacade.create(opnameMethode); 
         return "redirect:/opnames/beheer";
     }
     //</editor-fold>

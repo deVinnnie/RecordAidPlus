@@ -19,7 +19,7 @@ public interface AanvraagDatabaseInterface{
      * bepaald.
      * @return Een collection<Aanvraag> van aanvragen.
      */
-    public Collection<DagAanvraag> getAanvragen(Status status);
+    public Collection<AbstractAanvraag> getAanvragen(Status status);
 
     /**
      * Geeft een collection terug van alle aanvragen die toegewezen zijn aan een
@@ -29,7 +29,9 @@ public interface AanvraagDatabaseInterface{
      * zijn.
      * @return Een collection<Aanvraag> van aanvragen.
      */
-    public Collection<DagAanvraag> getAanvragenToegewezenLid(Gebruiker toegewezenLid);
+    public Collection<AbstractAanvraag> getAanvragenToegewezenLid(Gebruiker toegewezenLid);
+    
+    public Collection<MultiPeriodeAanvraag> getAanvragen(Gebruiker begeleider);
     
     public Collection<Opname> getOpnames(OpnameMethode opnameMethode); 
 }

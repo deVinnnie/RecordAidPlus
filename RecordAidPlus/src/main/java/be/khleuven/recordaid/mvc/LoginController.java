@@ -1,7 +1,8 @@
 package be.khleuven.recordaid.mvc;
 
-import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
+import be.khleuven.recordaid.util.Boodschap;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,22 +17,19 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/login")
-public class LoginController {
-    @Autowired
-    private RecordAidDomainFacade domainFacade; 
-    
+public class LoginController  extends AbstractController{
     @Autowired
     private MyUserDetailsService userDetailsService; 
     
     @RequestMapping(method=RequestMethod.GET, params="error")
     public String showLoginFormWithError(ModelMap model){
-        model.addAttribute("error", "De combinatie emailadres / paswoord bestaat niet of het emailadres is niet geregistreerd.");
+        model.addAttribute("boodschap", new Boodschap("De combinatie e-mailadres / wachtwoord bestaat niet of het e-mailadres is niet geregistreerd.", "error"));
         return "/login/login"; 
     }
     
     @RequestMapping(method=RequestMethod.GET, params="loginrequired")
     public String showLoginFormWithRequiredMessage(ModelMap model){
-        model.addAttribute("loginrequired",0); 
+        model.addAttribute("boodschap", new Boodschap("Om deze pagina te bekijken moet u ingelogd zijn.", "error"));
         return "/login/login"; 
     }
     
@@ -56,7 +54,7 @@ public class LoginController {
                     "Er is reeds een gebruiker geregistreerd met dit e-mailadres.")); 
             model.addAttribute("nieuweGebruiker", nieuweGebruiker); 
         }
-        return "/login/login"; 
+        return "/login/registreren"; 
     }
     
     @RequestMapping

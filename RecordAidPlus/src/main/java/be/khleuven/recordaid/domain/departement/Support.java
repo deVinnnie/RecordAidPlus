@@ -15,7 +15,8 @@ import javax.persistence.*;
 @Entity
 public class Support extends Identifiable implements Serializable
 {
-    private String report; 
+    @Column(columnDefinition = "CLOB")
+    private String probleem; 
     
     @OneToOne
     private Lokaal lokaal;
@@ -35,13 +36,13 @@ public class Support extends Identifiable implements Serializable
      * Constructor met parameters, dit is de constructor die gebruikt dient te
      * worden om een nieuwe Support aan te maken.
      *
-     * @param report String die het defect omschrijft.
+     * @param probleem String die het defect omschrijft.
      * @param lokaal String die het lokaal is waarin het defect is.
      * @param zender Gebruiker die het defect gemeld heeft.
      */
-    public Support(String report, Lokaal lokaal, Gebruiker zender)
+    public Support(String probleem, Lokaal lokaal, Gebruiker zender)
     {
-        this.setReport(report);
+        this.setProbleem(probleem);
         this.setLokaal(lokaal);
         this.setZender(zender);
     }
@@ -52,9 +53,9 @@ public class Support extends Identifiable implements Serializable
      *
      * @return String die het defect omschrijft.
      */
-    public String getReport()
+    public String getProbleem()
     {
-        return report;
+        return probleem;
     }
 
 
@@ -63,9 +64,9 @@ public class Support extends Identifiable implements Serializable
      *
      * @param report String die het defect omschrijft.
      */
-    public void setReport(String report)
+    public void setProbleem(String report)
     {
-        this.report = report;
+        this.probleem = report;
     }
 
 
@@ -136,7 +137,7 @@ public class Support extends Identifiable implements Serializable
         if(object instanceof Support)
         {
             Support item = (Support) object;
-            equals = (report.equals(item.getReport()));
+            equals = (probleem.equals(item.getProbleem()));
         }
 
         return equals;
@@ -152,7 +153,7 @@ public class Support extends Identifiable implements Serializable
     public int hashCode()
     {
         int hash = 5;
-        hash = 79 * hash + (this.report != null ? this.report.hashCode() : 0);
+        hash = 79 * hash + (this.probleem != null ? this.probleem.hashCode() : 0);
         return hash;
     }
 
@@ -166,7 +167,7 @@ public class Support extends Identifiable implements Serializable
     @Override
     public String toString()
     {
-        return this.report;
+        return this.probleem;
     }
     // </editor-fold>
 }

@@ -45,7 +45,7 @@
 <form method="POST">
     <p>Kies welke soort opname RecordAid mag doen. Je kan er ook voor opteren om zelf een opname te voorzien. </p>
  
-    <ul>
+    <ul id="opmnameMethodes">
     <%--OpnameMogelijkheden--%>
     <c:forEach var="opnameMethode" items="${opnameMethodes}">
         <li><input type="checkbox" name="methodes" value="${opnameMethode.id}"/>${opnameMethode.beschrijving}</li>
@@ -55,4 +55,3 @@
     <input type="submit" name="action" value="Goedkeuren"/>
     <input type="submit" name="action" value="Weigeren"/>
 </form>
-

@@ -44,7 +44,7 @@ public class MyUserDetailsService implements UserDetailsService{
         if (gebruiker.getEmailadres().matches("^.+@khleuven.be$")) {
             rol = Rollen.LEERKRACHT;
         }
-        gebruiker.setRol(rol);
+        gebruiker.addRol(rol);
         
         if(!wachtwoord.equals(wachtwoordConfirmation)){
             throw new DomainException("Uw wachtwoorden komen niet overeen."); 

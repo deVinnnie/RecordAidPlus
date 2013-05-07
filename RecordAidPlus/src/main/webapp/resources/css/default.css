@@ -1,13 +1,10 @@
-*{
-    font-family:"Calibri";
-}
-
 html{
     overflow-y: scroll; 
 }
 
 body{
     background-color: #595959;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 }
 
 html, body{
@@ -24,14 +21,13 @@ a:hover{
     color: #333;
 }
 
-body p{
+p{
     font-size: 1em;
 }
 
 h1, h2, h3, h4{
-    margin-top: 0; 
-    color: black;
-    font-family: "Century Gothic";
+    margin-top: 0;
+    margin-bottom: 0; 
 }
 
 #content{
@@ -44,7 +40,7 @@ h1, h2, h3, h4{
     box-shadow: 0 0 12px #FFF3E2;
 }
 
-#head{
+#header{
     height: 265px;
     overflow-y: hidden; 
     overflow-x: hidden; 
@@ -52,7 +48,6 @@ h1, h2, h3, h4{
 
 #navigation{
     margin: 0 auto;
-    width: auto;
     border-bottom: 1px solid #ddd;
 }
 
@@ -80,9 +75,8 @@ h1, h2, h3, h4{
 }
 
 #navlist li a:hover,
-#navlist a#current{
+#navlist a#active{
     color: #333;
-    font-size: 1.5em;
     border-bottom: 2px dashed #333;
 }
 
@@ -90,7 +84,7 @@ h1, h2, h3, h4{
     float: left; 
 }
 
-#beheer{
+#beheer, #info{
     margin-left: 15em; 
 }
 
@@ -124,7 +118,8 @@ a:hover{
 }
 
 input[type="text"], 
-input[type="password"]{
+input[type="password"],
+input[type="email"]{
     width: 221px;
     background: transparent url('images/bgtb.jpg') no-repeat;
     color : #747862;
@@ -132,6 +127,10 @@ input[type="password"]{
     border:0;
     padding:4px 6px;
     margin-bottom:0px;
+}
+
+input[type="submit"]{
+    margin-top:0.5em;
 }
 
 textarea{
@@ -143,19 +142,11 @@ textarea{
     padding:3px;
     margin-right:4px;
     margin-bottom:8px;
-    font-family:tahoma, arial, sans-serif;
-
     resize: none;
 }
 
-.bericht{
-    border-top: solid 2px lightgrey;
-    border-bottom: solid 1px lightgrey;
-    padding-bottom: 10px; 
-}
-
 td{
-    font-family:"Calibri";
+    padding: 0.5em; 
     font-size: 1em;
 }
 
@@ -175,12 +166,10 @@ td{
     font-weight: bold;
 }
 
-
 table td, 
 .htmlTable th
 {
-    padding: 10px 0; 
-    border-bottom: solid 1px #AAA;
+   /* padding: 10px 0; */
 }
 
 table
@@ -201,7 +190,7 @@ img.logo{
     display: block; 
 }
 
-#auth{ 
+#authentication{ 
     text-align: right;
     font-size: 1.2em; 
 }
@@ -223,13 +212,14 @@ img.logo{
 }
 
 #calendar{
-    max-width: 700px; 
+    max-width: 600px; 
 }
 
 .clearfix{
     clear: both; 
 }
 
+/*FullCalendar*/
 .fc-event-title{
     font-size: 20px !important; 
 }
@@ -238,12 +228,10 @@ img.logo{
     font-size:15px !important;   
 }
 
-#lectoren_list{
+#lectoren_list,
+#opmnameMethodes{
     list-style: none; 
-}
-
-les{
-    float: left;
+    padding:0; 
 }
 
 .lesstatus
@@ -289,9 +277,7 @@ les{
     padding: 0;
 }
 
-/*
-*    Footer
-*/
+/* Footer */
 .footer{
     border-top: 1px solid #ddd;
     background-color: transparent;
@@ -359,3 +345,10 @@ les{
     color: #333;
     border-bottom: 2px dashed #333;
 }  
+/*Einde footer*/
+
+ul{
+    list-style: none; 
+    padding: 0; 
+    margin: 0;
+}

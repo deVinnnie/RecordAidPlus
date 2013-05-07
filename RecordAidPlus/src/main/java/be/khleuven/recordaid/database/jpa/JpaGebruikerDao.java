@@ -42,7 +42,7 @@ public class JpaGebruikerDao extends JpaAbstractDao implements GebruikerDatabase
     @Override
     public Collection<Gebruiker> getGebruikers(Rollen rol)
     {
-        Query query = getEntityManager().createQuery("SELECT x FROM Gebruiker x WHERE x.rol = :rol");
+        Query query = getEntityManager().createQuery("SELECT x FROM Gebruiker x JOIN x.rollen r WHERE r = :rol");
         query.setParameter("rol", rol);
         Collection<Gebruiker> gebruikers = query.getResultList();
         return gebruikers;

@@ -6,25 +6,21 @@
 <springforms:form id="faqAntwoord" action="faq/update" method="POST" modelAttribute="faq">
     <table>
         <tr>
-            <td id="userMail">Aangevraagd door: ${faq.gebruiker.voornaam} ${faq.gebruiker.naam}</td>
+            <td>Aangevraagd door: <c:out value="${faq.gebruiker.voornaam} ${faq.gebruiker.achternaam}"/></td>
         </tr>
         <tr>
+            <td><label for="vraag">Vraag</label></td>
             <td>
-                <springforms:textarea path="vraag" type="text" id="currentFAQ" name="FAQVRAAG"/>
+                <springforms:textarea path="vraag" rows="6" cols="50" id="vraag"/>
             </td>
         </tr>
         <tr>
+            <td><label for="antwoord">Antwoord</label></td>
             <td>
-                <springforms:textarea path="antwoord" rows="6" cols="50" name="FAQANTWOORD" id="antw"/>
+                <springforms:textarea path="antwoord" rows="6" cols="50" id="antwoord"/>
             </td>
         </tr>
-        <tr>
-            <td>
-                <springforms:checkbox path="relevant" name="ISRELEVANT" label="Toon op de website"/>
-            </td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Beantwoord"/></td>
-        </tr>
-    </table>
+    </table>   
+    <springforms:checkbox path="relevant" label="Toon op de website"/><br>
+    <input type="submit" value="Beantwoord"/>
 </springforms:form>

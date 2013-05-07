@@ -8,8 +8,13 @@
     });
 </script>
 <springforms:form id="aanvraagForm" modelAttribute="nieuweMultiAanvraag" method="POST">
-    <p>Alle velden zijn verplicht.</p>
+    <!--<p>Alle velden zijn verplicht.</p>-->
     <table>
+        <tr>
+            <td><label for="student">Student (e-mailadres KHL)</label></td>
+            <td><input type="email" id="student" name="student"/></td>
+        </tr>
+        
         <tr>
             <td><label for="reden">Reden</label></td>
             <td><springforms:textarea path="reden" id="reden" rows="6" cols="50"/></td>

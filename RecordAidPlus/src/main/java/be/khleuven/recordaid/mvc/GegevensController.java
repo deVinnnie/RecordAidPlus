@@ -1,10 +1,6 @@
 package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.domain.departement.Lector;
-import be.khleuven.recordaid.opnames.OpnameMoment;
-import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/gegevens")
-public class GegevensController {
-    @Autowired
-    private RecordAidDomainFacade domainFacade;
-
+public class GegevensController extends AbstractController{
     @RequestMapping("/beheer")
     public String showGegevensBeheer(ModelMap model) {
         model.addAttribute("lectoren", domainFacade.getLectoren());

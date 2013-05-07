@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!--<script type="text/javascript" src="JavaScript/account.js" ></script>-->
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
 <h1>Mijn account</h1>
 <table>
     <tr>
@@ -16,14 +18,20 @@
         <td>${gebruiker.achternaam}</td>
     </tr>
     <tr>
-        <td>Status</td>
-        <td>${gebruiker.rol}</td>
+        <td>Rol</td>
+        <td>
+            <ul>
+                <c:forEach var="rol" items="${gebruiker.rollen}">
+                    <li>${rol.name}</li>
+                    </c:forEach>
+            </ul>
+        </td>
     </tr>
 </table>
 
-    <h2>Wachtwoord wijzigen</h2>
-    <p class="boodschap" id="wachtwoord_fout_error" style="color: red;">${wachtwoord_fout_error}</p>
-    <p class="boodschap" id="wachtwoord_verandert_boodschap" style="color: green;">${wachtwoord_verandert_boodschap}</p>
+<h2>Wachtwoord wijzigen</h2>
+<p class="boodschap" id="wachtwoord_fout_error" style="color: red;">${wachtwoord_fout_error}</p>
+<p class="boodschap" id="wachtwoord_verandert_boodschap" style="color: green;">${wachtwoord_verandert_boodschap}</p>
 <form id="form_updateAccount" method="POST">
     <table>
         <tr>
@@ -48,9 +56,7 @@
     </table>
 </form> 
 
-<c:if test="${gebruiker.rol eq 'STUDENT'}">
-    <p id="mail_verstuurd_boodschap" style="color: green;">${mail_verstuurd_boodschap}</p>
-    <c:if test="${mail_verstuurd_boodschap eq null}">
-        <a class="probleema" href="ActionServlet?action=mailen&method=buddyworden" >Ik wil buddy worden!</a>
-    </c:if>
-</c:if>
+<security:authorize access="hasRole('STUDENT') and not hasRole('BUDDY')">
+    <m:boodschap/>
+    <a href="<s:url value="/gebruikers/buddyworden"/>">Ik wil buddy worden!</a>
+</security:authorize>

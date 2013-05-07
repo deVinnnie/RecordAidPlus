@@ -5,6 +5,7 @@
     <definition name="template" template="/WEB-INF/views/template.jsp">
         <put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+        <put-attribute name="page" value="template" cascade="true"/> 
         <put-list-attribute name="scripts"></put-list-attribute>
         <put-list-attribute name="styles"></put-list-attribute>
     </definition>
@@ -26,16 +27,28 @@
     <definition name="base.beheer" extends="base.jquery">
         <put-attribute name="content" value="/WEB-INF/views/beheer_template.jsp"/>
     </definition>
+    
+    <definition name="base.info" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/info_template.jsp"/>
+    </definition>
     <!--End Templates-->
+    
+    <definition name="/info/*" extends="base.info">
+        <put-attribute name="title" value="info.{1}.title"/>
+        <put-attribute name="page" value="info" cascade="true"/>
+        <put-attribute name="info_content" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
+    </definition>
     
     <definition name="/items/reservaties" template="/WEB-INF/views/items/reservaties.jsp">
     </definition>
     
     <definition name="/home" extends="base.jquery">
         <put-attribute name="title" value="home.title"/>
+        <put-attribute name="page" value="home" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
     </definition>
     
+    <!--Login-->
     <definition name="/login/registreren" extends="base.jquery">
         <put-attribute name="title" value="login.registreren.title"/>
         <put-attribute name="content" value="/WEB-INF/views/login/registreren.jsp"/>
@@ -44,18 +57,25 @@
         </put-list-attribute>
     </definition>
     
+    <definition name="/login/*" extends="template">
+        <put-attribute name="title" value="login.{1}.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/login/{1}.jsp"/>
+    </definition>
+    
     <!--Aanvragen-->
     <definition name="/aanvragen/nieuw" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw.title"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw.jsp" />
+        <put-attribute name="page" value="aanvragen" cascade="true"/>
         <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/nieuweAanvraag.js"/>
         </put-list-attribute>
     </definition>
     
-     <definition name="/aanvragen/nieuw_multi" extends="base.jquery">
+    <definition name="/aanvragen/nieuw_multi" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw_multi.title"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw_multi.jsp" />
+        <put-attribute name="aanvragen" value="beheer" cascade="true"/>
         <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/multi_aanvraag.js"/>
         </put-list-attribute>
@@ -63,17 +83,26 @@
     
     <definition name="/aanvragen/nieuwe_opname" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw.title"/>
+        <put-attribute name="page" value="aanvragen" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuwe_opname.jsp" />
     </definition>
     
     <definition name="/aanvragen/mijnaanvragen" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.mijnaanvragen.title"/>
+        <put-attribute name="page" value="aanvragen" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/mijnaanvragen.jsp" />
+    </definition>
+    
+    <definition name="/aanvragen/begeleider/aanvragen" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.begeleider.aanvragen.title"/>
+        <put-attribute name="aanvragen" value="beheer" cascade="true"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/begeleider/aanvragen.jsp" />
     </definition>
     
     <!--Opnames-->
     <definition name="/opnames/editor" extends="base.jquery">
         <put-attribute name="title" value="opnames.editor.title"/>
+        <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/opnames/editor.jsp"/>
     </definition>
     
@@ -81,6 +110,7 @@
     <definition name="/items/reserveer" extends="base.jquery">
         <put-attribute name="title" value="items.reserveer.title"/>
         <put-attribute name="content" value="/WEB-INF/views/items/reserveer.jsp" />
+        <put-attribute name="page" value="reserveren" cascade="true"/>
         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/css/fullcalendar.css"/>
         </put-list-attribute>
@@ -93,6 +123,7 @@
     <definition name="/items/beheer" extends="base.beheer">
         <put-attribute name="title" value="items.beheer.title"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/items/beheer.jsp" cascade="true"/>
+        <put-attribute name="page" value="beheer" cascade="true"/>
         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/css/fullcalendar.css"/>
         </put-list-attribute>
@@ -105,13 +136,24 @@
     <!--FAQ-->
     <definition name="/faq/faq" extends="base.jquery">
         <put-attribute name="title" value="faq.faq.title"/>
+        <put-attribute name="page" value="faq" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/faq/faq.jsp" />
     </definition>
     
     <!--Mailing-->
     <definition name="/mailing/maillijst" extends="base.jquery">
         <put-attribute name="title" value="mailing.maillijst.title"/>
+        <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/mailing/maillijst.jsp" />
+    </definition>
+    
+    <!--Gebruiker-->
+    <definition name="/gebruikers/account" extends="base.jquery">
+        <put-attribute name="title" value="gebruikers.account.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/gebruikers/account.jsp"/>
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/js/account.js"/>
+        </put-list-attribute>
     </definition>
     
     <!--Common-->
@@ -124,11 +166,13 @@
     <!--Note: use cascade="true" so that the attributes are available to all levels.-->
     <definition name="/beheer" extends="base.beheer">
         <put-attribute name="title" value="beheer.title"/>
+        <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/beheer.jsp" cascade="true"/>
     </definition>
     
     <definition name="/*/beheer" extends="base.beheer">
         <put-attribute name="title" value="{1}.beheer.title"/>
+        <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/{1}/beheer.jsp" cascade="true"/>
     </definition>
     
@@ -140,6 +184,7 @@
     
     <definition name="/*/*" extends="template">
         <put-attribute name="title" value="{1}.{2}.title"/>
+        <put-attribute name="page" value="{1}" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
     <!--End Common-->

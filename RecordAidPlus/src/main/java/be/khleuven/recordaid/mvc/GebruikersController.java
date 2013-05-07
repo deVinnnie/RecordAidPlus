@@ -3,6 +3,7 @@ package be.khleuven.recordaid.mvc;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
+import be.khleuven.recordaid.domain.gebruiker.Rollen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/gebruikers")
 @SessionAttributes("gebruiker")
-public class GebruikersController{
-    @Autowired
-    private RecordAidDomainFacade domainFacade; 
-    
+public class GebruikersController extends AbstractController{
     @Autowired
     private MyUserDetailsService userDetailsService; 
     
@@ -41,6 +39,7 @@ public class GebruikersController{
                 @RequestParam("emailadres") String emailadres){
         Gebruiker gebruiker = domainFacade.getGebruiker(emailadres); 
         if(gebruiker!=null){
+            model.addAttribute("rollen", Rollen.values()); 
             model.addAttribute("gebruiker", gebruiker); 
             return "/gebruikers/detail";
         }

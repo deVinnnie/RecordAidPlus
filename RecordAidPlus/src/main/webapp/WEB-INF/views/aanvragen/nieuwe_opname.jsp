@@ -3,24 +3,20 @@
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <h1>Een nieuwe aanvraag plaatsen</h1>
 <h2>Les toevoegen</h2>
-<springforms:form id="nieuweOpnameForm" modelAttribute="nieuweOpname" method="POST">
+<springforms:errors path="*" cssClass="error"/>
+<springforms:form modelAttribute="nieuweOpname" method="POST">
     <table>    
         <tr>
             <td><label for="OOD">OOD</label></td>
-            <td><springforms:input path="OOD" autofocus="true" type="text" id="OOD"/></td>
-            <td id="vak_error" class="error">
-                <springforms:errors path="OOD" cssClass="error"/>
-            </td>
+            <td><springforms:input path="OOD" autofocus="true" type="text" id="OOD" required="required"/></td>
         </tr>
         <tr>
             <td><label for="reeks">Klas/Reeks</label></td>
-            <td><springforms:input path="reeks" type="text" id="reeks"/></td>
-            <td><springforms:errors path="reeks" cssClass="error"/></td>
+            <td><springforms:input path="reeks" type="text" id="reeks" required="required"/></td>
         </tr>
         <tr>
             <td><label for="lokaal">Lokaal</label></td>
-            <td><springforms:input path="lokaal.naam" type="text" id="lokaal"/></td>
-            <td><springforms:errors path="lokaal.naam" cssClass="error"/></td>
+            <td><springforms:input path="lokaal.naam" type="text" id="lokaal" required="required"/></td>
         </tr>
         <tr>
             <td><label for="beginUurH">Begin uur</label></td>
@@ -37,7 +33,6 @@
                     </c:forEach>
                 </springforms:select>
             </td>
-            <td id="uren_error" class="error"></td>
         </tr>
         <tr>
             <td><label>Eind uur</label> </td>
@@ -55,25 +50,16 @@
             </springforms:select>
             </td>
         </tr>
-        <%--<tr>
-            <td><label for="methode">Opname methode</label> </td>
-            <td>
-            <springforms:select path="methode" name="methode" id="methode">
-                <springforms:options items="${opnameMethodes}" itemValue="id" itemLabel="beschrijving"/>
-            </springforms:select>
-            </td>
-        </tr>--%>
         <tr>
             <td><label for="lector">Email lector</label></td> 
             <td>
-                <springforms:input path="lector" type="text" id="lector" list="lectoren"/>
+                <springforms:input path="lector" type="text" id="lector" list="lectoren" required="required"/>
                 <datalist id="lectoren">
                     <c:forEach items="${alleLectoren}" var="lector">
                         <option value="${lector.emailadres}"/>
                     </c:forEach>
                 </datalist>
             </td>
-            <td id="lector_error" class="error"><springforms:errors path="lector"/></td>
         </tr>
 </table>
 <input type="submit" name="action" value="Nog een les toevoegen"/>

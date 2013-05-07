@@ -1,27 +1,25 @@
 package be.khleuven.recordaid.mvc;
 
+import org.springframework.stereotype.Controller;
+import be.khleuven.recordaid.domain.FAQ;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
-import be.khleuven.recordaid.domain.*;
-import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
-import java.util.ArrayList;
-import javax.inject.Inject;
+import be.khleuven.recordaid.util.Boodschap;
+import java.util.*; 
 import javax.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*; 
 
+
+/**
+ *
+ * @author Vincent Ceulemans
+ */
 @Controller
 @RequestMapping("/faq")
-public class FAQController
-{
-    @Inject
-    private RecordAidDomainFacade domainFacade;
-    
-    public FAQController(){
-    }
-    
+@SessionAttributes("faq")
+public class FAQController extends AbstractController{
     @RequestMapping(method=RequestMethod.GET)
     public String listFAQ(ModelMap model)
     {
@@ -48,9 +46,9 @@ public class FAQController
         Gebruiker gebruiker = (Gebruiker) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
         faq.setGebruiker(gebruiker);
         domainFacade.create(faq);
-        //domainFacade.sentNieuweFAQMail(faq);
-        model.addAttribute("faq_toegevoegd",1); 
-        return "redirect:/faq";
+        model.addAttribute("boodschap",new Boodschap("Je vraag werd succesvol ontvangen, we proberen ze zo snel mogelijk te beantwoorden.", "succes")); 
+        model.addAttribute("faq",new FAQ());
+        return "/faq/nieuw";
     }
     
     @RequestMapping("/beheer")
@@ -92,12 +90,12 @@ public class FAQController
     
     @RequestMapping(value="/update",method=RequestMethod.POST)
     public String updateFaq(
-            @Valid FAQ faq, 
+            @ModelAttribute("faq") FAQ faq, 
             BindingResult bindingResult, 
             ModelMap model){
         domainFacade.edit(faq);
-        /*Gebruiker buddy = (Gebruiker) request.getSession().getAttribute("gebruiker");
-        domainFacade.sendAntwoordFAQMail(deFAQ, buddy);*/
+        //Gebruiker buddy =
+       /* domainFacade.sendAntwoordFAQMail(deFAQ, buddy);*/
         return "redirect:/faq/beheer";
     }
 }

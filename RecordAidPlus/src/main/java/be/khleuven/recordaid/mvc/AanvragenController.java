@@ -1,19 +1,17 @@
 package be.khleuven.recordaid.mvc;
 
+import be.khleuven.recordaid.util.Boodschap;
 import be.khleuven.recordaid.domain.departement.*; 
 import be.khleuven.recordaid.util.propertyeditors.*;
 import be.khleuven.recordaid.opnames.*;
 import be.khleuven.recordaid.domain.gebruiker.*;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
-import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.*;
 import be.khleuven.recordaid.util.TimeSpan;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*; 
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,28 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/aanvragen")
 @SessionAttributes({"aanvraag", "nieuweOpname", "nieuweMultiAanvraag"})
-public class AanvragenController {
-
-    @Autowired
-    private RecordAidDomainFacade domainFacade;
-
-    public AanvragenController() {
-    }
-
-    public AanvragenController(RecordAidDomainFacade domainFacade) {
-        this.domainFacade = domainFacade;
-    }
-
-    /**
-     * Fetches the dossier of the current user in this session.
-     *
-     * @return The dossier of the current user.
-     */
-    private Dossier getCurrentDossier() {
-        Gebruiker gebruiker = (Gebruiker) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Dossier dossier = domainFacade.getDossier(gebruiker);
-        return dossier;
-    }
+public class AanvragenController extends AbstractController{
 
     //<editor-fold defaultstate="collapsed" desc="Creation">
     @RequestMapping("/nieuw")
@@ -69,7 +46,7 @@ public class AanvragenController {
     }
 
     @RequestMapping(value = "/nieuwe_opname")
-    public String showNieuweOpnameMomentForm(ModelMap model, @ModelAttribute("aanvraag") AbstractAanvraag aanvraag) {
+    public String showNieuweOpnameMomentForm(ModelMap model, @ModelAttribute("aanvraag") AbstractAanvraag aanvraag) throws DomainException {
         Calendar defaultDate = aanvraag.getDefaultOpnameMomentDag();
         OpnameMoment opnameMoment = new OpnameMoment();
         opnameMoment.setTijdstip(new TimeSpan((Calendar) defaultDate.clone(), (Calendar) defaultDate.clone()));
@@ -99,7 +76,7 @@ public class AanvragenController {
     @RequestMapping(value = "/nieuwe_opname", params = "aanvraag", method = RequestMethod.GET)
     public String showNieuweOpnameMomentFormById(
             @RequestParam("aanvraag") long id,
-            ModelMap model) {
+            ModelMap model) throws DomainException {
         AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
         Calendar defaultDate = aanvraag.getDefaultOpnameMomentDag();
         OpnameMoment opnameMoment = new OpnameMoment();
@@ -142,7 +119,7 @@ public class AanvragenController {
             ModelMap model, @RequestParam("action") String action) {
         try {
             if(action.equals("Ok")){
-                aanvraag = domainFacade.addAanvraag(aanvraag);
+                aanvraag = domainFacade.addDagAanvraag((DagAanvraag) aanvraag);
                 return "redirect:/aanvragen/detail?succes&id=" + aanvraag.getId();
             }
             else{
@@ -193,14 +170,19 @@ public class AanvragenController {
     }
 
     @RequestMapping(value = "/nieuw_multi", method = RequestMethod.POST)
-    public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag) {
-        aanvraag = domainFacade.create(aanvraag);
-        Dossier dossier = this.getCurrentDossier();
-        dossier.addAanvraag(aanvraag);
-
-        domainFacade.edit(dossier);
-        aanvraag = domainFacade.edit(aanvraag);
-        return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
+    public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag, 
+                                    @RequestParam("student") String student) {
+        try {
+            Gebruiker gebruiker = domainFacade.getGebruiker(student); 
+            aanvraag.setDossier(domainFacade.getDossier(gebruiker));
+            Gebruiker begeleider = this.getCurrentDossier().getGebruiker(); 
+            
+            domainFacade.addMultiPeriodeAanvraag(aanvraag, begeleider);
+            return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
+        } catch (DomainException ex) {
+            Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/home"; 
     }
     //</editor-fold>
 
@@ -267,12 +249,8 @@ public class AanvragenController {
             @ModelAttribute("aanvraag") DagAanvraag aanvraag,
             BindingResult bindingResult,
             ModelMap model) {
-        try {
-            this.domainFacade.updateAanvraag(aanvraag);
-            return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
-        } catch (DatabaseException ex) {
-            return "/aanvragen/beheer";
-        }
+        this.domainFacade.edit(aanvraag);
+        return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
     }
     //</editor-fold>
 
@@ -305,6 +283,17 @@ public class AanvragenController {
         return "redirect:/aanvragen/detail?id=" + id;
     }
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Begeleider">
+    @RequestMapping(value="/begeleider", method=RequestMethod.GET)
+    public String showAanvragenBegeleider(ModelMap model){
+        model.addAttribute("aanvragen", domainFacade.getAanvragen(this.getCurrentDossier().getGebruiker())); 
+        return "/aanvragen/begeleider/aanvragen";
+    }
+    
+    //@RequestMapping(value="/")
+    
     //</editor-fold>
     
     @InitBinder

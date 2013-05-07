@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<h1>Bericht sturen naar geïnteresseerden</h1>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<h1>Bericht sturen naar bepaalde groepen</h1>
 <script type="text/javascript">
     $("document").ready(preview);
 
@@ -12,12 +13,22 @@
 <form>
     <table>
         <tr>
+            <td>Doelgroep</td>
+            <td>
+                <ul>
+                <c:forEach var="groep" items="${groepen}">
+                    <li><input type="checkbox" value="${groep}" name="groepen"/>${groep.name}</li>
+                </c:forEach>
+                </ul>
+            </td>
+        </tr>
+        <tr>
             <td><label for="onderwerp">Onderwerp</label></td>
-            <td><input type="text" name="onderwerp" id="onderwerp" onkeyup="preview();" onchange="preview();"/></td>
+            <td><input type="text" name="onderwerp" id="onderwerp" onkeyup="preview();" onchange="preview();" required="required"/></td>
         </tr>
         <tr>
             <td><label for="bericht">Bericht</label></td>
-            <td><textarea id="bericht" rows="15" cols="60" onkeyup="preview();" onchange="preview();" name="bericht"></textarea></td>
+            <td><textarea id="bericht" rows="15" cols="60" onkeyup="preview();" onchange="preview();" name="bericht" required="required"></textarea></td>
         </tr>
         <tr>
             <td>Preview</td>

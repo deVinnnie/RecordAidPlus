@@ -22,11 +22,8 @@
             <td>${gebruiker.emailadres}</td>
         </tr>
         <tr>
-            <td>Rol</td>
-            <td><springforms:select path="rol">
-                    <springforms:options/>
-                </springforms:select>
-            </td>
+            <td>Rollen</td>
+            <td><springforms:checkboxes path="rollen" itemLabel="name" items="${rollen}" delimiter="<br/>"/></td>
         </tr>
         <tr>
             <td>Gevalideerd</td>

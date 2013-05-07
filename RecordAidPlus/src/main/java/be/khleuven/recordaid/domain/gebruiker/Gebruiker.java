@@ -2,12 +2,11 @@ package be.khleuven.recordaid.domain.gebruiker;
 
 import be.khleuven.recordaid.util.ValidatieCodeGenerator;
 import java.io.Serializable;
-import java.util.*; 
-import javax.persistence.*; 
+import java.util.*;
+import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 
 /**
  * Gebruiker is een klasse die alle informatie bijhoudt over een bepaalde
@@ -17,28 +16,24 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Hannes
  */
 @Entity
-public class Gebruiker implements Serializable,UserDetails
-{
+public class Gebruiker implements Serializable, UserDetails {
+    @ElementCollection(targetClass = Rollen.class)
     @Enumerated
-    private Rollen rol = Rollen.STUDENT; 
+    private List<Rollen> rollen = new ArrayList<Rollen>();
     /*EnumType denotes the mapping between objects and database. 
-    Choosing String means the value of the enum will be stored as string 
-    instead of the default integer. 
-    */
+     Choosing String means the value of the enum will be stored as string 
+     instead of the default integer. 
+     */
     
     @Id
     private String emailadres;
-    
     private String voornaam;
     private String achternaam;
     
     /*@Column(length=70)    */
     private String wachtwoordHash;
-    
     private String validatieCode;
     private boolean gevalideerd = false;
-
-    private boolean geinteresseerd = false; 
     
     /**
      * Constructor met parameters, dit is de constructor die gebruikt dient te
@@ -51,9 +46,8 @@ public class Gebruiker implements Serializable,UserDetails
      * @param voornaam De voornaam van de gebruiker.
      * @param wachtwoord Het wachtwoord van de gebruiker.
      */
-    public Gebruiker(Rollen rol, String emailadres, String naam, String voornaam, String wachtwoord)
-    {
-        this.rol = rol;
+    public Gebruiker(Rollen rol, String emailadres, String naam, String voornaam, String wachtwoord) {
+        this.rollen.add(rol);
         this.emailadres = emailadres;
         this.achternaam = naam;
         this.voornaam = voornaam;
@@ -62,7 +56,9 @@ public class Gebruiker implements Serializable,UserDetails
         this.validatieCode = ValidatieCodeGenerator.generateValidatieCode();
     }
 
-    public Gebruiker() {}
+    public Gebruiker() {
+        this.rollen.add(Rollen.STUDENT);
+    }
 
     /**
      * Methode om een gebruiker te valideren op basis van een validatieCode. De
@@ -75,12 +71,10 @@ public class Gebruiker implements Serializable,UserDetails
      * @return True indien de gebruiker nu gevalideerd is, false indien de
      * validatiecodes niet overeen kwamen.
      */
-    public boolean valideer(String validatieCode)
-    {
+    public boolean valideer(String validatieCode) {
         boolean valid = false;
 
-        if(validatieCode.equals(this.validatieCode))
-        {
+        if (validatieCode.equals(this.validatieCode)) {
             valid = true;
             this.gevalideerd = true;
         }
@@ -92,8 +86,7 @@ public class Gebruiker implements Serializable,UserDetails
      * Methode om een gebruiker te valideren zonder de validatieCode. Deze
      * methode is bedoelt zo dat een admin manueel een gebruiker kan valideren.
      */
-    public void valideer()
-    {
+    public void valideer() {
         this.validatieCode = "***";
         this.gevalideerd = true;
     }
@@ -103,8 +96,7 @@ public class Gebruiker implements Serializable,UserDetails
      * een admin een gebruiker manueel kan devalideren, bijvoorbeeld een
      * gebruiker die niet meer toegelaten mag worden op de website.
      */
-    public void deValideer()
-    {
+    public void deValideer() {
         this.validatieCode = "***";
         this.gevalideerd = false;
     }
@@ -116,19 +108,16 @@ public class Gebruiker implements Serializable,UserDetails
      * @param rol De rol kan één van de rollen zoals bepaald in Enum Rollen
      * zijn.
      */
-    public void setRol(Rollen rol)
-    {
-        this.rol = rol;
+    public void addRol(Rollen rol) {
+        this.rollen.add(rol);
     }
-
 
     /**
      * Setter om de naam van de gebruiker te veranderen.
      *
      * @param naam String die de aangepaste naam van de gebruiker voorstelt.
      */
-    public void setNaam(String naam)
-    {
+    public void setNaam(String naam) {
         this.achternaam = naam;
     }
 
@@ -140,18 +129,15 @@ public class Gebruiker implements Serializable,UserDetails
         this.achternaam = achternaam;
     }
 
-
     /**
      * Setter om de voornaam van de gebruiker te veranderen.
      *
      * @param voornaam String die de aangepaste voornaam van de gebruiker
      * voorstelt.
      */
-    public void setVoornaam(String voornaam)
-    {
+    public void setVoornaam(String voornaam) {
         this.voornaam = voornaam;
     }
-
 
     /**
      * Setter om het wachtwoord van de gebruiker te veranderen.
@@ -159,9 +145,12 @@ public class Gebruiker implements Serializable,UserDetails
      * @param wachtwoord String die het aangepaste wachtwoord van de gebruiker
      * voorstelt.
      */
-    public void setWachtwoordHash(String wachtwoordHash)
-    {
+    public void setWachtwoordHash(String wachtwoordHash) {
         this.wachtwoordHash = wachtwoordHash;
+    }
+
+    public void setRollen(List<Rollen> rollen) {
+        this.rollen = rollen;
     }
     // </editor-fold>
 
@@ -171,13 +160,12 @@ public class Gebruiker implements Serializable,UserDetails
      *
      * @return String die het emailadres van de gebruiker teruggeeft.
      */
-    public String getEmailadres()
-    {
+    public String getEmailadres() {
         return emailadres;
     }
-    
-    public String getValidatieCode(){
-        return this.validatieCode; 
+
+    public String getValidatieCode() {
+        return this.validatieCode;
     }
 
     /**
@@ -186,8 +174,7 @@ public class Gebruiker implements Serializable,UserDetails
      * @return True indien het emailadres gevalideerd is, false indien het niet
      * gevalideerd is.
      */
-    public boolean isGevalideerd()
-    {
+    public boolean isGevalideerd() {
         return gevalideerd;
     }
 
@@ -196,11 +183,9 @@ public class Gebruiker implements Serializable,UserDetails
      *
      * @return String die de achternaam van de gebruiker is.
      */
-    public String getAchternaam()
-    {
+    public String getAchternaam() {
         return achternaam;
     }
-
 
     /**
      * Geeft de rol van de gebruiker terug.
@@ -208,9 +193,8 @@ public class Gebruiker implements Serializable,UserDetails
      * @return Eén van de mogelijke rollen die de gebruiker is zoals bepaalt in
      * de Enum Rollen.
      */
-    public Rollen getRol()
-    {
-        return rol;
+    public List<Rollen> getRollen() {
+        return rollen;
     }
 
     /**
@@ -218,8 +202,7 @@ public class Gebruiker implements Serializable,UserDetails
      *
      * @return String die de voornaam van de gebruiker is.
      */
-    public String getVoornaam()
-    {
+    public String getVoornaam() {
         return voornaam;
     }
 
@@ -229,28 +212,25 @@ public class Gebruiker implements Serializable,UserDetails
      * @return String die het wachtwoord van de gebruiker is.
      */
     //@Length(max=60)
-    public String getWachtwoordHash()
-    {
+    public String getWachtwoordHash() {
         return wachtwoordHash;
     }
-    
+
     /**
-     * Returns the name and surname combined. 
+     * Returns the name and surname combined.
      */
-    public String getVolledigeNaam(){
-        return this.voornaam + " " + this.achternaam; 
+    public String getVolledigeNaam() {
+        return this.voornaam + " " + this.achternaam;
     }
 
-    // </editor-fold>
-    
     public boolean isGeinteresseerd() {
-        return geinteresseerd;
+        return this.rollen.contains(Rollen.GEINTERESSEERDE); 
     }
 
     public void setGeinteresseerd(boolean geinteresseerd) {
-        this.geinteresseerd = geinteresseerd;
+        this.addRol(Rollen.GEINTERESSEERDE);
     }
-
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**
      * Methode die gebruikt wordt om een text representatie van het object te
@@ -259,11 +239,9 @@ public class Gebruiker implements Serializable,UserDetails
      * @return String die een text representatie van het object is.
      */
     @Override
-    public String toString()
-    {
-        return this.voornaam + " " + this.achternaam + " (" + this.emailadres + "), " + this.rol;
+    public String toString() {
+        return this.voornaam + " " + this.achternaam + " (" + this.emailadres + "), " + this.rollen;
     }
-
 
     /**
      * Methode die bepaalt wanneer 2 objecten hetzelfde zijn op basis van de
@@ -274,12 +252,10 @@ public class Gebruiker implements Serializable,UserDetails
      * zijn.
      */
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         boolean equals = false;
 
-        if(object!=null && object instanceof Gebruiker)
-        {
+        if (object != null && object instanceof Gebruiker) {
             Gebruiker gebruiker = (Gebruiker) object;
 
             equals = gebruiker.getEmailadres().equals(this.emailadres);
@@ -288,15 +264,13 @@ public class Gebruiker implements Serializable,UserDetails
         return equals;
     }
 
-
     /**
      * Methode die gebruikt wordt in bepaalde Collection<> klassen.
      *
      * @return integer gebaseerd op waarden van de instantievariabelen.
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 7;
         hash = 41 * hash + (this.emailadres != null ? this.emailadres.hashCode() : 0);
         return hash;
@@ -306,40 +280,42 @@ public class Gebruiker implements Serializable,UserDetails
     // <editor-fold defaultstate="collapsed" desc="Implemented UserDetails methods">
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority a = new SimpleGrantedAuthority(this.rol.name()); 
-        ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>(); 
-        list.add(a); 
-        return list; 
+        ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        for (Rollen rol : this.rollen) {
+            GrantedAuthority a = new SimpleGrantedAuthority(rol.name());
+            list.add(a);
+        }
+        return list;
     }
 
     @Override
     public String getPassword() {
-        return this.wachtwoordHash; 
+        return this.wachtwoordHash;
     }
 
     @Override
     public String getUsername() {
-        return this.emailadres; 
+        return this.emailadres;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; 
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-       return true; 
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; 
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.isGevalideerd(); 
+        return this.isGevalideerd();
     }
     // </editor-fold> 
 }

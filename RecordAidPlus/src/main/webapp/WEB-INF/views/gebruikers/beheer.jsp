@@ -14,7 +14,7 @@ $(document).ready(function()
             <th>Voornaam</th>
             <th>Naam</th>
             <th>Emailadres</th>
-            <th>Rol</th>
+            <th>Rollen</th>
             <th>Gevalideerd</th>
             <th>Details</th>
             <th>Dossier</th>
@@ -26,7 +26,11 @@ $(document).ready(function()
                 <td>${gebruiker.voornaam}</td>
                 <td>${gebruiker.achternaam}</td>
                 <td>${gebruiker.emailadres}</td>
-                <td>${gebruiker.rol}</td>
+                <td>
+                    <c:forEach items="${gebruiker.rollen}" var="rol">
+                        <c:out value="${rol.name}"/><br>
+                    </c:forEach>
+                </td>
                 <td><c:choose>
                         <c:when test="${gebruiker.gevalideerd}">
                             Ja

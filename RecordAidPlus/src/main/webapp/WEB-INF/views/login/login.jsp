@@ -1,13 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
 <h1>Inloggen</h1>
-<c:if test="${loginrequired != null}">
-    <p class="error">Om deze pagina te bekijken moet u ingelogd zijn.</p>
-</c:if>
-<c:if test="${error != null}">
-    <p class="error">${error}</p>
-</c:if>
+<m:boodschap/>
 <s:url var="authUrl" value="/static/j_spring_security_check" />
 <form id="registratieForm" method="POST" action="${authUrl}">
     <table>

@@ -47,8 +47,12 @@ public class Dossier implements Serializable {
     }
 
     public void addAanvraag(AbstractAanvraag aanvraag) {
+        this.addAanvraag(aanvraag, gebruiker); 
+    }
+    
+    public void addAanvraag(AbstractAanvraag aanvraag, Gebruiker aanvrager) {
         this.aanvragen.add(aanvraag);
-        this.addGebeurtenis("Nieuwe aanvraag toegevoegd", gebruiker);
+        this.addGebeurtenis("Nieuwe aanvraag toegevoegd", aanvrager);
     }
     
     public List<AbstractAanvraag> getAanvragen(){

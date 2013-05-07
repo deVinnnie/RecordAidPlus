@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Entity
 public class OpnameMethode extends Identifiable implements Serializable {
     private String naam; 
+    
+    @Column(columnDefinition = "CLOB")
     private String beschrijving; 
 
     public OpnameMethode() {}

@@ -1,30 +1,24 @@
 package be.khleuven.recordaid.domain.facade;
 
-import be.khleuven.recordaid.domain.departement.Lector;
-import be.khleuven.recordaid.domain.departement.Departement;
-import be.khleuven.recordaid.domain.departement.Lokaal;
+import be.khleuven.recordaid.domain.departement.*; 
 import be.khleuven.recordaid.domain.gebruiker.*; 
 import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.domain.*;
-import be.khleuven.recordaid.domain.aanvragen.DagAanvraag;
-import be.khleuven.recordaid.domain.aanvragen.MultiPeriodeAanvraag;
+import be.khleuven.recordaid.domain.aanvragen.*; 
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.opnames.OpnameMethode;
 import be.khleuven.recordaid.domain.items.*;
 import be.khleuven.recordaid.domain.mailing.*; 
 import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.util.TimeSpan;
-import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*; 
+import java.util.logging.*; 
 
 /**
  *
  * @author Vincent Ceulemans
  */
 public class StartUpDataFiller {
-
     private RecordAidDomainFacade facade;
 
     public StartUpDataFiller(RecordAidDomainFacade facade) {
@@ -70,7 +64,7 @@ public class StartUpDataFiller {
 
             //Create a dummy user
             String wachtwoord2 = "$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW.";
-            Gebruiker g2 = new Gebruiker(Rollen.STUDENT, "dummy@khleuven.be", "Dummy", "Dummy", wachtwoord2);
+            Gebruiker g2 = new Gebruiker(Rollen.BEGELEIDER, "dummy@khleuven.be", "Dummy", "Dummy", wachtwoord2);
             g2.valideer();
             this.facade.create(g2);
         } catch (Exception e) {
@@ -163,13 +157,14 @@ public class StartUpDataFiller {
             start.set(2013, Calendar.MARCH, 12, 10, 0);
             Calendar end = (Calendar) start.clone();
             end.set(2013, Calendar.MARCH, 12, 12, 0);
-           
-            Dossier dossier = facade.getDossier(facade.getGebruiker("dummy@khleuven.be"));
+            
+            Gebruiker dummy = facade.getGebruiker("dummy@khleuven.be");
+            Dossier dossier = facade.getDossier(dummy);
             MultiPeriodeAanvraag aanvraag = new MultiPeriodeAanvraag(dossier, facade.getDepartement("G&T"));
-                    
+            aanvraag.setBegeleider(dummy);
             aanvraag.setPeriode(new TimeSpan(start, end));
 
-            facade.addAanvraag(aanvraag); 
+            facade.addMultiPeriodeAanvraag(aanvraag, dummy); 
         }
         catch(Exception e){
             e.printStackTrace();

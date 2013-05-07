@@ -64,3 +64,4 @@ $(document).ready(function()
         </c:forEach>
     </tbody>    
 </table>
+<a href="<s:url value="/opnames/nieuw_opnamemethode"/>">Nieuwe Opnamemethode</a>

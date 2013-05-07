@@ -65,7 +65,7 @@
         <c:if test="${not empty selectedItem}">
         <div id="calendar_wrapper">
             <p>Klik of selecteer een slot om een reservatie toe te voegen.</p>
-            <springforms:form modelAttribute="nieuweReservatie" method="POST">
+            <springforms:form modelAttribute="nieuweReservatie" method="POST" style="float:left;">
                 <springforms:input type="hidden" id="startTime" path="slot.beginTime"/>
                 <springforms:input type="hidden" id="endTime" path="slot.endTime"/>
                 <input type="submit" value="Opslaan"/>

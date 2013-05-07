@@ -1,4 +1,4 @@
-package be.khleuven.recordaid.mvc;
+package be.khleuven.recordaid.util;
 
 /**
  *
@@ -8,8 +8,7 @@ public class Boodschap {
     private String message;
     private String type; 
 
-    public Boodschap() {
-    }
+    public Boodschap(){}
     
     public Boodschap(String message, String type) {
         this.message = message;
