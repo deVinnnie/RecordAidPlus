@@ -30,6 +30,10 @@ h1, h2, h3, h4{
     margin-bottom: 0; 
 }
 
+h2, h3, h4{
+    margin-top: 1em; 
+}
+
 #content{
     min-height: 500px;
     min-width: 900px; 

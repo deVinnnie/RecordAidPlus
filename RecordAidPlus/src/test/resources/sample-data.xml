@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Deze XML-file wordt door DB-Unit uitgelezen en gebruikt om 
+test-data aan de databank toe te voegen. Elk XML-element stelt één rij voor. 
+De naam van het element komt overeen met de tabel, de attributen en hun waarden 
+stellen de kolommen en waarden voor. 
+-->
+<dataset>
+<!--Departementen-->
+<DEPARTEMENT NAAM="GTen" ACTIEF="1" /> <!--Boolean waarde als int uitdrukken: true = 1; false = 0.-->
+<DEPARTEMENT NAAM="SSH" ACTIEF="0" />
+<DEPARTEMENT NAAM="DLO Diest" ACTIEF="0" />
+<DEPARTEMENT NAAM="Naamse steenweg" ACTIEF="0" />
+<DEPARTEMENT NAAM="Hertogstraat" ACTIEF="0" />
+<!--Lectoren-->
+<LECTOR ID="-5" NAAM="Luc Janssens" EMAILADRES="luc.janssens@khleuven.be" AUTONOOMOPNEMEN="1"/>
+<LECTOR ID="-6" NAAM="Elke Steegmans" EMAILADRES="elke.steegmans@khleuven.be" AUTONOOMOPNEMEN="0"/>
+<LECTOR ID="-7" NAAM="Mieke Kemme" EMAILADRES="mieke.kemme@khleuven.be" AUTONOOMOPNEMEN="0"/>
+<LECTOR ID="-8" NAAM="Jan van Hee" EMAILADRES="jan.van.hee@khleuven.be" AUTONOOMOPNEMEN="0"/>
+<!--Gebruikers-->
+<GEBRUIKER EMAILADRES="recordaid@khleuven.be" VOORNAAM="ADMIN" ACHTERNAAM="" WACHTWOORDHASH="$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m" VALIDATIECODE="****" GEVALIDEERD="1"/>
+<GEBRUIKER EMAILADRES="dummy@khleuven.be" VOORNAAM="Dummy" ACHTERNAAM="Duck" WACHTWOORDHASH="$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW." VALIDATIECODE="****" GEVALIDEERD="1"/>                  
+<GEBRUIKER_ROLLEN GEBRUIKER_EMAILADRES="recordaid@khleuven.be" ROLLEN="ADMIN"/>
+<GEBRUIKER_ROLLEN GEBRUIKER_EMAILADRES="dummy@khleuven.be" ROLLEN="BEGELEIDER"/>
+<!--Opnamemethodes-->
+<OPNAMEMETHODE ID="-1" NAAM="Scherm" BESCHRIJVING="Scherm"/>
+<OPNAMEMETHODE ID="-2" NAAM="Scherm/Bord en Lector" BESCHRIJVING="Scherm/Bord en Lector"/>
+<!--Items-->
+<ITEM ID="-3" NAAM="Item 1"/>
+<ITEM ID="-4" NAAM="Item 2"/>
+<!--Mailing-->
+<SUBJECTPREFIX ID="1" SUBJECT_PREFIX="[RecordAid]"/>
+</dataset>

@@ -156,6 +156,11 @@
         </put-list-attribute>
     </definition>
     
+    <definition name="/gebruikers/dossier" extends="base.jquery">
+        <put-attribute name="title" value="gebruikers.dossier.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/gebruikers/dossier.jsp"/>
+    </definition>
+    
     <!--Common-->
     <definition name="/error" extends="template">
         <put-attribute name="title" value="error.title"/>

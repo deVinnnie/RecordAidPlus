@@ -3,12 +3,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <h1><c:out value="Dossier - ${dossier.gebruiker.voornaam} ${dossier.gebruiker.achternaam}"/></h1>
-Hoofdverantwoordelijke: <c:out value="${dossier.verantwoordelijke.voornaam} ${dossier.verantwoordelijke.achternaam}" default="Niemand"/>
-
 <h2>Aanvragen</h2>
 <c:choose>
     <c:when test="${not empty dossier.aanvragen}">
-            <table>
+        <script type="text/javascript">
+            $('document').ready(function(){
+                datatable("#aanvragen"); 
+                
+            }); 
+        </script>
+            <table id="aanvragen">
                 <thead>
                     <tr>
                         <th>Type</th>
@@ -49,7 +53,12 @@ Hoofdverantwoordelijke: <c:out value="${dossier.verantwoordelijke.voornaam} ${do
 <h2>Geschiedenis</h2>
 <c:choose>
     <c:when test="${not empty dossier.geschiedenis.gebeurtenissen}">
-            <table>
+         <script type="text/javascript">
+            $('document').ready(function(){
+                datatable("#geschiedenis"); 
+            }); 
+        </script>
+            <table id="geschiedenis">
                 <thead>
                     <tr>
                         <th>Datum</th>

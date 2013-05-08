@@ -22,7 +22,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
  */
 public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  
-
     private String url = "http://recordaid.khleuven.be/";
     private CommonDatabaseInterface commonDb;
     private FAQDatabaseInterface faqDB;
@@ -58,25 +57,11 @@ public class RecordAidDomainFacade {
         this.departementDb = departementDb;
         this.mailDb = mailDb;
 
-        //Watch out!! The init method intializes some default but real entities. 
+        //Watch out!! Dbunit inserts some default but real entities into the DB. 
         //You don't want to accidently send a mail to them!
         mailHandler = new MailHandlerDummy();
-
-        try {
-            this.init();
-        } catch (Exception e) {
-            //Move along, nothing to see here. 
-        }
     }
     //</editor-fold>  
-
-    /**
-     * Put some test data in the database.
-     */
-    public void init() throws DatabaseException {
-        StartUpDataFiller filler = new StartUpDataFiller(this);
-        filler.init();
-    }
 
     //<editor-fold defaultstate="collapsed" desc="FAQ">
     public FAQ findFAQ(Long id) {
@@ -103,7 +88,7 @@ public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Gebruikers">
     public Gebruiker getGebruiker(String emailadres) {
         Gebruiker gebruiker = commonDb.find(Gebruiker.class, emailadres);
-        return gebruiker; 
+        return gebruiker;
     }
 
     public Gebruiker getGebruikerByValidatiecode(String validatiecode) {
@@ -122,15 +107,16 @@ public class RecordAidDomainFacade {
     }
 
     /**
-     * Een nieuwe gebruiker wordt aangemaakt in opdracht van een andere gebruiker. 
-     * Dit is het geval bij begeleiders die een aanvraag willen plaatsen voor studenten die nog niet geregistreerd zijn. 
-     * De mail die verstuurd wordt naar de student bevat een tijdelijk wachtwoord. 
+     * Een nieuwe gebruiker wordt aangemaakt in opdracht van een andere
+     * gebruiker. Dit is het geval bij begeleiders die een aanvraag willen
+     * plaatsen voor studenten die nog niet geregistreerd zijn. De mail die
+     * verstuurd wordt naar de student bevat een tijdelijk wachtwoord.
      */
     public void addGebruiker(Gebruiker gebruiker, Gebruiker begeleider) throws DomainException {
-        if(!begeleider.getRollen().contains(Rollen.BEGELEIDER)){
+        if (!begeleider.getRollen().contains(Rollen.BEGELEIDER)) {
             throw new DomainException("Enkel begeleiders kunnen nieuwe gebruikers aanmaken.");
         }
-        
+
         //Add user to database. 
         commonDb.create(gebruiker);
 
@@ -141,7 +127,7 @@ public class RecordAidDomainFacade {
         context.put("tijdelijk_wachtwoord", gebruiker.getValidatieCode());
         this.sendMail("validatie_gebruiker_indirect", gebruiker.getEmailadres(), context);
     }
-    
+
     public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException {
         commonDb.remove(gebruiker);
     }
@@ -364,7 +350,24 @@ public class RecordAidDomainFacade {
 
     private void sendMail(String message_key, String recipient, Map<String, String> context) throws DomainException {
         MailMessage mailMessage = mailDb.getMailMessage(message_key);
+        
+        if(mailMessage==null){
+            //Indicates that no mailmessages are present  in database.
+            //MailMessages in database are only called from code, and not dependant on user-input. 
+            this.resetMessages();
+        }
+        
         this.sendMail(mailMessage, recipient, context);
+    }
+
+    private void resetMessages() {
+        MailMessageFactory factory = new MailMessageFactory();
+        List<MailMessage> messages = factory.createMailMessages();
+
+        for (MailMessage message : messages) {
+            message.setSubjectPrefix(this.getSubjectPrefix());
+            this.create(message);
+        }
     }
 
     private void sendMail(MailMessage mailMessage, String recipient, Map<String, String> context) throws DomainException {

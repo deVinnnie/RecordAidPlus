@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 public class Gebruiker implements Serializable, UserDetails {
     @ElementCollection(targetClass = Rollen.class)
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private List<Rollen> rollen = new ArrayList<Rollen>();
     /*EnumType denotes the mapping between objects and database. 
      Choosing String means the value of the enum will be stored as string 

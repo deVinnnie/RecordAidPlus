@@ -8,42 +8,6 @@
     <packaging>war</packaging>
 
     <name>RecordAidPlus</name>
-    <!--<profiles>
-        <profile>
-            <id>dbunit</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>dbunit-maven-plugin</artifactId>
-                        <version>1.0-beta-3</version>
-                        
-                        <dependencies>
-                            <dependency>
-                                <groupId>hsqldb</groupId>
-                                <artifactId>hsqldb</artifactId>
-                                <version>${hsqldb.version}</version>
-                            </dependency>
-                        </dependencies>
-                        <configuration>
-                            <dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dataTypeFactoryName>
-                            <url>jdbc:hsqldb:file:${project.basedir}/target/db/build;shutdown=true</url>
-                            <driver>org.hsqldb.jdbcDriver</driver>
-                            <username>sa</username>
-                            <password></password>
-                            <type>CLEAN_INSERT</type>
-                            <src>src/test/data/stub.xml</src>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>-->
-
-
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -296,6 +260,47 @@
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Dbunit: Vult de databank met standaard data, gedefinieerd in een xml-file.-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>dbunit-maven-plugin</artifactId>
+                <version>1.0-beta-3</version>
+               
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.derby</groupId>
+                        <artifactId>derbyclient</artifactId>
+                        <version>10.10.1.1</version>
+                    </dependency>
+                </dependencies>
+                
+                <configuration>
+                    <dataTypeFactoryName>org.dbunit.dataset.datatype.DefaultDataTypeFactory</dataTypeFactoryName>
+                    <driver>org.apache.derby.jdbc.ClientDriver</driver>
+                    <username>app</username>
+                    <password>app</password>
+                    <url>jdbc:derby://localhost:1527/RecordAid</url>
+                    <schema>APP</schema>
+                    <transaction>true</transaction>
+                </configuration>
+            
+            
+                <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>operation</goal>
+                        </goals>
+                        
+                        <!-- specific configurations -->
+                        <configuration>
+                            <format>flat</format><!--Versie is belangrijk, xml als waarde genereert geen uitvoer.-->
+                            <src>src/test/resources/sample-data.xml</src>
+                            <type>CLEAN_INSERT</type>
                         </configuration>
                     </execution>
                 </executions>
