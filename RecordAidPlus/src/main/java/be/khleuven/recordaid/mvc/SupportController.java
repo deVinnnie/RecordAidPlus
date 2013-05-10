@@ -2,6 +2,7 @@ package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.util.Boodschap;
 import be.khleuven.recordaid.domain.departement.Support;
+import java.util.Collection;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,5 +28,12 @@ public class SupportController  extends AbstractController{
         model.addAttribute("boodschap", new Boodschap("Probleem succesvol toegevoegd.", "succes"));
         model.addAttribute("support", new Support());
         return "/support/nieuw";
+    }
+    
+    @RequestMapping(value="/beheer", method = RequestMethod.POST)
+    public String showBeheer(ModelMap model) {
+        Collection<Support> supports = domainFacade.getSupports();
+        model.addAttribute("supports", supports);
+        return "/support/beheer";
     }
 }

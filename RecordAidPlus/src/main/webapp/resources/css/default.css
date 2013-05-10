@@ -46,8 +46,7 @@ h2, h3, h4{
 
 #header{
     height: 265px;
-    overflow-y: hidden; 
-    overflow-x: hidden; 
+    overflow: hidden;
 }
 
 #navigation{
@@ -168,12 +167,6 @@ td{
     background-color: #EE5757;
     color: white;
     font-weight: bold;
-}
-
-table td, 
-.htmlTable th
-{
-   /* padding: 10px 0; */
 }
 
 table

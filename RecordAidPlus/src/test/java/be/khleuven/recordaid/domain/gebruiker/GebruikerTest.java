@@ -14,7 +14,7 @@ public class GebruikerTest {
     @Test
     public void testConstructor_Enkel_Emailadres() {
         Gebruiker gebruiker = new Gebruiker("voornaam.de.achternaam@student.khleuven.be");
-        assertEquals("voornaam", gebruiker.getVoornaam());
-        assertEquals("de achternaam", gebruiker.getAchternaam());      
+        assertEquals("Voornaam", gebruiker.getVoornaam());
+        assertEquals("De Achternaam", gebruiker.getAchternaam());      
     }
 }

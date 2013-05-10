@@ -36,7 +36,11 @@ public class OpnameMoment extends Identifiable implements Serializable {
     @OneToOne
     private Opname opname; 
     
-    private String toegangsCode = ValidatieCodeGenerator.generateValidatieCode(); 
+    private String toegangsCode = ValidatieCodeGenerator.generateValidatieCode();
+    
+    private Boolean goedgekeurd; 
+    //A Boolean (capital B) has default value null. 
+    //We'll use this a a tristate object for indicating GEWEIGERD, GOEDGEKEURD and UNSET. 
     
     /**
      * Indicates wether this Opname is visible to other users. 
@@ -152,7 +156,15 @@ public class OpnameMoment extends Identifiable implements Serializable {
         this.mogelijkeOpnameMethodes = mogelijkeOpnameMethodes;
     }
 
+    public Boolean getGoedgekeurd() {
+        return goedgekeurd;
+    }
+
+    public void setGoedgekeurd(Boolean goedgekeurd) {
+        this.goedgekeurd = goedgekeurd;
+    }
     //</editor-fold>
+    
     @Override
     public int hashCode() {
         int hash = 7;

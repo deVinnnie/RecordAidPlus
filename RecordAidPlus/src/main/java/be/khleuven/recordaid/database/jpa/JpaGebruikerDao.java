@@ -1,7 +1,6 @@
 package be.khleuven.recordaid.database.jpa;
 
-import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
-import be.khleuven.recordaid.domain.gebruiker.Rollen;
+import be.khleuven.recordaid.domain.gebruiker.*;
 import be.khleuven.recordaid.database.interfaces.GebruikerDatabaseInterface;
 import java.util.Collection;
 import javax.persistence.*; 

@@ -3,6 +3,7 @@ package be.khleuven.recordaid.database.jpa;
 import be.khleuven.recordaid.database.interfaces.CommonDatabaseInterface;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,13 @@ public class JpaCommonDao extends JpaAbstractDao implements CommonDatabaseInterf
     
     @Override
     public <T> T find(Class<T> className, Object id) {
-        return getEntityManager().find(className, id);
+        try{
+            EntityManager entityManager = getEntityManager(); 
+            return entityManager.find(className, id);
+        }
+        catch(NoResultException ex){
+            return null; 
+        }
     }
 
     @Override

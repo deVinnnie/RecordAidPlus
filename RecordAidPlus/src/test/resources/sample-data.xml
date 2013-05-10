@@ -22,6 +22,8 @@ stellen de kolommen en waarden voor.
 <GEBRUIKER EMAILADRES="dummy@khleuven.be" VOORNAAM="Dummy" ACHTERNAAM="Duck" WACHTWOORDHASH="$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW." VALIDATIECODE="****" GEVALIDEERD="1"/>                  
 <GEBRUIKER_ROLLEN GEBRUIKER_EMAILADRES="recordaid@khleuven.be" ROLLEN="ADMIN"/>
 <GEBRUIKER_ROLLEN GEBRUIKER_EMAILADRES="dummy@khleuven.be" ROLLEN="BEGELEIDER"/>
+<DOSSIER GEBRUIKER_EMAILADRES="recordaid@khleuven.be"/>
+<DOSSIER GEBRUIKER_EMAILADRES="dummy@khleuven.be"/>
 <!--Opnamemethodes-->
 <OPNAMEMETHODE ID="-1" NAAM="Scherm" BESCHRIJVING="Scherm"/>
 <OPNAMEMETHODE ID="-2" NAAM="Scherm/Bord en Lector" BESCHRIJVING="Scherm/Bord en Lector"/>
@@ -29,5 +31,5 @@ stellen de kolommen en waarden voor.
 <ITEM ID="-3" NAAM="Item 1"/>
 <ITEM ID="-4" NAAM="Item 2"/>
 <!--Mailing-->
-<SUBJECTPREFIX ID="1" SUBJECT_PREFIX="[RecordAid]"/>
+<!--<SUBJECTPREFIX ID="1" SUBJECT_PREFIX="[RecordAid]"/>-->
 </dataset>

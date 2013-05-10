@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
+import be.khleuven.recordaid.util.StringUtils;
 import be.khleuven.recordaid.util.ValidatieCodeGenerator;
 import java.io.Serializable;
 import java.util.*;
@@ -27,6 +28,7 @@ public class Gebruiker implements Serializable, UserDetails {
     
     @Id
     private String emailadres;
+    
     private String voornaam;
     private String achternaam;
     
@@ -64,14 +66,14 @@ public class Gebruiker implements Serializable, UserDetails {
         this.setEmailadres(emailadres);
         String[] split = emailadres.split("@"); //Results in voornaam.achternaam|khleuven.be
         String[] split2 = split[0].split("\\."); //Results in voornaam | achternaam
-        this.setVoornaam(split2[0]); 
+        this.setVoornaam(StringUtils.firstLetterToUpperCase(split2[0])); 
         String achternaam=""; 
         for(int i =1; i<split2.length; i++){
             if(i > 1){
                 //Do not add space for the first part. 
                 achternaam+=" "; 
             }
-            achternaam += split2[i]; 
+            achternaam += StringUtils.firstLetterToUpperCase(split2[i]); 
         }
         this.setAchternaam(achternaam); 
     }

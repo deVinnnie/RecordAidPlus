@@ -182,12 +182,12 @@ public class AanvragenController extends AbstractController{
             Gebruiker begeleider = this.getCurrentDossier().getGebruiker(); 
             Gebruiker gebruiker = domainFacade.getGebruiker(student); 
             if(gebruiker == null){
-                domainFacade.addGebruiker(new Gebruiker(student)  ,begeleider);
+                gebruiker = domainFacade.addGebruiker(new Gebruiker(student)  ,begeleider);
             }
             aanvraag.setDossier(domainFacade.getDossier(gebruiker));
+            aanvraag.setBegeleider(begeleider);
             
-            
-            domainFacade.addMultiPeriodeAanvraag(aanvraag, begeleider);
+            aanvraag = domainFacade.addMultiPeriodeAanvraag(aanvraag, begeleider);
             return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,18 +260,21 @@ public class AanvragenController extends AbstractController{
             BindingResult bindingResult,
             ModelMap model) {
         this.domainFacade.edit(aanvraag);
+        model.addAttribute("boodschap", new Boodschap("Aanvraag gewijzigd", "succes")); 
         return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Goedkeuring">
     @RequestMapping(value = "goedkeuren", params = "id", method = RequestMethod.GET)
-    public String aanvraagGoedkeuren(@RequestParam("id") long id) {
+    public String aanvraagGoedkeuren(@RequestParam("id") long id, ModelMap model) {
         try {
             AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
-            domainFacade.aanvaardAanvraag(aanvraag, this.getCurrentDossier().getGebruiker());    
+            domainFacade.aanvaardAanvraag(aanvraag, this.getCurrentDossier().getGebruiker());   
+            model.addAttribute("boodschap", new Boodschap("Aanvraag goedgekeurd", "succes")); 
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
+            model.addAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
         }
         return "redirect:/aanvragen/detail?id=" + id;
     }
@@ -283,12 +286,14 @@ public class AanvragenController extends AbstractController{
 
     @RequestMapping(value = "weigeren", params = {"id", "reden"}, method = RequestMethod.POST)
     public String aanvraagWeigeren(@RequestParam("id") long id,
-            @RequestParam("reden") String reden) {
+            @RequestParam("reden") String reden, ModelMap model) {
         try {
             AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
-            domainFacade.weigerAanvraag(aanvraag, this.getCurrentDossier().getGebruiker(), reden);    
+            domainFacade.weigerAanvraag(aanvraag, this.getCurrentDossier().getGebruiker(), reden);  
+            model.addAttribute("boodschap", new Boodschap("Aanvraag geweigerd", "succes")); 
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
+             model.addAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
         }
         return "redirect:/aanvragen/detail?id=" + id;
     }

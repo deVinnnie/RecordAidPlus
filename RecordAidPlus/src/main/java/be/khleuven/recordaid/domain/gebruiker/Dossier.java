@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
+import be.khleuven.recordaid.domain.Identifiable;
 import be.khleuven.recordaid.domain.aanvragen.AbstractAanvraag;
 import java.io.Serializable;
 import javax.persistence.*; 
@@ -10,7 +11,7 @@ import java.util.*;
  * @author Vincent Ceulemans
  */
 @Entity
-public class Dossier implements Serializable { 
+public class Dossier /*extends Identifiable*/ implements Serializable { 
     @OneToOne
     @Id
     private Gebruiker gebruiker; 

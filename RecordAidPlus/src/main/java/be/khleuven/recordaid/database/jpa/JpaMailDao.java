@@ -23,6 +23,12 @@ public class JpaMailDao extends JpaAbstractDao implements MailDatabaseInterface{
     public MailMessage getMailMessage(String description){
         Query query = getEntityManager().createQuery("SELECT x FROM MailMessage x WHERE x.description = :description");
         query.setParameter("description", description);
-        return (MailMessage) query.getSingleResult();
+        try{
+            MailMessage message = (MailMessage) query.getSingleResult();
+            return message; 
+        }
+        catch(NoResultException ex){
+            return null; 
+        }
     }
 }

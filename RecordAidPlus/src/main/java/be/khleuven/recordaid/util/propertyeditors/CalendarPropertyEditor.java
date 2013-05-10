@@ -43,7 +43,13 @@ public class CalendarPropertyEditor extends PropertyEditorSupport {
     public String getAsText(){
         SimpleDateFormat fmt = new SimpleDateFormat(format); 
         Calendar calendar = (Calendar) this.getValue(); 
-        String text = fmt.format(calendar.getTime()); 
+        String text; 
+        if(calendar != null){
+            text = fmt.format(calendar.getTime()); 
+        }
+        else{
+            text = fmt.format(Calendar.getInstance().getTime()); 
+        }
         return text;
     }
 }

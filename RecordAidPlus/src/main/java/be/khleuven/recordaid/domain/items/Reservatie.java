@@ -21,6 +21,9 @@ public class Reservatie extends Identifiable
     @OneToOne
     private Gebruiker gebruiker;
 
+    @OneToOne
+    private Item item; 
+    
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
      */
@@ -79,6 +82,14 @@ public class Reservatie extends Identifiable
     public Gebruiker getGebruiker()
     {
         return gebruiker;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
     // </editor-fold>
 

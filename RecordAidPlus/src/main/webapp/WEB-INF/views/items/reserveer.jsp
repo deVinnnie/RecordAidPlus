@@ -8,19 +8,23 @@
         <s:url value="/items/reservaties?item=${selectedItem.id}" var="feed"/>
         <security:authentication property="principal.voornaam" var="voornaam"/>
         <security:authentication property="principal.achternaam" var="achternaam"/>
+        <c:if test="${empty datum}">
+            <c:set var="datum" value="new Date()"/>
+        </c:if>
+
         <c:if test="${not empty selectedItem}">
             <script type="text/javascript">
                 $("document").ready(function()
                 {
-                    datepicker("#datum_picker", "#datum", new Date());
+                    datepicker("#datum_picker", "#datum", ${datum});
 
                     $("#datum_picker").change(function()
                     {
                         var date = $("#datum_picker").datepicker("getDate");
                         $("#calendar").fullCalendar('gotoDate', date);
                     });
-            
-                    var title = "${voornaam} ${achternaam}";
+
+                    var title = "<c:out value="${voornaam} ${achternaam}"/>";
                     initCalendar("#calendar", title, "${feed}");
                 });
             </script>
@@ -54,31 +58,31 @@
                     </tr>
                 </table>
             </form>
-            
+
             <%--Only show the datepicker if an item if selected.--%>
             <c:if test="${not empty selectedItem}">
                 <div id="datum_picker"></div>
             </c:if>
         </div>
-            
+
         <%--Show the reservation-tool if an item if selected.--%>
         <c:if test="${not empty selectedItem}">
-        <div id="calendar_wrapper">
-            <p>Klik of selecteer een slot om een reservatie toe te voegen.</p>
-            <springforms:form modelAttribute="nieuweReservatie" method="POST" style="float:left;">
-                <springforms:input type="hidden" id="startTime" path="slot.beginTime"/>
-                <springforms:input type="hidden" id="endTime" path="slot.endTime"/>
-                <input type="submit" value="Opslaan"/>
-            </springforms:form>
-                
-            <form method="GET" action="<s:url value="/items/reserveer/verwijder"/>">
-                <input type="hidden" name="reservatie" id="reservatie"/>
-                <input type="hidden" name="selected_item" id="selected_item" value="${selectedItem.id}"/>
-                <input id="remove_button" type="submit" value="Verwijder" disabled="disabled"/>
-            </form>
-            
-            <div id="calendar"></div>
-        </div>
+            <div id="calendar_wrapper">
+                <p>Klik of selecteer een slot om een reservatie toe te voegen.</p>
+                <springforms:form modelAttribute="nieuweReservatie" method="POST" style="float:left;">
+                    <springforms:input type="hidden" id="startTime" path="slot.beginTime"/>
+                    <springforms:input type="hidden" id="endTime" path="slot.endTime"/>
+                    <input type="submit" value="Opslaan"/>
+                </springforms:form>
+
+                <form method="GET" action="<s:url value="/items/reserveer/verwijder"/>">
+                    <input type="hidden" name="reservatie" id="reservatie"/>
+                    <input type="hidden" name="selected_item" id="selected_item" value="${selectedItem.id}"/>
+                    <input id="remove_button" type="submit" value="Verwijder" disabled="disabled"/>
+                </form>
+
+                <div id="calendar"></div>
+            </div>
         </c:if>
         <div class="clearfix"></div> 
     </c:when>

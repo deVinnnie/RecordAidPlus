@@ -10,6 +10,8 @@ import be.khleuven.recordaid.database.DatabaseException;
 import be.khleuven.recordaid.database.interfaces.*;
 import be.khleuven.recordaid.domain.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -40,7 +42,6 @@ public class RecordAidDomainFacade {
         mailHandler = new MailHandlerDummy();
     }
 
-    @Autowired
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
             FAQDatabaseInterface faqDB,
@@ -49,6 +50,19 @@ public class RecordAidDomainFacade {
             ReservatieDatabaseInterface reservatieDB,
             DepartementDatabaseInterface departementDb,
             MailDatabaseInterface mailDb) {
+        this(commonDb, faqDB, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true); 
+    }
+    
+    @Autowired
+    public RecordAidDomainFacade(
+            CommonDatabaseInterface commonDb,
+            FAQDatabaseInterface faqDB,
+            GebruikerDatabaseInterface gebruikerDB,
+            AanvraagDatabaseInterface aanvraagDB,
+            ReservatieDatabaseInterface reservatieDB,
+            DepartementDatabaseInterface departementDb,
+            MailDatabaseInterface mailDb, 
+            boolean initialize) {
         this.commonDb = commonDb;
         this.faqDB = faqDB;
         this.gebruikerDB = gebruikerDB;
@@ -60,9 +74,22 @@ public class RecordAidDomainFacade {
         //Watch out!! Dbunit inserts some default but real entities into the DB. 
         //You don't want to accidently send a mail to them!
         mailHandler = new MailHandlerDummy();
+        
+        if(initialize){
+            this.init(); 
+        }
     }
     //</editor-fold>  
 
+    public void init (){
+        try {
+            StartUpDataFiller filler = new StartUpDataFiller(this);
+            filler.init();
+        } catch (DatabaseException ex) {
+            Logger.getLogger(RecordAidDomainFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     //<editor-fold defaultstate="collapsed" desc="FAQ">
     public FAQ findFAQ(Long id) {
         return commonDb.find(FAQ.class, id);
@@ -112,13 +139,13 @@ public class RecordAidDomainFacade {
      * plaatsen voor studenten die nog niet geregistreerd zijn. De mail die
      * verstuurd wordt naar de student bevat een tijdelijk wachtwoord.
      */
-    public void addGebruiker(Gebruiker gebruiker, Gebruiker begeleider) throws DomainException {
+    public Gebruiker addGebruiker(Gebruiker gebruiker, Gebruiker begeleider) throws DomainException {
         if (!begeleider.getRollen().contains(Rollen.BEGELEIDER)) {
             throw new DomainException("Enkel begeleiders kunnen nieuwe gebruikers aanmaken.");
         }
 
         //Add user to database. 
-        commonDb.create(gebruiker);
+        Gebruiker res = commonDb.create(gebruiker);
 
         //Send mail with Validation-code to the new user. 
         Map<String, String> context = new HashMap<String, String>();
@@ -126,6 +153,8 @@ public class RecordAidDomainFacade {
         context.put("validatie_code", gebruiker.getValidatieCode());
         context.put("tijdelijk_wachtwoord", gebruiker.getValidatieCode());
         this.sendMail("validatie_gebruiker_indirect", gebruiker.getEmailadres(), context);
+        
+        return res; 
     }
 
     public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException {
@@ -254,7 +283,7 @@ public class RecordAidDomainFacade {
         Lector lector;
         try {
             lector = departementDb.getLector(emailadres);
-        } catch (EmptyResultDataAccessException ex) {
+        } catch (Exception ex) {
             lector = new Lector(emailadres);
             lector = commonDb.create(lector);
         }
@@ -355,6 +384,7 @@ public class RecordAidDomainFacade {
             //Indicates that no mailmessages are present  in database.
             //MailMessages in database are only called from code, and not dependant on user-input. 
             this.resetMessages();
+            mailMessage = mailDb.getMailMessage(message_key);
         }
         
         this.sendMail(mailMessage, recipient, context);
@@ -363,6 +393,12 @@ public class RecordAidDomainFacade {
     private void resetMessages() {
         MailMessageFactory factory = new MailMessageFactory();
         List<MailMessage> messages = factory.createMailMessages();
+        
+        SubjectPrefix prefix = new SubjectPrefix();
+        prefix.setId(1);
+        prefix.setSubject_prefix("[RecordAid]");
+        
+        this.create(prefix); 
 
         for (MailMessage message : messages) {
             message.setSubjectPrefix(this.getSubjectPrefix());

@@ -11,7 +11,7 @@
             <a href="<s:url value="/gebruikers/account"/>"><security:authentication property="principal.username"/></a>
             <a href="<s:url value="/static/j_spring_security_logout"/>">Logout</a>
     </security:authorize>
-    <security:authorize access="not isAuthenticated()">
+    <security:authorize access="isAnonymous()">
            <a href="<s:url value="/login"/>">Login</a>
            <a href="<s:url value="/login/registreren"/>">Registeren</a>
     </security:authorize>

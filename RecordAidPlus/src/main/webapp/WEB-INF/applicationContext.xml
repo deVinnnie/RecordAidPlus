@@ -8,7 +8,14 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
    
+    <bean id="inititalize" class="java.lang.Boolean">
+        <constructor-arg value="true"/>
+        
+    </bean>
     
     <!--DomainFacade-->
-    <bean id="domainFacade" class="be.khleuven.recordaid.domain.facade.RecordAidDomainFacade"/>
+    <bean id="domainFacade" class="be.khleuven.recordaid.domain.facade.RecordAidDomainFacade">
+        <!--Initialize: fill database with data or not. Use true in testing, false in production-->
+        <constructor-arg type="java.lang.Boolean" value="true"/> 
+    </bean>
 </beans>

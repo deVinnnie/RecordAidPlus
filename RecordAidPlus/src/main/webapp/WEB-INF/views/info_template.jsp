@@ -6,6 +6,7 @@
     <ul>
         <li><a href="<s:url value="/info/voorstelling"/>">Voorstelling</a></li>
         <li><a href="<s:url value="/info/studenten"/>">Studenten</a></li>
+        <li><a href="<s:url value="/info/lectoren"/>">Lectoren</a></li>
     </ul>
 </div>
 <div id="info">

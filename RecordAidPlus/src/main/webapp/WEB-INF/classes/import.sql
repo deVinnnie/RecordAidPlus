@@ -1,0 +1,1 @@
+insert into GEBRUIKER (EMAILADRES, VOORNAAM, ACHTERNAAM, GEVALIDEERD, VALIDATIECODE, WACHTWOORDHASH) values ('recordaid@khleuven.be', 'Admin', '', 1, '****', '$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m');

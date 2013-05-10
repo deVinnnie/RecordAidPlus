@@ -1,9 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
 <h1>Opname goedkeuren</h1>
+<m:boodschap/>
 <%--Toon details van de opname--%>
-<table class="detailTable">
+<table class="details">
     <tr>
         <td>Aanvrager</td>
         <td><c:out value="${aanvraag.dossier.gebruiker.voornaam} ${aanvraag.dossier.gebruiker.achternaam}"/></td>
@@ -42,16 +44,18 @@
 </table>
 
 <%--Toon opties voor de goedkeuring van de opname--%>
-<form method="POST">
-    <p>Kies welke soort opname RecordAid mag doen. Je kan er ook voor opteren om zelf een opname te voorzien. </p>
- 
-    <ul id="opmnameMethodes">
-    <%--OpnameMogelijkheden--%>
-    <c:forEach var="opnameMethode" items="${opnameMethodes}">
-        <li><input type="checkbox" name="methodes" value="${opnameMethode.id}"/>${opnameMethode.beschrijving}</li>
-    </c:forEach>
-    </ul>
+<c:if test="${empty boodschap}"><%--Als er een boodschap wilt dit zeggen dat de opname al goedgekeurd of afgekeurd is.--%>
+    <form method="POST">
+        <p>Kies welke soort opname RecordAid mag doen. Je kan er ook voor opteren om zelf een opname te voorzien. </p>
 
-    <input type="submit" name="action" value="Goedkeuren"/>
-    <input type="submit" name="action" value="Weigeren"/>
-</form>
+        <ul id="opmnameMethodes">
+            <%--OpnameMogelijkheden--%>
+            <c:forEach var="opnameMethode" items="${opnameMethodes}">
+                <li><input type="checkbox" name="methodes" value="${opnameMethode.id}"/>${opnameMethode.beschrijving}</li>
+                </c:forEach>
+        </ul>
+
+        <input type="submit" name="action" value="Goedkeuren"/>
+        <input type="submit" name="action" value="Weigeren"/>
+    </form>
+</c:if>

@@ -79,6 +79,8 @@ public class Item extends Identifiable implements Serializable
         dag = trim(dag); //Remove time. 
         ReservatieDag reservatieDag = new ReservatieDag(dag); 
         
+        reservatie.setItem(this); 
+        
         if(this.reservatieDagen.contains(reservatieDag)){
             int index = reservatieDagen.indexOf(reservatieDag);
             this.reservatieDagen.get(index).addReservatie(reservatie); 

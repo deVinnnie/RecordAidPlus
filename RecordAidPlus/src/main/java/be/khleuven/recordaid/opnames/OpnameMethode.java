@@ -18,6 +18,7 @@ public class OpnameMethode extends Identifiable implements Serializable {
     public OpnameMethode() {}
     
     public OpnameMethode(String naam, String beschrijving){
+        this.naam = naam; 
         this.beschrijving= beschrijving; 
     }
 

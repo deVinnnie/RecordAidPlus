@@ -3,8 +3,7 @@ package be.khleuven.recordaid.domain.aanvragen;
 import be.khleuven.recordaid.opnames.OpnameMoment;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.departement.Departement;
-import be.khleuven.recordaid.domain.DomainException;
-import be.khleuven.recordaid.domain.Identifiable;
+import be.khleuven.recordaid.domain.*; 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,7 +22,7 @@ public abstract class AbstractAanvraag extends Identifiable implements Serializa
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar aanvraagDatum = Calendar.getInstance();
     
-    @ManyToOne
+    @OneToOne
     private Dossier dossier; 
     
     @Enumerated

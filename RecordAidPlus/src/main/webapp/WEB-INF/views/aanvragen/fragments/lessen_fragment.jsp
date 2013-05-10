@@ -49,6 +49,22 @@
                         </a>
                     </td>
                 </tr>
+                <tr>
+                    <td>Goedgekeurd door lector</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${empty opnameMoment.goedgekeurd}">
+                                Niet van toepassing
+                            </c:when>
+                            <c:when test="${opnameMoment.goedgekeurd}">
+                                Ja
+                            </c:when>
+                            <c:when test="${not opnameMoment.goedgekeurd}">
+                                Nee
+                            </c:when>
+                        </c:choose>
+                    </td>
+                </tr>
                 <c:if test="${not empty opnameMoment.opname}">
                     <tr>
                         <td>Opname</td>

@@ -3,8 +3,8 @@
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <h1>Mail</h1>
+<a href="<s:url value="/mailing/maillijst"/>">Nieuw bericht versturen naar gebruikers</a>
 <h2>Berichten</h2>
-<a href="<s:url value="/mailing/maillijst"/>">Nieuw bericht versturen naar maillijst</a>
 <form method="GET">
     <table>
         <tr>

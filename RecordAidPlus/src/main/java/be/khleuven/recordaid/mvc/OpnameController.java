@@ -3,12 +3,11 @@ package be.khleuven.recordaid.mvc;
 import be.khleuven.recordaid.domain.departement.*;
 import be.khleuven.recordaid.util.propertyeditors.*;
 import be.khleuven.recordaid.opnames.*;
-import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.AbstractAanvraag;
+import be.khleuven.recordaid.util.Boodschap;
 import java.util.*;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -109,14 +108,17 @@ public class OpnameController extends AbstractController {
             @RequestParam("opname") long id,
             @RequestParam("aanvraag") long aanvraagID,
             @RequestParam("methodes") List<String> methodes, 
-            @RequestParam("action") String action) {
+            @RequestParam("action") String action)
+    {
         OpnameMoment opnameMoment = domainFacade.findOpnameMoment(id);
         AbstractAanvraag gevondenAanvraag = domainFacade.findAanvraag(aanvraagID);
-
+        String redirect = "redirect:/home"; 
+        
         //Controleer of de toegangscode klopt!
         if (gevondenAanvraag.getOpnameMomenten().contains(opnameMoment)
                 && opnameMoment.getToegangsCode().equals(toegangscode)) {
             if(action.equals("Goedkeuren")){
+                opnameMoment.setGoedgekeurd(Boolean.TRUE);
                 List<OpnameMethode> mogelijkeOpnameMethodes = new ArrayList<OpnameMethode>(); 
                 
                 for(String methodeID : methodes){
@@ -126,9 +128,16 @@ public class OpnameController extends AbstractController {
                 
                 opnameMoment.setMogelijkeOpnameMethodes(mogelijkeOpnameMethodes);
                 domainFacade.edit(opnameMoment); 
+                model.addAttribute("boodschap", new Boodschap("De opname werd goedgekeurd.", "succes")); 
             }
+            else{
+                opnameMoment.setGoedgekeurd(Boolean.FALSE);
+                domainFacade.edit(opnameMoment);
+                model.addAttribute("boodschap", new Boodschap("De opname werd geweigerd.","succes")); 
+            }
+            redirect = "/opnames/opname_goedkeuren"; 
         }
-        return "redirect:/home";
+        return redirect;
     }
     //</editor-fold>
 
