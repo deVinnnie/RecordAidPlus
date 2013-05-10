@@ -1,6 +1,5 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
-import be.khleuven.recordaid.domain.Identifiable;
 import be.khleuven.recordaid.domain.aanvragen.AbstractAanvraag;
 import java.io.Serializable;
 import javax.persistence.*; 
@@ -11,8 +10,8 @@ import java.util.*;
  * @author Vincent Ceulemans
  */
 @Entity
-public class Dossier /*extends Identifiable*/ implements Serializable { 
-    @OneToOne
+public class Dossier implements Serializable { 
+    @OneToOne(cascade = CascadeType.MERGE)
     @Id
     private Gebruiker gebruiker; 
     
@@ -86,5 +85,6 @@ public class Dossier /*extends Identifiable*/ implements Serializable {
     public void addGebeurtenis(String gebeurtenis, Gebruiker  betrokkenGebruiker){
         Gebeurtenis g = new Gebeurtenis(gebeurtenis, betrokkenGebruiker); 
         this.geschiedenis.addGebeurtenis(g);
+        this.gebruiker.setLastChange((Calendar) g.getTijdstip().clone()); 
     }
 }

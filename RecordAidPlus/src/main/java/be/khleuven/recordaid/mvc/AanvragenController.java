@@ -12,12 +12,12 @@ import be.khleuven.recordaid.util.TimeSpan;
 import java.util.*;
 import java.util.logging.*; 
 import javax.validation.Valid;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -205,8 +205,10 @@ public class AanvragenController extends AbstractController{
 
     @RequestMapping(value = {"/", "", "/mijnaanvragen"}, method = RequestMethod.GET)
     public String showMijnAanvragen(ModelMap model) {
-        Gebruiker gebruiker = (Gebruiker) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Dossier dossier = domainFacade.getDossier(gebruiker);
+        Dossier dossier = this.getCurrentDossier();
+        dossier.getGebruiker().setLastRead(Calendar.getInstance());
+        domainFacade.edit(dossier); 
+        
         model.addAttribute("aanvragen", dossier.getAanvragen());
         return "/aanvragen/mijnaanvragen";
     }
@@ -255,26 +257,23 @@ public class AanvragenController extends AbstractController{
     }
 
     @RequestMapping(value = "/bewerk", method = RequestMethod.POST)
-    public String updateAanvraag(
-            @ModelAttribute("aanvraag") DagAanvraag aanvraag,
-            BindingResult bindingResult,
-            ModelMap model) {
+    public String updateAanvraag(@ModelAttribute("aanvraag") DagAanvraag aanvraag, RedirectAttributes redirectAttr) {
         this.domainFacade.edit(aanvraag);
-        model.addAttribute("boodschap", new Boodschap("Aanvraag gewijzigd", "succes")); 
+        redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag gewijzigd", "succes")); 
         return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Goedkeuring">
     @RequestMapping(value = "goedkeuren", params = "id", method = RequestMethod.GET)
-    public String aanvraagGoedkeuren(@RequestParam("id") long id, ModelMap model) {
+    public String aanvraagGoedkeuren(@RequestParam("id") long id, RedirectAttributes redirectAttr) {
         try {
             AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
             domainFacade.aanvaardAanvraag(aanvraag, this.getCurrentDossier().getGebruiker());   
-            model.addAttribute("boodschap", new Boodschap("Aanvraag goedgekeurd", "succes")); 
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag goedgekeurd", "succes")); 
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
-            model.addAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
         }
         return "redirect:/aanvragen/detail?id=" + id;
     }

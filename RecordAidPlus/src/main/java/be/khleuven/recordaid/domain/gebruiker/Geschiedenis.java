@@ -19,7 +19,7 @@ public class Geschiedenis extends Identifiable implements Serializable{
     public Geschiedenis() {}
     
     public void addGebeurtenis(Gebeurtenis gebeurtenis){
-        this.gebeurtenissen.add(0, gebeurtenis); 
+        this.gebeurtenissen.add(gebeurtenis); 
     }        
     
     public Gebeurtenis getGebeurtenis(int i){

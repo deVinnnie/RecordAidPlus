@@ -129,11 +129,13 @@ public class OpnameController extends AbstractController {
                 opnameMoment.setMogelijkeOpnameMethodes(mogelijkeOpnameMethodes);
                 domainFacade.edit(opnameMoment); 
                 model.addAttribute("boodschap", new Boodschap("De opname werd goedgekeurd.", "succes")); 
+                gevondenAanvraag.getDossier().addGebeurtenis("Opname voor "+opnameMoment.getOOD() +" werd goedgekeurd.", null);
             }
             else{
                 opnameMoment.setGoedgekeurd(Boolean.FALSE);
                 domainFacade.edit(opnameMoment);
                 model.addAttribute("boodschap", new Boodschap("De opname werd geweigerd.","succes")); 
+                gevondenAanvraag.getDossier().addGebeurtenis("Opname voor "+opnameMoment.getOOD() +" werd geweigerd.", null);
             }
             redirect = "/opnames/opname_goedkeuren"; 
         }

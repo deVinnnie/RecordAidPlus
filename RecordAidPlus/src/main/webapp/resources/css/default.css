@@ -83,6 +83,10 @@ h2, h3, h4{
     border-bottom: 2px dashed #333;
 }
 
+#navlist a.updated{
+    font-weight: bold; 
+}
+
 #subnav{
     float: left; 
 }

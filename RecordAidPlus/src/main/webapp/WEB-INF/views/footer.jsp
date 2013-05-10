@@ -31,15 +31,14 @@
     </div>
 
     <div class="social">
-        <s:url value="/resources" var="resources"/>
         <h4>Sociaal</h4>
         <ul>
             <li>
-                <img src="${resources}/images/f_logo30.png" alt="Facebook logo"/>
+                <img src="<s:url value="/resources/images/f_logo30.png"/>" alt="Facebook logo"/>
                 <a href="https://www.facebook.com/KhLeuvenScreencasting">Facebook</a>
             </li>
             <li>
-                <img src="${resources}/images/yt-logo.png" alt="YouTube logo"/>
+                <img src="<s:url value="/resources/images/yt-logo.png"/>" alt="YouTube logo"/>
                 <a href="http://www.youtube.com/user/RecordAid">YouTube</a>
             </li>
         </ul>

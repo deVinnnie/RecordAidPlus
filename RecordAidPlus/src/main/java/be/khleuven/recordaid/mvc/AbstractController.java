@@ -14,9 +14,11 @@ public abstract class AbstractController {
     @Autowired
     protected RecordAidDomainFacade domainFacade;
 
-    public AbstractController() {}
+    public AbstractController() {
+    }
 
     public AbstractController(RecordAidDomainFacade domainFacade) {
+        this(); 
         this.domainFacade = domainFacade;
     }
     
