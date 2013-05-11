@@ -186,6 +186,10 @@ table
     color: green; 
 }
 
+.notification{
+    color: blue; 
+}
+
 img.logo{
     margin: 0 auto; 
     display: block; 

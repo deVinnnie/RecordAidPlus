@@ -2,6 +2,7 @@ package be.khleuven.recordaid.domain;
 
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -16,8 +17,12 @@ import javax.persistence.OneToOne;
 @Entity
 public class FAQ extends Identifiable implements Serializable
 {
+    @Column(columnDefinition = "CLOB")
     private String vraag;
+    
+    @Column(columnDefinition = "CLOB")
     private String antwoord;
+    
     private boolean relevant = false;
     private boolean beantwoord = false;
     
@@ -42,21 +47,6 @@ public class FAQ extends Identifiable implements Serializable
         this.gebruiker = gebruiker;
         this.vraag = vraag;
     }
-
-    /**
-     * Vult een antwoord in op de vraag en zet de vraag op beantwoord.
-     *
-     * @param antwoord String met het antwoord op de vraag.
-     */
-    public void beantwoord(String antwoord)
-    {
-        if(antwoord != null)
-        {
-            this.antwoord = antwoord;
-            beantwoord = true;
-        }
-    }
-
 
     /**
      * Geeft weer of de vraag relevant is voor andere gebruikers.
@@ -112,7 +102,10 @@ public class FAQ extends Identifiable implements Serializable
         return beantwoord;
     }
 
-
+    public void setBeantwoord(boolean beantwoord) {
+        this.beantwoord = beantwoord;
+    }
+    
     /**
      * Setter om de vraag te veranderen.
      *

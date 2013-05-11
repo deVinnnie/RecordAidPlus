@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -37,25 +38,17 @@
 
         <security:authorize access="hasRole('BEGELEIDER')">
             <li>
-                <a href="<s:url value="/aanvragen/begeleider"/>" <m:isActiveLink page="aanvragen" currentPage="${page}"/>>
+                <a href="<s:url value="/aanvragen/begeleider"/>"
+                   <m:isActiveLink page="aanvragen" currentPage="${page}"/>>
                     Aanvragen
                 </a>
             </li>
         </security:authorize>
-        <security:authorize access="isAuthenticated()">
-            <security:authentication var="lastRead" property="principal.lastRead"/>
-            <security:authentication var="lastChange" property="principal.lastChange"/>
-            <c:set var="updated" value="false"/>
-            <c:if test="${lastChange gt lastRead}">
-                <c:set var="updated" value="true"/>
-            </c:if>
-        </security:authorize>
+        
         <security:authorize access="not hasRole('BEGELEIDER')">
             <li>
                 <a href="<s:url value="/aanvragen"/>" 
-                   <m:isActiveLink page="aanvragen" currentPage="${page}"/>
-                   <c:if test="${updated}"> class="updated"</c:if>
-                   >
+                   <m:isActiveLink page="aanvragen" currentPage="${page}"/>>
                     Mijn Aanvragen
                 </a>
             </li> 

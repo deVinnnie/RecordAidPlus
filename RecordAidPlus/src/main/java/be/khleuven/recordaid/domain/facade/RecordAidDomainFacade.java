@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  * Klasse die fungeert als een facade voor alle database klassen. De
@@ -26,7 +25,6 @@ public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  
     private String url = "http://recordaid.khleuven.be/";
     private CommonDatabaseInterface commonDb;
-    private FAQDatabaseInterface faqDB;
     private GebruikerDatabaseInterface gebruikerDB;
     private AanvraagDatabaseInterface aanvraagDB;
     private ReservatieDatabaseInterface reservatieDB;
@@ -44,19 +42,17 @@ public class RecordAidDomainFacade {
 
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
-            FAQDatabaseInterface faqDB,
             GebruikerDatabaseInterface gebruikerDB,
             AanvraagDatabaseInterface aanvraagDB,
             ReservatieDatabaseInterface reservatieDB,
             DepartementDatabaseInterface departementDb,
             MailDatabaseInterface mailDb) {
-        this(commonDb, faqDB, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true); 
+        this(commonDb, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true); 
     }
     
     @Autowired
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
-            FAQDatabaseInterface faqDB,
             GebruikerDatabaseInterface gebruikerDB,
             AanvraagDatabaseInterface aanvraagDB,
             ReservatieDatabaseInterface reservatieDB,
@@ -64,7 +60,6 @@ public class RecordAidDomainFacade {
             MailDatabaseInterface mailDb, 
             boolean initialize) {
         this.commonDb = commonDb;
-        this.faqDB = faqDB;
         this.gebruikerDB = gebruikerDB;
         this.aanvraagDB = aanvraagDB;
         this.reservatieDB = reservatieDB;
@@ -97,18 +92,6 @@ public class RecordAidDomainFacade {
 
     public Collection<FAQ> getFAQs() {
         return commonDb.findAll(FAQ.class);
-    }
-
-    public Collection<FAQ> getRelevanteFAQs() {
-        return faqDB.getRelevanteFAQs();
-    }
-
-    public Collection<FAQ> getBeantwoordeFAQs() {
-        return faqDB.getBeantwoordeFAQs();
-    }
-
-    public Collection<FAQ> getNietBeantwoordeFAQs() {
-        return faqDB.getNietBeantwoordeFAQs();
     }
     //</editor-fold>
 
@@ -195,6 +178,8 @@ public class RecordAidDomainFacade {
         Dossier dossier = aanvraag.getDossier();
         dossier.addAanvraag(aanvraag);
         commonDb.edit(dossier);
+        Gebruiker gebruiker = dossier.getGebruiker(); 
+        this.edit(gebruiker); 
 
         //Verzend mail naar recordaid met de boodschap dat een nieuwe aanvraag is toegevoegd. 
         Map<String, String> context = new HashMap<String, String>();
@@ -430,20 +415,12 @@ public class RecordAidDomainFacade {
 
         for (Gebruiker gebruiker : maillijst) {
             mailMessage.setRecipient(gebruiker.getEmailadres());
-            this.sendMail(mailMessage, gebruiker.getEmailadres(), null);
+            this.sendMail(mailMessage, gebruiker.getEmailadres(), new HashMap<String, String>());
         }
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public FAQDatabaseInterface getFaqDB() {
-        return faqDB;
-    }
-
-    public void setFaqDB(FAQDatabaseInterface faqDB) {
-        this.faqDB = faqDB;
-    }
-
     public GebruikerDatabaseInterface getGebruikerDB() {
         return gebruikerDB;
     }
@@ -542,7 +519,7 @@ public class RecordAidDomainFacade {
         Dossier dossier = aanvraag.getDossier();
         dossier.addGebeurtenis("Aanvraag is afgekeurd door de kern.", initiator);
         this.edit(dossier);
-
+       
         //Stuur mail naar de aanvrager met de boodschap dat de aanvraag afgekeurd is. 
         Map<String, String> context = new HashMap<String, String>();
         context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
@@ -560,5 +537,33 @@ public class RecordAidDomainFacade {
         }
 
         this.remove(opnameMethode);
+    }
+
+    /**
+     * Beantwoord een vraag van een gebruiker. Er wordt een mail gestuurd naar de vrager, 
+     * tenzij deze vraag al eerder beantwoord werd (in geval van wijziging). 
+     *
+     * @param faq Faq met antwoord
+     * @param antwoorder Buddy of Kernlid die de vraag beantwoord.
+     */
+    public void beantwoordFaq(FAQ faq, Gebruiker antwoorder) throws DomainException {
+        if (faq.isBeantwoord() == false) {
+            //Maak context voor mail
+            Gebruiker gebruiker = faq.getGebruiker();
+            Map<String, String> context = new HashMap<String, String>();
+            context.put("gebruiker_voornaam", gebruiker.getVoornaam());
+            context.put("faq_vraag", faq.getVraag());
+            context.put("faq_antwoord", faq.getAntwoord());
+            context.put("buddy_voornaam", antwoorder.getVoornaam());
+            context.put("buddy_achternaam", antwoorder.getAchternaam());
+            context.put("buddy_email", antwoorder.getEmailadres());
+
+            //Verstuur mail
+            this.sendMail("antwoord_faq", gebruiker.getEmailadres(), context);
+        }
+        
+        //Bewerk vraag
+        faq.setBeantwoord(true);
+        this.edit(faq);
     }
 }

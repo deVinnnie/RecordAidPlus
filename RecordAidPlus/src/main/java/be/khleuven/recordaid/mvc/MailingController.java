@@ -3,6 +3,7 @@ package be.khleuven.recordaid.mvc;
 import be.khleuven.recordaid.domain.DomainException;
 import be.khleuven.recordaid.domain.gebruiker.Rollen;
 import be.khleuven.recordaid.domain.mailing.MailMessage;
+import be.khleuven.recordaid.util.Boodschap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -44,19 +46,28 @@ public class MailingController extends AbstractController{
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Maillijst">
-    @RequestMapping(value="/maillijst", method= RequestMethod.GET)
+    @RequestMapping(value="/maillijst")
     public String showMaillistForm(ModelMap model){
         model.addAttribute("groepen", Rollen.values()); 
         model.addAttribute("subjectPrefix", domainFacade.getSubjectPrefix()); 
         return "/mailing/maillijst"; 
     }
     
+    @RequestMapping(value="/maillijst", method= RequestMethod.POST)
+    public String redirectToMailListForm(){
+        return "redirect:/mailing/maillijst"; 
+    }
+    
     @RequestMapping(value="/maillijst",params={"onderwerp", "bericht"}, method= RequestMethod.POST)
     public String sendMaillijstMessage(@RequestParam("onderwerp") String onderwerp, 
             @RequestParam("bericht") String bericht, 
-            @RequestParam("groepen") List<String> groepen){
+            @RequestParam("groepen") List<String> groepen, 
+            RedirectAttributes redirectAttr){
+        //Make new MailMessage
         MailMessage mailMessage = new MailMessage(onderwerp, bericht, ""); 
         mailMessage.setSubjectPrefix(domainFacade.getSubjectPrefix());
+        
+        //Get checked roles
         List<Rollen> rollen = new ArrayList<Rollen>(); 
         for(String string : groepen){
             rollen.add(Enum.valueOf(Rollen.class, string));
@@ -64,10 +75,12 @@ public class MailingController extends AbstractController{
         
         try {
             domainFacade.sendMail(mailMessage, rollen);
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Mail werd verstuurd.", "succes")); 
         } catch (DomainException ex) {
             Logger.getLogger(MailingController.class.getName()).log(Level.SEVERE, null, ex);
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
         }
-        return "redirect:/mailing/beheer"; 
+        return "redirect:/mailing/maillijst"; 
     }
     //</editor-fold>
 }

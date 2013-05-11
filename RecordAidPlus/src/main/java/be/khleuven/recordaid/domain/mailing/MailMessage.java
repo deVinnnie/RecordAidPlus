@@ -2,6 +2,7 @@ package be.khleuven.recordaid.domain.mailing;
 
 import be.khleuven.recordaid.domain.Identifiable;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.*; 
 import org.stringtemplate.v4.ST;
@@ -30,7 +31,7 @@ public class MailMessage extends Identifiable implements Serializable {
     @Transient
     private String sender; 
     @Transient
-    private Map<String, String> context; 
+    private Map<String, String> context = new HashMap<String, String>(); 
     
     public MailMessage(){}
     

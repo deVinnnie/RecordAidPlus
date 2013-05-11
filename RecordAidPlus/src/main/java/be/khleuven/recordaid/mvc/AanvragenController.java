@@ -12,6 +12,7 @@ import be.khleuven.recordaid.util.TimeSpan;
 import java.util.*;
 import java.util.logging.*; 
 import javax.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -122,19 +123,20 @@ public class AanvragenController extends AbstractController{
 
     @RequestMapping(value = "/bevestig_aanvraag", method = RequestMethod.POST)
     public String bevestigAanvraag(@ModelAttribute("aanvraag") AbstractAanvraag aanvraag,
-            ModelMap model, @RequestParam("action") String action) {
+            ModelMap model, @RequestParam("action") String action, RedirectAttributes redirectAttr) {
         try {
             if(action.equals("Ok")){
                 aanvraag = domainFacade.addDagAanvraag((DagAanvraag) aanvraag);
-                return "redirect:/aanvragen/detail?succes&id=" + aanvraag.getId();
+                redirectAttr.addFlashAttribute("boodschap", new Boodschap("De aanvraag is succesvol toegevoegd.", "succes"));
+                return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
             }
             else{
                 return "redirect:/home";  
             }
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "redirect:/aanvragen/detail?succes&id=" + aanvraag.getId();
+        } 
+        return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
     }
     //</editor-fold>
 
@@ -206,10 +208,8 @@ public class AanvragenController extends AbstractController{
     @RequestMapping(value = {"/", "", "/mijnaanvragen"}, method = RequestMethod.GET)
     public String showMijnAanvragen(ModelMap model) {
         Dossier dossier = this.getCurrentDossier();
-        dossier.getGebruiker().setLastRead(Calendar.getInstance());
-        domainFacade.edit(dossier); 
-        
         model.addAttribute("aanvragen", dossier.getAanvragen());
+        model.addAttribute("dossier", dossier); 
         return "/aanvragen/mijnaanvragen";
     }
 
@@ -220,17 +220,6 @@ public class AanvragenController extends AbstractController{
         AbstractAanvraag aanvraag = this.domainFacade.findAanvraag(id);
         model.addAttribute("aanvraag", aanvraag);
         model.addAttribute("type", aanvraag.getClass().getSimpleName());
-        return "/aanvragen/detail";
-    }
-
-    @RequestMapping(value = "/detail", params = {"id", "succes"}, method = RequestMethod.GET)
-    public String showDetailWithSuccesMessage(
-            @RequestParam("id") long id,
-            ModelMap model) {
-        AbstractAanvraag aanvraag = this.domainFacade.findAanvraag(id);
-        model.addAttribute("aanvraag", aanvraag);
-        model.addAttribute("type", aanvraag.getClass().getSimpleName());
-        model.addAttribute("boodschap", new Boodschap("De aanvraag is succesvol toegevoegd.", "succes"));
         return "/aanvragen/detail";
     }
     //</editor-fold>
@@ -285,14 +274,15 @@ public class AanvragenController extends AbstractController{
 
     @RequestMapping(value = "weigeren", params = {"id", "reden"}, method = RequestMethod.POST)
     public String aanvraagWeigeren(@RequestParam("id") long id,
-            @RequestParam("reden") String reden, ModelMap model) {
+            @RequestParam("reden") String reden,
+            RedirectAttributes redirectAttr) {
         try {
             AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
             domainFacade.weigerAanvraag(aanvraag, this.getCurrentDossier().getGebruiker(), reden);  
-            model.addAttribute("boodschap", new Boodschap("Aanvraag geweigerd", "succes")); 
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag geweigerd", "succes")); 
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
-             model.addAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
         }
         return "redirect:/aanvragen/detail?id=" + id;
     }

@@ -212,12 +212,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.4.7</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

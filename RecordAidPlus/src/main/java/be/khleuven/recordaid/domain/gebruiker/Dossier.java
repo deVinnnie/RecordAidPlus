@@ -11,7 +11,7 @@ import java.util.*;
  */
 @Entity
 public class Dossier implements Serializable { 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     @Id
     private Gebruiker gebruiker; 
     
@@ -85,6 +85,5 @@ public class Dossier implements Serializable {
     public void addGebeurtenis(String gebeurtenis, Gebruiker  betrokkenGebruiker){
         Gebeurtenis g = new Gebeurtenis(gebeurtenis, betrokkenGebruiker); 
         this.geschiedenis.addGebeurtenis(g);
-        this.gebruiker.setLastChange((Calendar) g.getTijdstip().clone()); 
     }
 }

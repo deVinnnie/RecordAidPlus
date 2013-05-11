@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="m" tagdir="/WEB-INF/tags/"%>
 <h1>Bericht sturen naar bepaalde groepen</h1>
+<m:boodschap/>
 <script type="text/javascript">
     $("document").ready(preview);
 
@@ -10,7 +12,7 @@
                 + $("#onderwerp").val() + "</p>" + $("#bericht").val());
     }
 </script>
-<form>
+<form method="POST">
     <table>
         <tr>
             <td>Doelgroep</td>

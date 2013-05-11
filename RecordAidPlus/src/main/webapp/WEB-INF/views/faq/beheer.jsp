@@ -1,8 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<!--<script type="text/javascript" src="JavaScript/beantwoordFAQ.js"></script>-->
-<h1>Beantwoord een vraag</h1>
+<%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
+<h1>Veelgestelde Vragen</h1>
+<m:boodschap/>
 <h2>Beantwoorde vragen</h2>
 <c:choose>
     <c:when test="${empty beantwoordeVragen}">
@@ -24,7 +25,16 @@
                 <tr>
                     <td><a href="<s:url value="/faq?id=${faq.id}"/>">${faq.vraag}</a></td>
                     <td>${faq.gebruiker.emailadres}</td>
-                    <td>${faq.relevant}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${faq.relevant}">
+                                Ja
+                            </c:when>   
+                            <c:otherwise>
+                                Nee
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td><a href="<s:url value="/faq/beheer?delete&id=${faq.id}"/>">Verwijder</a></td>
                 </tr>
             </c:forEach>
@@ -40,7 +50,7 @@
         </c:when>
 
         <c:otherwise>
-            <p style="color: blue;">Klik op een vraag om ze te beantwoorden.</p>
+            <p class="notification">Klik op een vraag om ze te beantwoorden.</p>
             <table id="onbeantwoord">
                 <thead>
                 <tr>
@@ -55,7 +65,16 @@
                 <tr>
                     <td><a href="<s:url value="/faq?id=${faq.id}"/>">${faq.vraag}</a></td>
                     <td>${faq.gebruiker.emailadres}</td>
-                    <td>${faq.relevant}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${faq.relevant}">
+                                Ja
+                            </c:when>   
+                            <c:otherwise>
+                                Nee
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td><a href="<s:url value="/faq/beheer?delete&id=${faq.id}"/>">Verwijder</a></td>
                 </tr>
             </c:forEach>

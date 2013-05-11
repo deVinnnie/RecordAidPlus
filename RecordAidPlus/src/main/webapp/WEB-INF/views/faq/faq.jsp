@@ -2,10 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <h1>Frequently Asked Questions</h1>
-<c:if test="${not empty faq_toegevoegd}">
-    <p class="succes">Bedankt voor uw vraag, ze werd goed ontvangen. U zal spoedig een email ontvangen met een antwoord.</p>
-</c:if>
-
 <c:choose>
     <c:when test="${not empty faqList}">
         <div id="accordion">
@@ -26,11 +22,11 @@
         </script>
     </c:when>
     <c:otherwise>
-        <p>Er zijn momenteel nog geen Frequently asked questions.</p>
+        <p>Er zijn momenteel nog geen Frequently Asked Questions.</p>
     </c:otherwise>
 </c:choose>
 <p>
     Staat jouw vraag er niet bij? 
-    Post je <a href="<s:url value="/faq?nieuw"/>">nieuwe vraag</a> 
+    Post je <a href="<s:url value="/faq/nieuw"/>">nieuwe vraag</a> 
     en een RecordAid-lid zal deze zo snel mogelijk beantwoorden.
 </p>

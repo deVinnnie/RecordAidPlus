@@ -36,13 +36,6 @@ public class Gebruiker implements Serializable, UserDetails {
     private String wachtwoordHash;
     private String validatieCode;
     private boolean gevalideerd = false;
-       
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar lastRead = Calendar.getInstance(); 
-    
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar lastChange = Calendar.getInstance(); 
-    
     
     /**
      * Constructor met parameters, dit is de constructor die gebruikt dient te
@@ -256,23 +249,6 @@ public class Gebruiker implements Serializable, UserDetails {
         this.addRol(Rollen.GEINTERESSEERDE);
     }
     // </editor-fold>
-    
-    public Calendar getLastRead() {
-        return lastRead;
-    }
-
-    public void setLastRead(Calendar lastRead) {
-        this.lastRead = lastRead;
-    }
-
-    public Calendar getLastChange() {
-        return lastChange;
-    }
-
-    public void setLastChange(Calendar lastChange) {
-        this.lastChange = lastChange;
-    }
-    
     
     
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
