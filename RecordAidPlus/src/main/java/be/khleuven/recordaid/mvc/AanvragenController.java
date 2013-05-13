@@ -306,6 +306,6 @@ public class AanvragenController extends AbstractController{
         dataBinder.registerCustomEditor(OpnameMethode.class, new OpnameMethodePropertyEditor(domainFacade));
         dataBinder.registerCustomEditor(Lector.class, new LectorPropertyEditor(domainFacade));
         dataBinder.registerCustomEditor(Gebruiker.class, new GebruikerPropertyEditor(domainFacade));
-        dataBinder.registerCustomEditor(Lokaal.class, new GenericPropertyEditor(domainFacade));
+        //dataBinder.registerCustomEditor(Lokaal.class, new GenericPropertyEditor(domainFacade));
     }
 }

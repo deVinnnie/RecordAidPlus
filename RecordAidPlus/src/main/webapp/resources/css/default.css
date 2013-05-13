@@ -182,6 +182,12 @@ table
     border-collapse: collapse;
 }
 
+.error, 
+.succes, 
+.notification{
+    font-weight: bold;
+}
+
 .error{
     color: red;
 }

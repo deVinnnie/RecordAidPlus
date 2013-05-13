@@ -37,7 +37,7 @@
         <put-attribute name="title" value="info.{1}.title"/>
         <put-attribute name="page" value="info" cascade="true"/>
         <put-attribute name="info_content" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
-        <put-attribute name="subpage" value="info.{1}" cascade="true"/>
+        <put-attribute name="subpage" value="/info/{1}" cascade="true"/>
     </definition>
     
     <definition name="/items/reservaties" template="/WEB-INF/views/items/reservaties.jsp">
@@ -125,6 +125,7 @@
         <put-attribute name="title" value="items.beheer.title"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/items/beheer.jsp" cascade="true"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
+        <put-attribute name="subpage" value="/items/beheer" cascade="true"/>
         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/css/fullcalendar.css"/>
         </put-list-attribute>
@@ -173,12 +174,14 @@
     <definition name="/beheer" extends="base.beheer">
         <put-attribute name="title" value="beheer.title"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
+        <put-attribute name="subpage" value="" cascade="true"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/beheer.jsp" cascade="true"/>
     </definition>
     
     <definition name="/*/beheer" extends="base.beheer">
         <put-attribute name="title" value="{1}.beheer.title"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
+        <put-attribute name="subpage" value="/{1}/beheer" cascade="true"/>
         <put-attribute name="beheer_content" value="/WEB-INF/views/{1}/beheer.jsp" cascade="true"/>
     </definition>
     

@@ -21,11 +21,10 @@ public class Support extends Identifiable implements Serializable
     @OneToOne
     private Lokaal lokaal;
     
-    @OneToOne
-    private Gebruiker zender;
-
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar datum = Calendar.getInstance();
+    
+    private boolean actief=true; 
     
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
@@ -44,7 +43,6 @@ public class Support extends Identifiable implements Serializable
     {
         this.setProbleem(probleem);
         this.setLokaal(lokaal);
-        this.setZender(zender);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -91,32 +89,20 @@ public class Support extends Identifiable implements Serializable
         this.lokaal = lokaal;
     }
 
-    /**
-     * Geeft de gebruiker terug die het defect gemeld heeft.
-     *
-     * @return Gebruiker die de gebruiker is die het defect gemeld heeft.
-     */
-    public Gebruiker getZender()
-    {
-        return zender;
-    }
-
-    /**
-     * Setter om de gebruiker die het defect gemeld heeft aan te passen.
-     *
-     * @param zender Gebruiker die het defect gemeld heeft.
-     */
-    public void setZender(Gebruiker zender)
-    {
-        this.zender = zender;
-    }
-
     public Calendar getDatum() {
         return datum;
     }
 
     public void setDatum(Calendar datum) {
         this.datum = datum;
+    }
+
+    public boolean isActief() {
+        return actief;
+    }
+
+    public void setActief(boolean actief) {
+        this.actief = actief;
     }
     //</editor-fold>
     

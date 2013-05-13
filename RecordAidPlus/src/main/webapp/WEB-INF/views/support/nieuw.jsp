@@ -10,7 +10,7 @@ Vul dan dit formulier in om de RecordAid medewerkers hiervan op de hoogte te ste
     <table>
         <tr>
             <td><label for="lokaal">Lokaal</label></td>
-            <td><springforms:input type="text" id="lokaal" path="lokaal" required="required"/></td>
+            <td><springforms:input type="text" id="lokaal" path="lokaal.naam" required="required"/></td>
         </tr>
         <tr>
             <td><label for="probleem">Probleem</label></td>

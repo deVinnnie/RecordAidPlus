@@ -6,7 +6,6 @@
 <%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
 <div>
     <h1>Detail aanvraag <%@include file="fragments/aanvraag_datum.jsp" %></h1>
-    <m:boodschap/>
     <security:authorize access="hasRole('ADMIN') or hasRole('KERNLID')">
         <a href="<s:url value="/aanvragen/beheer"/>">Terug naar beheer</a>
     </security:authorize>
@@ -16,6 +15,7 @@
     <security:authorize access="hasRole('ADMIN') or hasRole('KERNLID')">
         <a href="<s:url value="/aanvragen/bewerk?id=${aanvraag.id}"/>">Bewerken</a>
     </security:authorize>
+    <m:boodschap/>
 </div>
 
 <div id="aanvraag_algemeen">

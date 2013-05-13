@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:choose>
     <c:when test="${empty aanvraag.opnameMomenten}">
         <p>Er zijn nog geen lessen toegevoegd.</p>
@@ -9,8 +10,8 @@
     <c:otherwise>
         <c:forEach var="opnameMoment" items="${aanvraag.opnameMomenten}">
             <h3 class="les">
-                <fmt:formatDate value="${opnameMoment.beginTijdstip.time}" pattern="hh:mm" /> tot 
-                <fmt:formatDate value="${opnameMoment.eindTijdstip.time}" pattern="hh:mm" />  
+                <fmt:formatDate value="${opnameMoment.beginTijdstip.time}" pattern="HH:mm" /> tot 
+                <fmt:formatDate value="${opnameMoment.eindTijdstip.time}" pattern="HH:mm" />  
                 <%@include file="les_status_fragment.jsp" %>
             </h3>
             <a href="<s:url value="/opnames/opname_goedkeuren?toegangscode=${opnameMoment.toegangsCode}&opname=${opnameMoment.id}&aanvraag=${aanvraag.id}"/>">
@@ -65,6 +66,19 @@
                         </c:choose>
                     </td>
                 </tr>
+                <security:authorize access="hasRole('ADMIN') or hasRole('KERNLID') or hasRole('BUDDY')">
+                    <tr>
+                        <td>Toegestane Opnamemethodes</td>
+                        <td>
+                            <ul>
+                                <c:forEach var="opnameMethode" items="${opnameMoment.mogelijkeOpnameMethodes}">
+                                    <li>${opnameMethode.naam}</li>
+                                </c:forEach>
+                            </ul>
+                        </td>
+                    </tr>
+                </security:authorize>
+                
                 <c:if test="${not empty opnameMoment.opname}">
                     <tr>
                         <td>Opname</td>

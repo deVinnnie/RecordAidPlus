@@ -3,7 +3,6 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<!--"GeenStudentenLeerkrachten.jsp"-->
 <div>
     <h1>Bewerken :  <%@include file="fragments/aanvraag_datum.jsp" %></h1>
     <a href="<s:url value="/aanvragen/beheer"/>">Terug naar het overzicht</a>
@@ -79,7 +78,7 @@
                     </tr>
                     <tr>
                         <td><label for="${counter.index}_lokaal">Lokaal</label></td>
-                        <td><springforms:input path="opnameMomenten[${counter.index}].lokaal" type="text" id="${counter.index}_lokaal"/></td>
+                        <td><springforms:input path="opnameMomenten[${counter.index}].lokaal.naam" type="text" id="${counter.index}_lokaal"/></td>
                     </tr>
                     <tr>
                         <td><label for="${counter.index}_reeks">Klas/Reeks</label></td>
@@ -101,28 +100,8 @@
                 </table>
             </c:forEach>
         </div>
-            
     <div class="clearfix">
          <input type="submit" value="Werk aanvraag bij"/>
     </div>
    </springforms:form>
-    <%--<tr>
-    <form method="POST" id="opleidingsHoofd" action="ActionServlet">
-        <input type="hidden" name="aanvraagid" value="${aanvraag.id}"/>
-        <input type="hidden" name="action" value="zendMailOpleidingshoofd"/>
-        <td>Stuur een mail</td>
-        <td>
-            <select name="OPHDEN" id="OPHDEN">
-                <option value="-1" selected>Selecteer een opleidingshoofd...</option>
-                <c:forEach items="${opleidingsh}" var="oplh">
-                    <option id="oplh" name="oplh" value="${oplh.emailadres}">${oplh.voornaam}  ${oplh.naam}  ${oplh.wachtwoord}</option>
-                </c:forEach>
-            </select>    
-        </td>
-        <td>
-            <input type="submit" value="Stuur mail"/>
-        </td>
-    </form>
-    </tr>
-</table>--%>
 </div>

@@ -1,7 +1,6 @@
 package be.khleuven.recordaid.util;
 
-import be.khleuven.recordaid.domain.DomainException;
-import be.khleuven.recordaid.domain.Identifiable;
+import be.khleuven.recordaid.domain.*; 
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.*;
@@ -15,12 +14,12 @@ import javax.persistence.*;
  */
 @Entity
 public class TimeSpan extends Identifiable implements Serializable {
-
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar beginTime; 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar endTime;
-
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar beginTime; 
+    
     public TimeSpan() {}
 
     public TimeSpan(Calendar beginTime, Calendar endTime) throws DomainException {
@@ -39,7 +38,8 @@ public class TimeSpan extends Identifiable implements Serializable {
     public void setBeginHour(int hour) throws DomainException {
         Calendar clone = (Calendar) this.beginTime.clone(); 
         clone.set(Calendar.HOUR, hour);
-        if (clone.after(this.getEndTime())) {
+        
+        if (!(this.getEndTime().get(Calendar.HOUR) ==0) && clone.after(this.getEndTime())) {
             throw new DomainException("Begintijdstip kan niet later zijn dan eindtijdstip.");
         }
         this.beginTime.set(Calendar.HOUR, hour);
@@ -52,7 +52,7 @@ public class TimeSpan extends Identifiable implements Serializable {
     public void setBeginMinute(int minute) throws DomainException {
         Calendar clone = (Calendar) this.beginTime.clone(); 
         clone.set(Calendar.MINUTE, minute);
-        if (clone.after(this.getEndTime())) {
+        if (!(this.endTime.get(Calendar.HOUR) == 0) && clone.after(this.getEndTime())){
             throw new DomainException("Begintijdstip kan niet later zijn dan eindtijdstip.");
         }
         this.beginTime.set(Calendar.MINUTE, minute);

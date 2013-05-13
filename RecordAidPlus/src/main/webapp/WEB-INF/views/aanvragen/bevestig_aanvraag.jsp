@@ -7,9 +7,6 @@
     <%@include file="fragments/aanvraag_detail_fragment.jsp"%>
 </div>
 <%--Toon de lessen (OpnameMomenten) verbonden met deze aanvraag.--%>
-
-
-
 <div id="aanvraag_lessen">
     <h2>Lessen</h2>
     <%@include file="fragments/lessen_fragment.jsp"%>
@@ -21,4 +18,3 @@
     <input type="submit" name="action" value="Ok"/>
     <input type="submit" name="action" value="Annuleren"/>
 </form>
-

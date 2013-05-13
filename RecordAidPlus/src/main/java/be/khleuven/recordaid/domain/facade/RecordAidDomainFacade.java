@@ -254,7 +254,7 @@ public class RecordAidDomainFacade {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Support">
-    public Support findSupport(long id) throws DatabaseException {
+    public Support findSupport(long id) {
         return commonDb.find(Support.class, id);
     }
 

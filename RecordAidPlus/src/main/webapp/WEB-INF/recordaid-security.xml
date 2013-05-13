@@ -11,12 +11,13 @@
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/info/**" access="permitAll"/>
         <intercept-url pattern="/login/**" access="permitAll"/>
+        <intercept-url pattern="/support" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <intercept-url pattern="/items/reserveer" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
         <intercept-url pattern="/items/reservervaties" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
         <intercept-url pattern="/**/beheer" access="hasAnyRole('ADMIN','KERNLID')"/>
         <intercept-url pattern="/gebruikers/detail" access="hasAnyRole('ADMIN','KERNLID')"/>
-        <intercept-url pattern="/aanvragen/bewerk" access="hasAnyRole('ADMIN','KERNLID')"/> 
+        <intercept-url pattern="/aanvragen/bewerk" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY')"/> 
         <form-login login-processing-url="/static/j_spring_security_check"
             login-page="/login?loginrequired"
             authentication-failure-url="/login?error"/>
