@@ -10,33 +10,23 @@
         <td>Aanvrager</td>
         <td><c:out value="${aanvraag.dossier.gebruiker.voornaam} ${aanvraag.dossier.gebruiker.achternaam}"/></td>
     </tr>
-    <c:if test="${aanvraag.getClass().getSimpleName() eq 'DagAanvraag'}">
-        <tr>
-            <td>Lesdatum</td>
-            <td><fmt:formatDate value="${aanvraag.lesDatum.time}" pattern="yyyy-MM-dd" /></td>
-        </tr>
-        <tr>
-            <td>Voor hele reeks?</td>
-            <td>
-                <c:choose>
-                    <c:when test="${aanvraag.voorHeleReeks}">
-                        Ja
-                    </c:when>
-                    <c:otherwise>
-                        Nee
-                    </c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-    </c:if>
-    <c:if test="${aanvraag.getClass().getSimpleName() eq 'MultiPeriodeAanvraag'}">
-        <tr>
-            <td>Periode</td>
-            <td><fmt:formatDate value="${aanvraag.periode.beginTime.time}" pattern="yyyy-MM-dd" />
-                tot <fmt:formatDate value="${aanvraag.periode.endTime.time}" pattern="yyyy-MM-dd" />
-            </td>
-        </tr>
-    </c:if>
+    <tr>
+        <td>Lesdatum</td>
+        <td><fmt:formatDate value="${opnameMoment.tijdstip.beginTime.time}" pattern="yyyy-MM-dd hh:mm" /></td>
+    </tr>
+    <tr>
+        <td>Voor hele reeks?</td>
+        <td>
+            <c:choose>
+                <c:when test="${aanvraag.voorHeleReeks}">
+                    Ja
+                </c:when>
+                <c:otherwise>
+                    Nee
+                </c:otherwise>
+            </c:choose>
+        </td>
+    </tr>
     <tr>
         <td>Reden</td>
         <td>${aanvraag.reden}</td>

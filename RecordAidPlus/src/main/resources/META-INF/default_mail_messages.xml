@@ -76,8 +76,8 @@ Met vriendelijke groeten,<br><br>Het RecordAid Team]]>
         <subject>Aanvraag lesopname</subject>
         <content>
 <![CDATA[Beste, <br><br>
-Student <b>$aanvraag_aanvrager_voornaam$ $aanvraag_aanvrager_achternaam</b> 
-heeft een aanvraag ingediend om de les $aanvraag.getOptenemenVak()$ te laten opnemen door RecordAid.<br>
+Student <b>$aanvraag_aanvrager_voornaam$ $aanvraag_aanvrager_achternaam$</b> 
+heeft een aanvraag ingediend om de les $aanvraag_ood$ te laten opnemen door RecordAid.<br>
 De reden die de student opgegeven heeft is volgende: $aanvraag_reden$ <br>
 Zou u ons via deze <a href="$url$">link</a> kunnen laten weten of we deze les mogen opnemen?
 <br><br>Met vriendelijke groeten,<br>

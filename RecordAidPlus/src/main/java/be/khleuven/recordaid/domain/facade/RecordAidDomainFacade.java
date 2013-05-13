@@ -496,6 +496,23 @@ public class RecordAidDomainFacade {
         context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
         context.put("aanvraag_datum", aanvraag.getTijdsbepaling());
         this.sendMail("goedkeuring_aanvraag", dossier.getGebruiker().getEmailadres(), context);
+        
+        //Stuur mail naar de betrokken lectoren. 
+        if (aanvraag instanceof DagAanvraag) {
+            for (OpnameMoment opnameMoment : aanvraag.getOpnameMomenten()) {
+                Map<String, String> opnameMomentContext = new HashMap<String, String>();
+                opnameMomentContext.put("aanvraag_aanvrager_voornaam", aanvraag.getDossier().getGebruiker().getVoornaam());
+                opnameMomentContext.put("aanvraag_aanvrager_achternaam", aanvraag.getDossier().getGebruiker().getAchternaam());
+                opnameMomentContext.put("aanvraag_ood", opnameMoment.getOOD());
+                opnameMomentContext.put("aanvraag_reden", aanvraag.getReden());
+                String urlFormulier = url+"opnames/opname_goedkeuren?toegangscode=" 
+                        + opnameMoment.getToegangsCode()
+                        + "&opname=" + opnameMoment.getId() 
+                        + "&aanvraag=" + aanvraag.getId(); 
+                opnameMomentContext.put("url", urlFormulier);
+                this.sendMail("aanvraag_goedkeuring_lector", opnameMoment.getLector().getEmailadres(), opnameMomentContext);
+            }
+        }
     }
 
     /**

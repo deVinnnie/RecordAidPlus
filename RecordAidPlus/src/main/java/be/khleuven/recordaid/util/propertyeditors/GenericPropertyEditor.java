@@ -2,7 +2,6 @@ package be.khleuven.recordaid.util.propertyeditors;
 
 import be.khleuven.recordaid.domain.Identifiable;
 import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
-import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import java.beans.PropertyEditorSupport;
 
 /**

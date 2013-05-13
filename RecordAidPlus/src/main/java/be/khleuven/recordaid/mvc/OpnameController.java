@@ -5,6 +5,7 @@ import be.khleuven.recordaid.util.propertyeditors.*;
 import be.khleuven.recordaid.opnames.*;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.AbstractAanvraag;
+import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.util.Boodschap;
 import java.util.*;
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -103,41 +105,50 @@ public class OpnameController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/opname_goedkeuren", params = {"toegangscode", "opname", "aanvraag", "action"}, method = RequestMethod.POST)
-    public String goedkeurenOpname(ModelMap model, @RequestParam("toegangscode") String toegangscode,
+     @RequestMapping(value = "/opname_goedkeuren", params = {"toegangscode", "opname", "aanvraag", "action"}, method = RequestMethod.POST)
+    public String weigerenOpname(ModelMap model, @RequestParam("toegangscode") String toegangscode,
             @RequestParam("opname") long id,
             @RequestParam("aanvraag") long aanvraagID,
-            @RequestParam("methodes") List<String> methodes, 
-            @RequestParam("action") String action)
+            @RequestParam("action") String action, 
+            RedirectAttributes redirectAttr)
     {
+        return this.goedkeurenOpname(model, toegangscode, id, aanvraagID, new ArrayList<String>(), action,redirectAttr);
+    }
+    
+    @RequestMapping(value = "/opname_goedkeuren", params = {"toegangscode", "opname", "aanvraag", "action", "methodes"}, method = RequestMethod.POST)
+    public String goedkeurenOpname(ModelMap model, @RequestParam("toegangscode") String toegangscode,
+            @RequestParam("opname") long id, @RequestParam("aanvraag") long aanvraagID,
+            @RequestParam("methodes") List<String> methodes, @RequestParam("action") String action,
+            RedirectAttributes redirectAttr) {
         OpnameMoment opnameMoment = domainFacade.findOpnameMoment(id);
         AbstractAanvraag gevondenAanvraag = domainFacade.findAanvraag(aanvraagID);
-        String redirect = "redirect:/home"; 
-        
+        String redirect = "redirect:/home";
+
         //Controleer of de toegangscode klopt!
         if (gevondenAanvraag.getOpnameMomenten().contains(opnameMoment)
                 && opnameMoment.getToegangsCode().equals(toegangscode)) {
-            if(action.equals("Goedkeuren")){
+            Dossier dossier = gevondenAanvraag.getDossier();
+            if (action.equals("Goedkeuren")) {
                 opnameMoment.setGoedgekeurd(Boolean.TRUE);
-                List<OpnameMethode> mogelijkeOpnameMethodes = new ArrayList<OpnameMethode>(); 
-                
-                for(String methodeID : methodes){
-                    OpnameMethode opnameMethode = domainFacade.findOpnameMethode(Long.parseLong(methodeID)); 
+
+                //Zet de mogelijke opnameMethodes. 
+                List<OpnameMethode> mogelijkeOpnameMethodes = new ArrayList<OpnameMethode>();
+                for (String methodeID : methodes) {
+                    OpnameMethode opnameMethode = domainFacade.findOpnameMethode(Long.parseLong(methodeID));
                     mogelijkeOpnameMethodes.add(opnameMethode);
                 }
-                
                 opnameMoment.setMogelijkeOpnameMethodes(mogelijkeOpnameMethodes);
-                domainFacade.edit(opnameMoment); 
-                model.addAttribute("boodschap", new Boodschap("De opname werd goedgekeurd.", "succes")); 
-                gevondenAanvraag.getDossier().addGebeurtenis("Opname voor "+opnameMoment.getOOD() +" werd goedgekeurd.", null);
-            }
-            else{
+                redirectAttr.addFlashAttribute("boodschap", new Boodschap("De opname werd goedgekeurd.", "succes"));
+                dossier.addGebeurtenis("Opname voor " + opnameMoment.getOOD() + " werd goedgekeurd.", null);
+            } else {
                 opnameMoment.setGoedgekeurd(Boolean.FALSE);
-                domainFacade.edit(opnameMoment);
-                model.addAttribute("boodschap", new Boodschap("De opname werd geweigerd.","succes")); 
-                gevondenAanvraag.getDossier().addGebeurtenis("Opname voor "+opnameMoment.getOOD() +" werd geweigerd.", null);
+                redirectAttr.addFlashAttribute("boodschap", new Boodschap("De opname werd geweigerd.", "succes"));
+                dossier.addGebeurtenis("Opname voor " + opnameMoment.getOOD() + " werd geweigerd.", null);
             }
-            redirect = "/opnames/opname_goedkeuren"; 
+            domainFacade.edit(opnameMoment);
+            domainFacade.edit(dossier);
+            redirect = "redirect:/opnames/opname_goedkeuren?opname=" + id + "&aanvraag=" 
+                    + aanvraagID + "&toegangscode=" + toegangscode;
         }
         return redirect;
     }

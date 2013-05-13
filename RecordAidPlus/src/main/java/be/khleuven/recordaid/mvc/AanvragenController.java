@@ -12,7 +12,6 @@ import be.khleuven.recordaid.util.TimeSpan;
 import java.util.*;
 import java.util.logging.*; 
 import javax.validation.Valid;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -307,5 +306,6 @@ public class AanvragenController extends AbstractController{
         dataBinder.registerCustomEditor(OpnameMethode.class, new OpnameMethodePropertyEditor(domainFacade));
         dataBinder.registerCustomEditor(Lector.class, new LectorPropertyEditor(domainFacade));
         dataBinder.registerCustomEditor(Gebruiker.class, new GebruikerPropertyEditor(domainFacade));
+        dataBinder.registerCustomEditor(Lokaal.class, new GenericPropertyEditor(domainFacade));
     }
 }

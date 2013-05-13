@@ -75,6 +75,6 @@
             </table>
     </c:when>
     <c:otherwise>
-        <p>Er is nog geschiedenis voor dit dossier.</p>
+        <p>Er zijn nog geen gebeurtenissen om te tonen.</p>
     </c:otherwise>
 </c:choose>
