@@ -5,4 +5,4 @@
 <%@attribute name="page" required="true"%>
 
 <%-- any content can be specified here e.g.: --%>
-<c:if test="${currentPage eq page}">id="active"</c:if>
+<c:if test="${currentPage eq page}">class="active"</c:if>

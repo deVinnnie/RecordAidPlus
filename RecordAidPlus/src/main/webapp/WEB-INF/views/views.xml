@@ -37,6 +37,7 @@
         <put-attribute name="title" value="info.{1}.title"/>
         <put-attribute name="page" value="info" cascade="true"/>
         <put-attribute name="info_content" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
+        <put-attribute name="subpage" value="info.{1}" cascade="true"/>
     </definition>
     
     <definition name="/items/reservaties" template="/WEB-INF/views/items/reservaties.jsp">

@@ -78,7 +78,7 @@ h2, h3, h4{
 }
 
 #navlist li a:hover,
-#navlist a#active{
+#navlist a.active{
     color: #333;
     border-bottom: 2px dashed #333;
 }
@@ -89,6 +89,10 @@ h2, h3, h4{
 
 #subnav{
     float: left; 
+}
+
+#subnav a.active{
+    font-weight: bold; 
 }
 
 #beheer, #info{
@@ -361,4 +365,10 @@ ul{
 article ul{
     list-style:square;   
     margin: 0 0 1.625em 2.5em; 
+}
+
+img.aligncenter{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
