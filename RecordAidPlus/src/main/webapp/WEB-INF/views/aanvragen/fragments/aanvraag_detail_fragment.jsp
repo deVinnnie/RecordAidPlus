@@ -41,7 +41,7 @@
     </c:if>
     <tr>
         <td>Status</td>
-        <td>${aanvraag.status}</td>
+        <td>${aanvraag.status.name}</td>
     </tr>
     <tr>
         <td>Departement</td>

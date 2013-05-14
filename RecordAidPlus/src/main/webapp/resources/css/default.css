@@ -1,3 +1,5 @@
+/*General
+---------------*/
 html{
     overflow-y: scroll; 
 }
@@ -13,7 +15,13 @@ html, body{
     padding: 0;
 }
 
-a:active, a:visited {
+.clearfix{
+    clear: both; 
+}
+
+/* Links
+---------------*/
+a {
     color: #EE5757;
 }
 
@@ -21,9 +29,8 @@ a:hover{
     color: #333;
 }
 
-p{
-    font-size: 1em;
-}
+/*Headers
+---------------*/
 
 h1, h2, h3, h4{
     margin-top: 0;
@@ -34,59 +41,91 @@ h2, h3, h4{
     margin-top: 1em; 
 }
 
-#content{
-    min-height: 500px;
-    min-width: 900px; 
-    width: 90%; 
-    margin: 0 auto; 
-    padding: 10px;
-    background-color: #FCF7EF;
-    box-shadow: 0 0 12px #FFF3E2;
+/*Paragraph
+---------------*/
+p{
+    font-size: 1em;
 }
 
+
+/*Lijsten
+---------------*/
+ul{
+    list-style: none; 
+    margin: 0;
+    padding: 0; 
+}
+
+article ul{
+    list-style:square;   
+    margin: 0 0 1.625em 2.5em; 
+    padding-top: 10px;
+    padding-left: 1em; 
+}
+
+/*Content
+---------------*/
+#content{
+    background-color: #FCF7EF;
+    box-shadow: 0 0 12px #FFF3E2;
+    min-height: 500px;
+    min-width: 900px; 
+    margin: 0 auto; 
+    padding: 10px;
+    width: 90%; 
+}
+
+/*Header
+---------------*/
 #header{
     height: 265px;
     overflow: hidden;
 }
 
-#navigation{
+#authentication{ 
+    text-align: right;
+    font-size: 1.2em; 
+}
+
+/*Navigation
+---------------*/
+#nav{
     margin: 0 auto;
     border-bottom: 1px solid #ddd;
 }
 
-#navlist{
+#nav ul{
     text-align: center;
     margin: 0 auto;
-    padding: 0;
-    text-indent: 0;
-    list-style-type: none;    
+    text-indent: 0;   
 }
 
-#navlist li{
+#nav li{
     padding: 0 20px;
     margin: 0;
     text-indent: 0;
     display: inline;
 }
 
-#navlist li a{
+#nav a{
     letter-spacing: -1px;
     text-decoration: none;
-    color: #EE5757;
     font-size: 1.5em;
     margin-top: 20px;
 }
 
-#navlist li a:hover,
-#navlist a.active{
+#nav a:hover,
+#nav a.active{
     color: #333;
     border-bottom: 2px dashed #333;
 }
 
-#navlist a.updated{
+#nav a.updated{
     font-weight: bold; 
 }
 
+/*Subnavigation
+---------------*/
 #subnav{
     float: left; 
 }
@@ -95,13 +134,8 @@ h2, h3, h4{
     font-weight: bold; 
 }
 
-#beheer, #info{
+#subcontent{
     margin-left: 15em; 
-}
-
-.lijstopmaak {
-    list-style-type: square;
-    padding-top: 10px;
 }
 
 #page {
@@ -111,23 +145,9 @@ h2, h3, h4{
     padding-bottom: 50px; 
 }
 
-p a:active, p a:visited{
-    color: #EE5757;
-}
-
-div p a:hover{
-    color: #333;
-}
-
-a,
-a:visited{
-    color: #EE5757;
-}
-
-a:hover{
-    color: #333;
-}
-
+/*
+Forms
+---------------*/
 input[type="text"], 
 input[type="password"],
 input[type="email"]{
@@ -156,32 +176,22 @@ textarea{
     resize: none;
 }
 
-td{
-    padding: 0.5em; 
-    font-size: 1em;
-}
-
-.htmlTable a
-{
-    color: #EE5757;
-}
-
-.htmlTable{
-    box-shadow: 0 0 5px;
-}
-
-.htmlTable th
-{
-    background-color: #EE5757;
-    color: white;
-    font-weight: bold;
-}
-
+/*
+Tables
+---------------*/
 table
 {
     border-collapse: collapse;
 }
 
+td{
+    padding: 0.5em; 
+    font-size: 1em;
+}
+
+/*
+Succes and Error messages
+---------------*/
 .error, 
 .succes, 
 .notification{
@@ -200,16 +210,6 @@ table
     color: blue; 
 }
 
-img.logo{
-    margin: 0 auto; 
-    display: block; 
-}
-
-#authentication{ 
-    text-align: right;
-    font-size: 1.2em; 
-}
-
 #preview{
     border: 1px solid #4E6CA3; 
     padding: 0.5em; 
@@ -222,19 +222,8 @@ img.logo{
     border-right: 1px solid black; 
 }
 
-#calendar_wrapper{
-    float: left; 
-}
-
-#calendar{
-    max-width: 600px; 
-}
-
-.clearfix{
-    clear: both; 
-}
-
-/*FullCalendar*/
+/*FullCalendar
+---------------*/
 .fc-event-title{
     font-size: 20px !important; 
 }
@@ -243,35 +232,41 @@ img.logo{
     font-size:15px !important;   
 }
 
-#lectoren_list,
-#opmnameMethodes{
-    list-style: none; 
-    padding:0; 
+#calendar_wrapper{
+    float: left; 
 }
 
-.lesstatus
+#calendar{
+    max-width: 600px; 
+}
+
+/*Lessen
+---------------*/
+.les-status
 {
     display: inline-block; 
     width:10px;
     height:10px; 
 }
 
-.lesstatus.opgenomen{
+.les-status.opgenomen{
     background-color: #0F0; 
 }
 
-.lesstatus.nietopgenomen{
+.les-status.nietopgenomen{
     background-color: #F00; 
 }
 
-.lesstatus.toegewezen{
+.les-status.toegewezen{
     background-color: #f89406;    
 }
 
-.lesstatus.afgekeurd{
+.les-status.afgekeurd{
     background-color: #bbb; 
 }
 
+/*Aanvragen
+---------------*/
 #aanvraag_algemeen{
     width:40%;
     margin-right: 10%; 
@@ -292,7 +287,8 @@ img.logo{
     padding: 0;
 }
 
-/* Footer */
+/* Footer 
+---------------*/
 .footer{
     border-top: 1px solid #ddd;
     background-color: transparent;
@@ -301,7 +297,7 @@ img.logo{
     height: 160px;
 }
 
-.footerNavigatie {
+.important-links {
     padding: 0px;
     margin-left: 10px;
     width: 125px;
@@ -309,17 +305,18 @@ img.logo{
     border-right: 1px solid #ddd;
 }
 
-.footerNavigatie ul{
+.important-links ul{
     list-style: none;
     padding: 0px;
 }
 
-.footerNavigatie ul li{
+.important-links ul li{
     padding-bottom: 2px;
 }
 
 .contact {
-    width: 350px;
+    min-width: 350px;
+    width:30%;
     float: left;
     margin-left: 45px;
 }
@@ -348,9 +345,7 @@ img.logo{
     margin-top: 5px;
 }
 
-.footer a:link,
-.footer a:visited, 
-.footer a:active { 
+.footer a { 
     letter-spacing: -1px;
     text-decoration: none;
     color: #EE5757;
@@ -360,21 +355,32 @@ img.logo{
     color: #333;
     border-bottom: 2px dashed #333;
 }  
-/*Einde footer*/
 
-ul{
-    list-style: none; 
-    padding: 0; 
-    margin: 0;
-}
 
-article ul{
-    list-style:square;   
+dl{
     margin: 0 0 1.625em 2.5em; 
+    padding-top: 10px;
+    padding-left: 1em
 }
 
+dt {
+    display: list-item;
+    list-style-type: square;
+}
+
+dd{
+    margin-bottom: 1em; 
+}
+
+/*Images
+---------------*/
 img.aligncenter{
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+img.logo{
+    margin: 0 auto; 
+    display: block; 
 }

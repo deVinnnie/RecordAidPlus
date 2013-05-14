@@ -8,6 +8,7 @@
     <a href="<s:url value="/aanvragen/beheer"/>">Terug naar het overzicht</a>
     <a href="<s:url value="/aanvragen/goedkeuren?id=${aanvraag.id}"/>">Goedkeuren</a>
     <a href="<s:url value="/aanvragen/weigeren?id=${aanvraag.id}"/>">Weigeren</a>
+    <a href="<s:url value="/aanvragen/sluiten?id=${aanvraag.id}"/>">Voltooid</a>
 </div>
 
 <div>

@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<article>
 <h1>Home</h1>
 <h2>Wat is RecordAid?</h2>
 <p> 
@@ -17,7 +18,7 @@
     of studenten nood hebben om de lessen nog eens te herbekijken en deze redenen kunnen niet genegeerd worden.
 
     Redenen kunnen onderanderen zijn:
-<ul class="lijstopmaak">
+<ul>
     <li><strong>Ziekte:</strong> Studenten worden wel eens ziek maar wat als je lange tijd ziek bent zoals bijvoorbeeld klierkoorts. Of als je een operatie moet ondergaan. Momenteel zijn er 12 studenten op G&amp;T die minstens 4 weken niet naar de lessen kunnen komen door ziekte. Met screencasts kunnen zij toch meeblijven met de leerstof.</li>
     <li><strong>Werkstudenten:</strong> Sommige studenten werken al en kunnen hierdoor niet alle lessen aanwezig zijn. Voor deze studenten zou het handig zijn als ze de lessen kunnen herbekijken zodat zij niet achter geraken met de leerstof. Op G&amp;T zijn er 31 voltijdse werkstudenten. Deze kunnen dus zeer weinig lessen volgen maar zouden door screencasts toch meeblijven met de leerstof.</li>
     <li><strong>Leerproblemen:</strong> Als je last hebt van leerproblemen zoals ADD en je kan je soms niet goed concentreren dan zou het zeer handig zijn als je de les thuis rustig kon herbekijken. Op G&amp;T heeft 8,8% van de studenten leerproblemen, dit zijn zo’n 240 studenten.</li>
@@ -31,6 +32,7 @@
     willen ondersteunen zodat we alle studenten kunnen helpen en meer lessen 
     kunnen opnemen. Via de <a href="<s:url value="/gebruikers/account/"/>">gebruikers-pagina</a> kan je opgeven dat je een buddy wil worden.
 </p>
+</article>
 <h2>Opnames</h2>
 <script type="text/javascript">
 $(document).ready(function()

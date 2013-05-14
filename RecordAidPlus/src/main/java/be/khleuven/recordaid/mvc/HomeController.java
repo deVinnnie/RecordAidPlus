@@ -40,4 +40,8 @@ public class HomeController extends AbstractController{
         }
         return "/error";
     }
+    @RequestMapping("/pagenotfound")
+    public String pagenotfoundError(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        return "/404";
+    }
 }

@@ -37,7 +37,7 @@
                                 </c:when>
                             </c:choose>    
                         </td>
-                        <td>${aanvraag.status}</td>
+                        <td>${aanvraag.status.name}</td>
                         <td><a href="<s:url value="/aanvragen/detail?id=${aanvraag.id}"/>">Details</a></td>
                     </tr>
                 </c:forEach>

@@ -25,18 +25,18 @@
     </definition>
     
     <definition name="base.beheer" extends="base.jquery">
-        <put-attribute name="content" value="/WEB-INF/views/beheer_template.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/views/beheer/beheer_template.jsp"/>
     </definition>
     
     <definition name="base.info" extends="template">
-        <put-attribute name="content" value="/WEB-INF/views/info_template.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/views/info/info_template.jsp"/>
     </definition>
     <!--End Templates-->
     
     <definition name="/info/*" extends="base.info">
         <put-attribute name="title" value="info.{1}.title"/>
         <put-attribute name="page" value="info" cascade="true"/>
-        <put-attribute name="info_content" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
+        <put-attribute name="subcontent" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
         <put-attribute name="subpage" value="/info/{1}" cascade="true"/>
     </definition>
     
@@ -76,7 +76,7 @@
     <definition name="/aanvragen/nieuw_multi" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw_multi.title"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw_multi.jsp" />
-        <put-attribute name="aanvragen" value="beheer" cascade="true"/>
+        <put-attribute name="page" value="aanvragen" cascade="true"/>
         <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/multi_aanvraag.js"/>
         </put-list-attribute>
@@ -96,7 +96,7 @@
     
     <definition name="/aanvragen/begeleider/aanvragen" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.begeleider.aanvragen.title"/>
-        <put-attribute name="aanvragen" value="beheer" cascade="true"/>
+        <put-attribute name="page" value="aanvragen" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/begeleider/aanvragen.jsp" />
     </definition>
     
@@ -123,7 +123,7 @@
     
     <definition name="/items/beheer" extends="base.beheer">
         <put-attribute name="title" value="items.beheer.title"/>
-        <put-attribute name="beheer_content" value="/WEB-INF/views/items/beheer.jsp" cascade="true"/>
+        <put-attribute name="subcontent" value="/WEB-INF/views/items/beheer.jsp" cascade="true"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="subpage" value="/items/beheer" cascade="true"/>
         <put-list-attribute name="styles" inherit="true">
@@ -166,7 +166,12 @@
     <!--Common-->
     <definition name="/error" extends="template">
         <put-attribute name="title" value="error.title"/>
-        <put-attribute name="content" value="/WEB-INF/views/error.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/error/error.jsp" />
+    </definition>
+    
+    <definition name="/404" extends="template">
+        <put-attribute name="title" value="pagenotfound.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/error/404.jsp" />
     </definition>
     
     <!--Admin Pages-->
@@ -175,14 +180,14 @@
         <put-attribute name="title" value="beheer.title"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="subpage" value="" cascade="true"/>
-        <put-attribute name="beheer_content" value="/WEB-INF/views/beheer.jsp" cascade="true"/>
+        <put-attribute name="subcontent" value="/WEB-INF/views/beheer/beheer.jsp" cascade="true"/>
     </definition>
     
     <definition name="/*/beheer" extends="base.beheer">
         <put-attribute name="title" value="{1}.beheer.title"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
         <put-attribute name="subpage" value="/{1}/beheer" cascade="true"/>
-        <put-attribute name="beheer_content" value="/WEB-INF/views/{1}/beheer.jsp" cascade="true"/>
+        <put-attribute name="subcontent" value="/WEB-INF/views/{1}/beheer.jsp" cascade="true"/>
     </definition>
     
     <!--Normal Pages-->

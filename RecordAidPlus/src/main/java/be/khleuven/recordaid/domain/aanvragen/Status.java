@@ -9,8 +9,20 @@ package be.khleuven.recordaid.domain.aanvragen;
  */
 public enum Status
 {
-    NIEUW,
-    GOEDGEKEURD, 
-    AFGEHANDELD,
-    AFGEKEURD;
+    NIEUW("Nieuw"),
+    GOEDGEKEURD("Goedgekeurd"), 
+    AFGEHANDELD("Afgehandeld"),
+    AFGEKEURD("Afgekeurd");
+    
+    private String name; 
+    
+    private Status(){}
+    
+    private Status(String name){
+        this.name = name; 
+    }
+
+    public String getName() {
+        return name;
+    }
 }

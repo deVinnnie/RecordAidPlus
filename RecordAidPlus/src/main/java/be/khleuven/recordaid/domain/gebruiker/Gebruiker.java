@@ -49,17 +49,16 @@ public class Gebruiker implements Serializable, UserDetails {
      * @param wachtwoord Het wachtwoord van de gebruiker.
      */
     public Gebruiker(Rollen rol, String emailadres, String naam, String voornaam, String wachtwoord) {
+        this(); 
         this.rollen.add(rol);
         this.emailadres = emailadres;
         this.achternaam = naam;
         this.voornaam = voornaam;
         this.wachtwoordHash = wachtwoord;
-
-        this.validatieCode = ValidatieCodeGenerator.generateValidatieCode();
     }
 
     public Gebruiker() {
-        this.rollen.add(Rollen.STUDENT);
+        this.validatieCode = ValidatieCodeGenerator.generateValidatieCode();
     }
     
     public Gebruiker(String emailadres){
@@ -246,10 +245,16 @@ public class Gebruiker implements Serializable, UserDetails {
     }
 
     public void setGeinteresseerd(boolean geinteresseerd) {
-        this.addRol(Rollen.GEINTERESSEERDE);
+        if(geinteresseerd){
+            this.addRol(Rollen.GEINTERESSEERDE);
+        }
+        else{
+            if(this.isGeinteresseerd()){
+                this.rollen.remove(Rollen.GEINTERESSEERDE);
+            }
+        }
     }
     // </editor-fold>
-    
     
     // <editor-fold defaultstate="collapsed" desc="Overridden methods">
     /**

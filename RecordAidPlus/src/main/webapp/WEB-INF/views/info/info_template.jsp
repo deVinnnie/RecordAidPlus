@@ -14,7 +14,7 @@
         </c:forEach>
     </ul>
 </div>
-<div id="info">
-    <tiles:insertAttribute name="info_content"/>
+<div id="subcontent">
+    <tiles:insertAttribute name="subcontent"/>
 </div>
 <div style="clear: both;"></div>

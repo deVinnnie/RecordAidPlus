@@ -9,36 +9,36 @@
             <li>De <strong>RecordAid-kern</strong> is een groep van Buddy&#8217;s die het volledige reilen en zeilen van RecordAid in goede banen proberen te leiden. Dit gaat van het maken van flyers tot het verzamelen en ondersteunen van de Buddy&#8217;s.</li>
         </ul>
         <h2>De RecordAid-kern</h2>
-        <ul>
-            <li>David Demeyer</li>
-            <p> Coördinator RecordAid</p>
-            <li>Wouter De Bruyn</li>
-            <p>Departementale verantwoordelijke Buddy&#8217;s<br />
-                Verantwoordelijke Buddy&#8217;s Toegepaste Informatica</p>
-            <li>Klaas D&#8217;Hose</li>
-            <p>Verantwoordelijke Buddy&#8217;s Verpleegkunde</p>
-            <li>Corrine Keemink</li>
-            <p>Verantwoordelijke Buddy&#8217;s Vroedkunde</p>
-            <li>Carl Vanderwegen</li>
-            <p>Verantwoordelijke Buddy&#8217;s Biomedische Laboratoriumtechnologie</p>
-            <li>Maxime Van den Kerkhof</li>
-            <p> Verantwoordelijke Website</p>
-            <li>Sander Brebels / Rens Oosterbos</li>
-            <p>Verantwoordelijke Promo</p>
-            <li>Mattias Mercy</li>
-            <p>Verantwoordelijke Vorming en Support
-        </ul>
+        <dl>
+            <dt>David Demeyer</dt>
+            <dd>Coördinator RecordAid</dd>
+            <dt>Wouter De Bruyn</dt>
+            <dd>Departementale verantwoordelijke Buddy&#8217;s<br />
+                Verantwoordelijke Buddy&#8217;s Toegepaste Informatica</dd>
+            <dt>Klaas D&#8217;Hose</dt>
+            <dd>Verantwoordelijke Buddy&#8217;s Verpleegkunde</dd>
+            <dt>Corrine Keemink</dt>
+            <dd>Verantwoordelijke Buddy&#8217;s Vroedkunde</dd>
+            <dt>Carl Vanderwegen</dt>
+            <dd>Verantwoordelijke Buddy&#8217;s Biomedische Laboratoriumtechnologie</dd>
+            <dt>Maxime Van den Kerkhof</dt>
+            <dd> Verantwoordelijke Website</dd>
+            <dt>Sander Brebels / Rens Oosterbos</dt>
+            <dd>Verantwoordelijke Promo</dd>
+            <dt>Mattias Mercy</dt>
+            <dd>Verantwoordelijke Vorming en Support</dd>
+        </dl>
         <h2>De vertegenwoordigers</h2>
-        <ul>
-            <li>Jeroen Meys</li>
-            <p> Vertegenwoordiger ISW</p>
-            <li>Mattias Mercy</li>
-            <p> Vertegenwoordiger DSR</p>
-            <li>Bart van Doren</li>
-            <p> Vertegenwoordiger Diana</p>
-            <li>Karlien Lemmens</li>
-            <p> Vertegenwoordiger StEIL
-        </ul>
+        <dl>
+            <dt>Jeroen Meys</dt>
+            <dd>Vertegenwoordiger ISW</dd>
+            <dt>Mattias Mercy</dt>
+            <dd>Vertegenwoordiger DSR</dd>
+            <dt>Bart van Doren</dt>
+            <dd>Vertegenwoordiger Diana</dd>
+            <dt>Karlien Lemmens</dt>
+            <dd>Vertegenwoordiger StEIL</dd>
+        </dl>
         <h2>RecordAid Peter</h2>
         <p>De persoon die we zeker en vast niet mogen vergeten, de persoon die er voor gezorgd heeft dat we staan waar we nu staan: <strong>Luc Janssens</strong><br /></p>
     </div>

@@ -10,7 +10,6 @@
         <tr>
             <td><label for="email">E-mail adres (KHL)</label></td>
             <td><input type="text" id="email" name="j_username"/></td>
-            <td id="email_error" class="error"></td>
         </tr>
         <tr>
             <td><label for="wachtwoord">Paswoord</label></td>
@@ -19,7 +18,6 @@
         <tr>
             <td>&nbsp;</td>
             <td><input type="submit" value="Log in"/></td>
-            <td>&nbsp;</td>
         </tr>
     </table>
 </form>

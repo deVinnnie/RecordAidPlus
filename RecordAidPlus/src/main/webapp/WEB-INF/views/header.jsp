@@ -18,8 +18,8 @@
     </div>
     <img class="logo" src="<s:url value="/resources/images/recordaid_logo.png"/>" alt="RecordAid logo"/>
 </div>
-<div id="navigation">
-    <ul id="navlist">
+<div id="nav">
+    <ul>
         <tiles:useAttribute id="page" name="page" classname="java.lang.String"/>
 
         <li>

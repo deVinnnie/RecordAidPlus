@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/items")
@@ -41,17 +42,16 @@ public class ItemController extends AbstractController{
         return "/items/beheer";
     }
     
-    @RequestMapping(params="verwijder",method=RequestMethod.POST)
-    public String deleteItem(@RequestParam("id") Long id, 
-                                ModelMap model){
+    @RequestMapping(value="/verwijder",method=RequestMethod.GET)
+    public String deleteItem(@RequestParam("id") long id, RedirectAttributes redirectAttr){
         Item item = domainFacade.findItem(id); 
         if (item != null) {
             domainFacade.remove(item);
         }
         else{
-            model.addAttribute("error", "Item bestaat niet."); 
+            redirectAttr.addAttribute("error", "Item bestaat niet."); 
         }
-        return "/items/beheer";
+        return "redirect:/items/beheer";
     } 
     
     @RequestMapping(value="/beheer", method=RequestMethod.POST)

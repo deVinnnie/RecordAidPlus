@@ -6,23 +6,31 @@
 <h2>Huidige items</h2>
 <c:choose>
     <c:when test="${not empty items}">
-        <table class="htmlTable">
-            <tr>
-                <th>Item naam</th>
-                <th>Verwijderen</th>
-            </tr>
-            <c:forEach items="${items}" var="item">
+        <script type="text/javascript">
+            $('document').ready(function()
+            {
+                datatable("#items");
+            });
+        </script>
+        <table id="items">
+            <thead>
                 <tr>
-                    <td>${item.naam}</td>
-                    <td> 
-                        <form method="POST">
-                            <input type="hidden" id="verwijder" value=""/>
-                            <input type="hidden" id="naam" value="${item.naam}"/>
-                            <input type="submit" value="Verwijder"/>
-                        </form>
-                    </td>
+                    <th>Item naam</th>
+                    <th>Verwijderen</th>
                 </tr>
-            </c:forEach>
+            </thead>
+            <tbody>
+                <c:forEach items="${items}" var="item">
+                    <tr>
+                        <td>${item.naam}</td>
+                        <td> 
+                            <a href="<s:url value="/items/verwijder?id=${item.id}"/>">
+                                Verwijder
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
         </table>
     </c:when>
     <c:otherwise>
@@ -31,26 +39,16 @@
 </c:choose>
 
 <h2>Voeg een nieuw item toe</h2>
-<p id="error" class="error">${error}</p>
-
+<p id="error" class="error"></p>
 <springforms:form id="formAddItem" method="POST" modelAttribute="newItem">
-    <table>
-        <tr>
-            <td><label for="naam">Naam van het item</label></td>
-            <td><springforms:input path="naam" type="text" name="naam" id="naam"/></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>
-                <input type="submit" value="Voeg toe"/>
-            </td>
-        </tr>
-    </table>
+    <label for="naam">Naam van het item</label>
+    <springforms:input path="naam" type="text" id="naam"/>
+    <input type="submit" value="Voeg toe"/>
 </springforms:form>
 
 <s:url value="/items/reservaties" var="feed"/>
 <script type="text/javascript">
-    $("document").ready(function() {
+    $('document').ready(function() {
         var calendar = $("#reservaties").fullCalendar({
             header: {
                 left: 'title',

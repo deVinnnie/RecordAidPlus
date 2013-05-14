@@ -8,12 +8,12 @@
     js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
 <div class="footer">
-    <div class="footerNavigatie">
+    <div class="important-links">
         <h4>Navigatie</h4>
         <ul>
             <li><a href="<s:url value="/home"/>">Home</a></li>
+            <li><a href="<s:url value="/info/voorstelling"/>">Info</a></li>
             <li><a href="<s:url value="/aanvragen"/>">Mijn Aanvragen</a></li>
             <li><a href="<s:url value="/support"/>" >Support</a></li>
             <li><a href="<s:url value="/faq"/>">FAQ</a></li>       

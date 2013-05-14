@@ -73,7 +73,7 @@ public class AanvragenController extends AbstractController{
         aanvraag.addOpnameMoment(nieuwOpnameMoment);
 
         if (action.equals("Gereed")) {
-            return "redirect:/aanvragen/bevestig_aanvraag";
+            return "redirect:/aanvragen/bevestigen";
         } else {
             return "redirect:/aanvragen/nieuwe_opname";
         }
@@ -113,14 +113,14 @@ public class AanvragenController extends AbstractController{
         }
     }
 
-    @RequestMapping(value = "/bevestig_aanvraag", method = RequestMethod.GET)
+    @RequestMapping(value = "/bevestigen", method = RequestMethod.GET)
     public String showBevestigAanvraagForm(@ModelAttribute("aanvraag") AbstractAanvraag nieuweAanvraag,
             ModelMap model) {
         model.addAttribute("aanvraag", nieuweAanvraag);
-        return "/aanvragen/bevestig_aanvraag";
+        return "/aanvragen/bevestigen";
     }
 
-    @RequestMapping(value = "/bevestig_aanvraag", method = RequestMethod.POST)
+    @RequestMapping(value = "/bevestigen", method = RequestMethod.POST)
     public String bevestigAanvraag(@ModelAttribute("aanvraag") AbstractAanvraag aanvraag,
             ModelMap model, @RequestParam("action") String action, RedirectAttributes redirectAttr) {
         try {
@@ -252,7 +252,7 @@ public class AanvragenController extends AbstractController{
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Goedkeuring">
+    //<editor-fold defaultstate="collapsed" desc="Status veranderen">
     @RequestMapping(value = "goedkeuren", params = "id", method = RequestMethod.GET)
     public String aanvraagGoedkeuren(@RequestParam("id") long id, RedirectAttributes redirectAttr) {
         try {
@@ -285,7 +285,14 @@ public class AanvragenController extends AbstractController{
         }
         return "redirect:/aanvragen/detail?id=" + id;
     }
-
+    
+    @RequestMapping(value = "sluiten", params = "id", method = RequestMethod.GET)
+    public String aanvraagSluiten(@RequestParam("id") long id, RedirectAttributes redirectAttr) {
+        AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
+        domainFacade.sluitAanvraag(aanvraag, this.getCurrentDossier().getGebruiker());
+        redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag voltooid.", "succes"));
+        return "redirect:/aanvragen/detail?id=" + id;
+    }
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Begeleider">

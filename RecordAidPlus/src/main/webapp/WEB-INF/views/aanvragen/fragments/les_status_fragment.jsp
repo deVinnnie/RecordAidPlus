@@ -18,4 +18,4 @@
         <c:set var="titel" value="Opgenomen"/>
     </c:otherwise>
 </c:choose>
-<span title="${titel}" class="lesstatus ${klasse}"></span>  
+<span title="${titel}" class="les-status ${klasse}"></span>  

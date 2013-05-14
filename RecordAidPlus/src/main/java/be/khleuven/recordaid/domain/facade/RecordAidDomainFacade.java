@@ -15,18 +15,18 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Klasse die fungeert als een facade voor alle database klassen. De
- * RecordAidDomainFacade kan aangesproken worden en deze geeft de betreffende
+ * Klasse die fungeert als een facade voor alle database klassen. 
+ * De RecordAidDomainFacade kan aangesproken worden en deze geeft de betreffende
  * taak door aan het juiste model-object.
  *
- * @author Maxime Van den Kerkhof
+ * @author Maxime Van den Kerkhof, Vincent Ceulemans
  */
 public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  
+
     private static String url = "http://recordaid.khleuven.be/";
-    private static String configPath = System.getProperty("user.home")+"/.recordaid/recordaid.properties";
-    private String mailHandlerType = "MailHandlerDummy"; 
-    
+    private static String configPath = System.getProperty("user.home") + "/.recordaid/recordaid.properties";
+    private String mailHandlerType = "MailHandlerDummy";
     private CommonDatabaseInterface commonDb;
     private GebruikerDatabaseInterface gebruikerDB;
     private AanvraagDatabaseInterface aanvraagDB;
@@ -37,7 +37,8 @@ public class RecordAidDomainFacade {
     /**
      * Constructor om een nieuwe RecordAidDomainFacade aan te maken.
      */
-    public RecordAidDomainFacade() {}
+    public RecordAidDomainFacade() {
+    }
 
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
@@ -46,9 +47,9 @@ public class RecordAidDomainFacade {
             ReservatieDatabaseInterface reservatieDB,
             DepartementDatabaseInterface departementDb,
             MailDatabaseInterface mailDb) {
-        this(commonDb, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true); 
+        this(commonDb, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true);
     }
-    
+
     @Autowired
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
@@ -56,7 +57,7 @@ public class RecordAidDomainFacade {
             AanvraagDatabaseInterface aanvraagDB,
             ReservatieDatabaseInterface reservatieDB,
             DepartementDatabaseInterface departementDb,
-            MailDatabaseInterface mailDb, 
+            MailDatabaseInterface mailDb,
             boolean initialize) {
         this.commonDb = commonDb;
         this.gebruikerDB = gebruikerDB;
@@ -67,15 +68,15 @@ public class RecordAidDomainFacade {
 
         //Watch out!! Dbunit inserts some default but real entities into the DB. 
         //You don't want to accidently send a mail to them!
-       
-        
-        if(initialize){
-            this.init(); 
+
+
+        if (initialize) {
+            this.init();
         }
     }
     //</editor-fold>  
 
-    public void init (){
+    public void init() {
         try {
             StartUpDataFiller filler = new StartUpDataFiller(this);
             filler.init();
@@ -83,7 +84,7 @@ public class RecordAidDomainFacade {
             Logger.getLogger(RecordAidDomainFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="FAQ">
     public FAQ findFAQ(Long id) {
         return commonDb.find(FAQ.class, id);
@@ -135,8 +136,8 @@ public class RecordAidDomainFacade {
         context.put("validatie_code", gebruiker.getValidatieCode());
         context.put("tijdelijk_wachtwoord", gebruiker.getValidatieCode());
         this.sendMail("validatie_gebruiker_indirect", gebruiker.getEmailadres(), context);
-        
-        return res; 
+
+        return res;
     }
 
     public void removeGebruiker(Gebruiker gebruiker) throws DatabaseException {
@@ -177,8 +178,8 @@ public class RecordAidDomainFacade {
         Dossier dossier = aanvraag.getDossier();
         dossier.addAanvraag(aanvraag);
         commonDb.edit(dossier);
-        Gebruiker gebruiker = dossier.getGebruiker(); 
-        this.edit(gebruiker); 
+        Gebruiker gebruiker = dossier.getGebruiker();
+        this.edit(gebruiker);
 
         //Verzend mail naar recordaid met de boodschap dat een nieuwe aanvraag is toegevoegd. 
         Map<String, String> context = new HashMap<String, String>();
@@ -320,6 +321,7 @@ public class RecordAidDomainFacade {
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="OpnameMethoden">
     public OpnameMethode findOpnameMethode(Long id) {
         return commonDb.find(OpnameMethode.class, id);
     }
@@ -346,6 +348,7 @@ public class RecordAidDomainFacade {
     public OpnameMoment findOpnameMoment(long id) {
         return this.commonDb.find(OpnameMoment.class, id);
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mailing">
     public List<MailMessage> findMailMessages() {
@@ -363,26 +366,26 @@ public class RecordAidDomainFacade {
 
     private void sendMail(String message_key, String recipient, Map<String, String> context) throws DomainException {
         MailMessage mailMessage = mailDb.getMailMessage(message_key);
-        
-        if(mailMessage==null){
+
+        if (mailMessage == null) {
             //Indicates that no mailmessages are present  in database.
             //MailMessages in database are only called from code, and not dependant on user-input. 
             this.resetMessages();
             mailMessage = mailDb.getMailMessage(message_key);
         }
-        
+
         this.sendMail(mailMessage, recipient, context);
     }
 
     private void resetMessages() {
         MailMessageFactory factory = new MailMessageFactory();
         List<MailMessage> messages = factory.createMailMessages();
-        
+
         SubjectPrefix prefix = new SubjectPrefix();
         prefix.setId(1);
         prefix.setSubject_prefix("[RecordAid]");
-        
-        this.create(prefix); 
+
+        this.create(prefix);
 
         for (MailMessage message : messages) {
             message.setSubjectPrefix(this.getSubjectPrefix());
@@ -392,9 +395,9 @@ public class RecordAidDomainFacade {
 
     private void sendMail(MailMessage mailMessage, String recipient, Map<String, String> context) throws DomainException {
         try {
-            MailHandlerFactory mailHandlerFactory = new MailHandlerFactory(); 
-            AbstractMailHandler mailHandler = mailHandlerFactory.createMailHandler(this.mailHandlerType, RecordAidDomainFacade.configPath); 
-            
+            MailHandlerFactory mailHandlerFactory = new MailHandlerFactory();
+            AbstractMailHandler mailHandler = mailHandlerFactory.createMailHandler(this.mailHandlerType, RecordAidDomainFacade.configPath);
+
             mailMessage.setRecipient(recipient);
             mailMessage.setContext(context);
             mailHandler.sendMessage(mailMessage);
@@ -472,6 +475,11 @@ public class RecordAidDomainFacade {
     }
     //</editor-fold>
 
+    public Setting getSetting(String sleutel) {
+        return commonDb.find(Setting.class, sleutel);
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Handelingen">
     /**
      * Keurt de gegeven aanvraag goed door de RecordAid-kern. Het RecordAid-team
      * aanvaard de moeilijke taak om de aanvrager bij te staan. Hierna moeten de
@@ -498,7 +506,7 @@ public class RecordAidDomainFacade {
         context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
         context.put("aanvraag_datum", aanvraag.getTijdsbepaling());
         this.sendMail("goedkeuring_aanvraag", dossier.getGebruiker().getEmailadres(), context);
-        
+
         //Stuur mail naar de betrokken lectoren. 
         if (aanvraag instanceof DagAanvraag) {
             for (OpnameMoment opnameMoment : aanvraag.getOpnameMomenten()) {
@@ -507,10 +515,10 @@ public class RecordAidDomainFacade {
                 opnameMomentContext.put("aanvraag_aanvrager_achternaam", aanvraag.getDossier().getGebruiker().getAchternaam());
                 opnameMomentContext.put("aanvraag_ood", opnameMoment.getOOD());
                 opnameMomentContext.put("aanvraag_reden", aanvraag.getReden());
-                String urlFormulier = url+"opnames/opname_goedkeuren?toegangscode=" 
+                String urlFormulier = url + "opnames/opname_goedkeuren?toegangscode="
                         + opnameMoment.getToegangsCode()
-                        + "&opname=" + opnameMoment.getId() 
-                        + "&aanvraag=" + aanvraag.getId(); 
+                        + "&opname=" + opnameMoment.getId()
+                        + "&aanvraag=" + aanvraag.getId();
                 opnameMomentContext.put("url", urlFormulier);
                 this.sendMail("aanvraag_goedkeuring_lector", opnameMoment.getLector().getEmailadres(), opnameMomentContext);
             }
@@ -538,7 +546,7 @@ public class RecordAidDomainFacade {
         Dossier dossier = aanvraag.getDossier();
         dossier.addGebeurtenis("Aanvraag is afgekeurd door de kern.", initiator);
         this.edit(dossier);
-       
+
         //Stuur mail naar de aanvrager met de boodschap dat de aanvraag afgekeurd is. 
         Map<String, String> context = new HashMap<String, String>();
         context.put("aanvraag_aanvrager_voornaam", dossier.getGebruiker().getVoornaam());
@@ -559,8 +567,9 @@ public class RecordAidDomainFacade {
     }
 
     /**
-     * Beantwoord een vraag van een gebruiker. Er wordt een mail gestuurd naar de vrager, 
-     * tenzij deze vraag al eerder beantwoord werd (in geval van wijziging). 
+     * Beantwoord een vraag van een gebruiker. Er wordt een mail gestuurd naar
+     * de vrager, tenzij deze vraag al eerder beantwoord werd (in geval van
+     * wijziging).
      *
      * @param faq Faq met antwoord
      * @param antwoorder Buddy of Kernlid die de vraag beantwoord.
@@ -580,41 +589,45 @@ public class RecordAidDomainFacade {
             //Verstuur mail
             this.sendMail("antwoord_faq", gebruiker.getEmailadres(), context);
         }
-        
+
         //Bewerk vraag
         faq.setBeantwoord(true);
         this.edit(faq);
     }
-    
+
     public void koppelOpname(AbstractAanvraag aanvraag, OpnameMoment opnameMoment, Opname opname) throws DomainException {
         //Koppel opname
         opnameMoment.setOpname(opname);
         this.edit(opnameMoment);
-        
+
         //Stuur mail naar aanvrager als alle opnames gebeurt zijn. 
-        if(aanvraag instanceof DagAanvraag){
-            boolean alleOpnamesGedaan =true; 
-            for(OpnameMoment moment : aanvraag.getOpnameMomenten()){
-                if(moment.getGoedgekeurd().equals(Boolean.TRUE)){
-                    if(moment.getOpname()==null ||
-                           !moment.getOpname().getStatus().equals(OpnameStatus.GEREED)){
-                        alleOpnamesGedaan = false; 
+        if (aanvraag instanceof DagAanvraag) {
+            boolean alleOpnamesGedaan = true;
+            for (OpnameMoment moment : aanvraag.getOpnameMomenten()) {
+                if (moment.getGoedgekeurd().equals(Boolean.TRUE)) {
+                    if (moment.getOpname() == null
+                            || !moment.getOpname().getStatus().equals(OpnameStatus.GEREED)) {
+                        alleOpnamesGedaan = false;
                     }
                 }
             }
-            
-            if(alleOpnamesGedaan){
+
+            if (alleOpnamesGedaan) {
                 //Construct context. 
-                Map<String, String> context = new HashMap<String, String>(); 
-                context.put("aanvraag_aanvrager_voornaam",aanvraag.getDossier().getGebruiker().getVoornaam()); 
-                context.put("aanvraag_datum", aanvraag.getTijdsbepaling()); 
-             
-                this.sendMail("opnames_klaar",aanvraag.getDossier().getGebruiker().getEmailadres(), context); 
+                Map<String, String> context = new HashMap<String, String>();
+                context.put("aanvraag_aanvrager_voornaam", aanvraag.getDossier().getGebruiker().getVoornaam());
+                context.put("aanvraag_datum", aanvraag.getTijdsbepaling());
+
+                this.sendMail("opnames_klaar", aanvraag.getDossier().getGebruiker().getEmailadres(), context);
             }
         }
     }
-
-    public Setting getSetting(String sleutel) {
-        return commonDb.find(Setting.class, sleutel); 
+    
+    public void sluitAanvraag(AbstractAanvraag aanvraag, Gebruiker gebruiker) {
+        aanvraag.setStatus(Status.AFGEHANDELD);
+        this.edit(aanvraag); 
+        Dossier dossier = aanvraag.getDossier(); 
+        dossier.addGebeurtenis("", gebruiker);
     }
+    //</editor-fold>
 }

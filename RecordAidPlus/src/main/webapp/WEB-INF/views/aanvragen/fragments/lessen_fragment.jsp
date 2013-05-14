@@ -14,9 +14,11 @@
                 <fmt:formatDate value="${opnameMoment.eindTijdstip.time}" pattern="HH:mm" />  
                 <%@include file="les_status_fragment.jsp" %>
             </h3>
-            <a href="<s:url value="/opnames/opname_goedkeuren?toegangscode=${opnameMoment.toegangsCode}&opname=${opnameMoment.id}&aanvraag=${aanvraag.id}"/>">
-                Link voor Lector
-            </a>
+            <security:authorize access="hasRole('ADMIN')">
+                <a href="<s:url value="/opnames/opname_goedkeuren?toegangscode=${opnameMoment.toegangsCode}&opname=${opnameMoment.id}&aanvraag=${aanvraag.id}"/>">
+                    Link voor Lector
+                </a>
+            </security:authorize>
             <table>
                 <tr>
                     <td>OOD</td>
@@ -73,12 +75,12 @@
                             <ul>
                                 <c:forEach var="opnameMethode" items="${opnameMoment.mogelijkeOpnameMethodes}">
                                     <li>${opnameMethode.naam}</li>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                         </td>
                     </tr>
                 </security:authorize>
-                
+
                 <c:if test="${not empty opnameMoment.opname}">
                     <tr>
                         <td>Opname</td>

@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
 <h1>Emailadres valideren</h1>
+<m:boodschap/>
 <p>We hebben een email gestuurd naar het emailadres dat u opgaf. Gelieve de validatiecode in de email in te geven om uw emailadres te valideren.</p>
-<p class="error">${fout_melding}</p>
 <form method="POST">
     <table>
         <tr>
