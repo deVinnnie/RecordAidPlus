@@ -1,11 +1,13 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-
+    <!--Allow all requests for resources (css, js, images)-->
     <http pattern="/resources/**" security="none" />
     
+    <!--Rules for page acces. Additionally individual pages may have parts 
+        which are rendered based on a user's role.-->
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/home" access="permitAll"/>
         <intercept-url pattern="/" access="permitAll"/>
@@ -25,7 +27,7 @@
         <logout logout-url="/static/j_spring_security_logout"/>
     </http>
      
-    <!-- authentication manager and password hashing -->
+    <!--Authentication manager-->
     <authentication-manager alias="authenticationManager">
         <authentication-provider ref="daoAuthenticationProvider"/>
     </authentication-manager>
@@ -35,14 +37,20 @@
         <beans:property name="passwordEncoder" ref="passwordEncoder"/>
     </beans:bean>
  
+    <!--This custom authenticationProvider queries the database for a user's credentials and passes them to Spring-->
     <beans:bean id="userDetailsService"  name="userAuthenticationProvider" class="be.khleuven.recordaid.mvc.MyUserDetailsService">
         <beans:constructor-arg>
             <beans:ref bean="domainFacade"/>
         </beans:constructor-arg>
     </beans:bean>
     
+    <!--The Succes handler is called after a succesful login, 
+        it allows for a redirect to a certain page based on several paramters.
+        This was originally used for presenting the admin with a setup screen 
+        on first login.
+    -->
     <beans:bean id="authenticationSuccessHandler" class="be.khleuven.recordaid.util.RecordAidAuthenticationHandler"/>
     
-    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-    </beans:bean>
+    <!--Use BCrypt aka Blowfish for password hashing-->
+    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 </beans:beans>   

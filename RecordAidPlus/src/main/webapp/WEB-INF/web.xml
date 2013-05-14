@@ -53,6 +53,10 @@
     </error-page>
     
     <error-page>
+        <!--Some urls do not result immediatly in a 404, this is the case 
+        when these urls correspond to Wildcards in the views.xml. 
+        A FileNotFoundException is then trhown because 
+        the jsp location constructed from the url does not exist.-->
         <exception-type>java.io.FileNotFoundException</exception-type>
         <location>/pagenotfound</location>
     </error-page>

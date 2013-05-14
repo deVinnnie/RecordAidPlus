@@ -33,16 +33,6 @@
     </definition>
     <!--End Templates-->
     
-    <definition name="/info/*" extends="base.info">
-        <put-attribute name="title" value="info.{1}.title"/>
-        <put-attribute name="page" value="info" cascade="true"/>
-        <put-attribute name="subcontent" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
-        <put-attribute name="subpage" value="/info/{1}" cascade="true"/>
-    </definition>
-    
-    <definition name="/items/reservaties" template="/WEB-INF/views/items/reservaties.jsp">
-    </definition>
-    
     <definition name="/home" extends="base.jquery">
         <put-attribute name="title" value="home.title"/>
         <put-attribute name="page" value="home" cascade="true"/>
@@ -56,11 +46,6 @@
         <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/registreren.js"/>
         </put-list-attribute>
-    </definition>
-    
-    <definition name="/login/*" extends="template">
-        <put-attribute name="title" value="login.{1}.title"/>
-        <put-attribute name="content" value="/WEB-INF/views/login/{1}.jsp"/>
     </definition>
     
     <!--Aanvragen-->
@@ -135,6 +120,10 @@
         </put-list-attribute>
     </definition>
     
+    <definition name="/items/reservaties" template="/WEB-INF/views/items/reservaties.jsp">
+        <!--JSON feed, doesn't require other elements of the template (header, footer...)-->
+    </definition>
+    
     <!--FAQ-->
     <definition name="/faq/faq" extends="base.jquery">
         <put-attribute name="title" value="faq.faq.title"/>
@@ -149,7 +138,7 @@
         <put-attribute name="content" value="/WEB-INF/views/mailing/maillijst.jsp" />
     </definition>
     
-    <!--Gebruiker-->
+    <!--Gebruikers-->
     <definition name="/gebruikers/account" extends="base.jquery">
         <put-attribute name="title" value="gebruikers.account.title"/>
         <put-attribute name="content" value="/WEB-INF/views/gebruikers/account.jsp"/>
@@ -163,7 +152,7 @@
         <put-attribute name="content" value="/WEB-INF/views/gebruikers/dossier.jsp"/>
     </definition>
     
-    <!--Common-->
+    <!--Error pages-->
     <definition name="/error" extends="template">
         <put-attribute name="title" value="error.title"/>
         <put-attribute name="content" value="/WEB-INF/views/error/error.jsp" />
@@ -196,10 +185,16 @@
         <put-attribute name="content" value="/WEB-INF/views/gegevens/{1}/{2}.jsp" />
     </definition>
     
+    <definition name="/info/*" extends="base.info">
+        <put-attribute name="title" value="info.{1}.title"/>
+        <put-attribute name="page" value="info" cascade="true"/>
+        <put-attribute name="subcontent" value="/WEB-INF/views/info/{1}.jsp" cascade="true"/>
+        <put-attribute name="subpage" value="/info/{1}" cascade="true"/>
+    </definition>
+    
     <definition name="/*/*" extends="template">
         <put-attribute name="title" value="{1}.{2}.title"/>
         <put-attribute name="page" value="{1}" cascade="true"/>
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
-    <!--End Common-->
 </tiles-definitions>
