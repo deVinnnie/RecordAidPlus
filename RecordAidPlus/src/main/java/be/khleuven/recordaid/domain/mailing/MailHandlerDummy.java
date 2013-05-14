@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.mailing;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -12,7 +13,7 @@ public class MailHandlerDummy extends AbstractMailHandler{
         super(); 
     }
     
-    public MailHandlerDummy(String path){
+    public MailHandlerDummy(String path) throws IOException{
         super(path);
     }
 

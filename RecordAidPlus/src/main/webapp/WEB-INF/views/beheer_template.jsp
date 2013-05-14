@@ -20,15 +20,6 @@
         <c:forEach var="link" items="${links}">
             <li><a href="<s:url value="${link.value}"/>" <m:isActiveLink page="${link.value}" currentPage="${subpage}"/>>${link.key}</a></li>
         </c:forEach> 
-
-        <%-- <li><a href="<s:url value="/aanvragen/beheer"/>" <m:isActiveLink page="" currentPage=""/>>Aanvragen</a></li>
-         <li><a href="<s:url value="/faq/beheer"/>">FAQ</a></li>
-         <li><a href="<s:url value="/gebruikers/beheer"/>">Gebruikers</a></li>
-        <li><a href="<s:url value="/items/beheer"/>">Items</a></li>
-        <li><a href="<s:url value="/opnames/beheer"/>">Opnames</a></li>
-        <li><a href="<s:url value="/mailing/beheer"/>">Mail</a></li>
-        <li><a href="<s:url value="/gegevens/beheer"/>">Gegevens</a></li>
-        <li><a href="<s:url value="/support/beheer"/>">Support</a></li>--%>
     </ul>
 </div>
 <div id="beheer">

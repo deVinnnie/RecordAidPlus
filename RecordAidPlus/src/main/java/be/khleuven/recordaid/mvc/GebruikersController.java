@@ -1,7 +1,6 @@
 package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
-import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.gebruiker.Rollen;
 import org.springframework.beans.factory.annotation.Autowired;

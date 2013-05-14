@@ -23,22 +23,21 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  
-    private String url = "http://recordaid.khleuven.be/";
+    private static String url = "http://recordaid.khleuven.be/";
+    private static String configPath = System.getProperty("user.home")+"/.recordaid/recordaid.properties";
+    private String mailHandlerType = "MailHandlerDummy"; 
+    
     private CommonDatabaseInterface commonDb;
     private GebruikerDatabaseInterface gebruikerDB;
     private AanvraagDatabaseInterface aanvraagDB;
     private ReservatieDatabaseInterface reservatieDB;
     private DepartementDatabaseInterface departementDb;
     private MailDatabaseInterface mailDb;
-    private AbstractMailHandler mailHandler;
 
     /**
      * Constructor om een nieuwe RecordAidDomainFacade aan te maken.
      */
-    public RecordAidDomainFacade() {
-        //mailing = new SendMail(this.servletContext.getRealPath("/WEB-INF"));
-        mailHandler = new MailHandlerDummy();
-    }
+    public RecordAidDomainFacade() {}
 
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
@@ -68,7 +67,7 @@ public class RecordAidDomainFacade {
 
         //Watch out!! Dbunit inserts some default but real entities into the DB. 
         //You don't want to accidently send a mail to them!
-        mailHandler = new MailHandlerDummy();
+       
         
         if(initialize){
             this.init(); 
@@ -393,6 +392,9 @@ public class RecordAidDomainFacade {
 
     private void sendMail(MailMessage mailMessage, String recipient, Map<String, String> context) throws DomainException {
         try {
+            MailHandlerFactory mailHandlerFactory = new MailHandlerFactory(); 
+            AbstractMailHandler mailHandler = mailHandlerFactory.createMailHandler(this.mailHandlerType, RecordAidDomainFacade.configPath); 
+            
             mailMessage.setRecipient(recipient);
             mailMessage.setContext(context);
             mailHandler.sendMessage(mailMessage);
@@ -461,12 +463,12 @@ public class RecordAidDomainFacade {
         this.departementDb = departementDb;
     }
 
-    public AbstractMailHandler getMailHandler() {
-        return mailHandler;
+    public String getMailHandlerType() {
+        return mailHandlerType;
     }
 
-    public void setMailHandler(AbstractMailHandler mailing) {
-        this.mailHandler = mailing;
+    public void setMailHandlerType(String mailHandlerType) {
+        this.mailHandlerType = mailHandlerType;
     }
     //</editor-fold>
 
@@ -582,5 +584,37 @@ public class RecordAidDomainFacade {
         //Bewerk vraag
         faq.setBeantwoord(true);
         this.edit(faq);
+    }
+    
+    public void koppelOpname(AbstractAanvraag aanvraag, OpnameMoment opnameMoment, Opname opname) throws DomainException {
+        //Koppel opname
+        opnameMoment.setOpname(opname);
+        this.edit(opnameMoment);
+        
+        //Stuur mail naar aanvrager als alle opnames gebeurt zijn. 
+        if(aanvraag instanceof DagAanvraag){
+            boolean alleOpnamesGedaan =true; 
+            for(OpnameMoment moment : aanvraag.getOpnameMomenten()){
+                if(moment.getGoedgekeurd().equals(Boolean.TRUE)){
+                    if(moment.getOpname()==null ||
+                           !moment.getOpname().getStatus().equals(OpnameStatus.GEREED)){
+                        alleOpnamesGedaan = false; 
+                    }
+                }
+            }
+            
+            if(alleOpnamesGedaan){
+                //Construct context. 
+                Map<String, String> context = new HashMap<String, String>(); 
+                context.put("aanvraag_aanvrager_voornaam",aanvraag.getDossier().getGebruiker().getVoornaam()); 
+                context.put("aanvraag_datum", aanvraag.getTijdsbepaling()); 
+             
+                this.sendMail("opnames_klaar",aanvraag.getDossier().getGebruiker().getEmailadres(), context); 
+            }
+        }
+    }
+
+    public Setting getSetting(String sleutel) {
+        return commonDb.find(Setting.class, sleutel); 
     }
 }

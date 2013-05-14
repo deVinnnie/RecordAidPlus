@@ -1,7 +1,7 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-    xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <http pattern="/resources/**" security="none" />
@@ -19,8 +19,9 @@
         <intercept-url pattern="/gebruikers/detail" access="hasAnyRole('ADMIN','KERNLID')"/>
         <intercept-url pattern="/aanvragen/bewerk" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY')"/> 
         <form-login login-processing-url="/static/j_spring_security_check"
-            login-page="/login?loginrequired"
-            authentication-failure-url="/login?error"/>
+                    login-page="/login?loginrequired"
+                    authentication-failure-url="/login?error"
+                    authentication-success-handler-ref="authenticationSuccessHandler"/>
         <logout logout-url="/static/j_spring_security_logout"/>
     </http>
      
@@ -39,7 +40,9 @@
             <beans:ref bean="domainFacade"/>
         </beans:constructor-arg>
     </beans:bean>
- 
+    
+    <beans:bean id="authenticationSuccessHandler" class="be.khleuven.recordaid.util.RecordAidAuthenticationHandler"/>
+    
     <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
     </beans:bean>
 </beans:beans>   

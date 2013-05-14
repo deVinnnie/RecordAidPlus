@@ -8,53 +8,36 @@ import java.util.Properties;
  * @author Vincent Ceulemans
  */
 public abstract class AbstractMailHandler {
-    private String username, password, path;
-    private String emailadresRecordAid; 
-    
-    protected AbstractMailHandler(){}
-    
+
+    private String username;
+    private String password;
+
+    protected AbstractMailHandler() {
+    }
+
     /**
      * Constructor.
      *
      * @param path String die het path naar het project weergeeft.
      */
-    public AbstractMailHandler(String path)
-    {
-        this.path = path;
-        this.readProperties(); 
+    public AbstractMailHandler(String path) throws IOException {
+        this.readProperties(path);
     }
 
-    private void readProperties()
-    { 
-        try
-        {
-            Properties userProperties = new Properties(); 
-            userProperties.load(new FileInputStream(path + "/config.properties"));
-            this.username = userProperties.getProperty("username");
-            this.password = userProperties.getProperty("password");
-            this.emailadresRecordAid = userProperties.getProperty("emailadresRecordAid");
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
+    private void readProperties(String path) throws IOException {
+        Properties userProperties = new Properties();
+        userProperties.load(new FileInputStream(path));
+        this.password = userProperties.getProperty("email_wachtwoord");
+        this.username = userProperties.getProperty("email");
     }
-    
-    public abstract boolean sendMessage(MailMessage mailMessage); 
-    
-    protected String getEmailadresRecordAid(){
-        return this.emailadresRecordAid; 
+
+    public abstract boolean sendMessage(MailMessage mailMessage);
+
+    protected String getUsername() {
+        return this.username;
     }
-    
-    protected String getUsername(){
-        return this.username;  
-    }
-    
-    protected String getPassword(){
-        return this.password; 
+
+    protected String getPassword() {
+        return this.password;
     }
 }

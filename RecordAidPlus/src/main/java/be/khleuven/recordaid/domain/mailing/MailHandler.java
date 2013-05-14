@@ -1,5 +1,6 @@
 package be.khleuven.recordaid.domain.mailing;
 
+import java.io.IOException;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*; 
@@ -14,7 +15,7 @@ import javax.mail.internet.*;
  */
 public class MailHandler extends AbstractMailHandler
 {   
-    public MailHandler(String path){
+    public MailHandler(String path) throws IOException{
         super(path); 
     }
    
@@ -66,7 +67,7 @@ public class MailHandler extends AbstractMailHandler
     @Override
     public boolean sendMessage(MailMessage mailMessage){
         boolean succes = false;
-
+        
         try
         {
             Message message = new MimeMessage(this.getTLSSession());

@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <article>
     <h1>Media</h1>
-    <p>U vindt ons YouTube-kanaal op:<a href="http://www.youtube.com/user/RecordAid?feature=guide" title="RecordAid - YouTube Kanaal"> http://www.youtube.com/user/RecordAid?feature=guide</a></p>
+    <p>U vindt ons YouTube-kanaal op:<a href="http://www.youtube.com/user/RecordAid?feature=guide" title="RecordAid - YouTube Kanaal">http://www.youtube.com/user/RecordAid?feature=guide</a></p>
     
     <h2>Presentatie van RecordAid</h2>
     

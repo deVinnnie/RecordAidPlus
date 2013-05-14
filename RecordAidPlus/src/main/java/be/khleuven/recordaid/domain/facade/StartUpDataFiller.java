@@ -19,7 +19,6 @@ import java.util.logging.*;
  * @author Vincent Ceulemans
  */
 public class StartUpDataFiller {
-
     private RecordAidDomainFacade facade;
 
     public StartUpDataFiller(RecordAidDomainFacade facade) {
@@ -27,6 +26,15 @@ public class StartUpDataFiller {
     }
 
     public void init() throws DatabaseException {
+        try{
+            Setting setting = new Setting("admin_first_login", "TRUE");
+            facade.create(setting); 
+        }
+        catch(Exception e){
+            System.out.println("**Exception Occured:");
+            e.printStackTrace();
+        } 
+        
         try {
             //Departementen
             facade.addDepartement(new Departement("G&T", true));
