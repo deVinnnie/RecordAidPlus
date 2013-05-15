@@ -51,6 +51,7 @@ public class Departement implements Serializable {
     }
 
     //</editor-fold>
+    
     @Override
     public int hashCode() {
         int hash = 3;
