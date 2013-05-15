@@ -13,7 +13,6 @@ import org.stringtemplate.v4.ST;
  */
 @Entity
 public class MailMessage extends Identifiable implements Serializable {
-    /*ST = StringTemplate: Library for templating with Strings.*/
     @Column(columnDefinition = "CLOB")
     private String message; 
     
@@ -40,12 +39,12 @@ public class MailMessage extends Identifiable implements Serializable {
         this.message = message; 
         this.description = description; 
     }
-    
+   
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public void setContext(Map<String, String> context){
         this.context = context; 
     }
     
-    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public void setMessage(String message){
         this.message = message; 
     }
@@ -95,6 +94,7 @@ public class MailMessage extends Identifiable implements Serializable {
     }
     //</editor-fold>
     
+    /*ST = StringTemplate: Library for templating with Strings.*/
     public String renderSubject(){
         ST subjectTemplate = new ST("$subject_prefix$ " +subject, '$', '$');
         for(Map.Entry<String, String> entry : this.context.entrySet()){

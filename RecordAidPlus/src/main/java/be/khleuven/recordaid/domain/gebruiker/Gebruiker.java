@@ -31,37 +31,36 @@ public class Gebruiker implements Serializable, UserDetails {
     
     private String voornaam;
     private String achternaam;
-    
-    /*@Column(length=70)    */
+
     private String wachtwoordHash;
     private String validatieCode;
     private boolean gevalideerd = false;
     
-    /**
-     * Constructor met parameters, dit is de constructor die gebruikt dient te
-     * worden om een nieuwe Gebruiker aan te maken.
-     *
-     * @param rol De rol van de gebruiker, kan één van de mogelijke rollen
-     * bepaald in de Enum Rollen zijn.
-     * @param emailadres Het emailadres van de gebruiker.
-     * @param naam De naam van de gebruiker.
-     * @param voornaam De voornaam van de gebruiker.
-     * @param wachtwoord Het wachtwoord van de gebruiker.
-     */
-    public Gebruiker(Rollen rol, String emailadres, String naam, String voornaam, String wachtwoord) {
-        this(); 
-        this.rollen.add(rol);
-        this.emailadres = emailadres;
-        this.achternaam = naam;
-        this.voornaam = voornaam;
-        this.wachtwoordHash = wachtwoord;
-    }
-
     public Gebruiker() {
         this.validatieCode = ValidatieCodeGenerator.generateValidatieCode();
     }
     
+    /**
+     * Constructor met parameters.
+     *
+     * @param rol De rol van de gebruiker, één van de mogelijke rollen
+     * bepaald in de Enum Rollen zijn.
+     * @param emailadres Het emailadres van de gebruiker.
+     * @param achternaam De naam van de gebruiker.
+     * @param voornaam De voornaam van de gebruiker.
+     * @param wachtwoord Het wachtwoord van de gebruiker.
+     */
+    public Gebruiker(Rollen rol, String emailadres, String achternaam, String voornaam, String wachtwoord) {
+        this(); 
+        this.rollen.add(rol);
+        this.emailadres = emailadres;
+        this.achternaam = achternaam;
+        this.voornaam = voornaam;
+        this.wachtwoordHash = wachtwoord;
+    }
+    
     public Gebruiker(String emailadres){
+        this(); 
         this.setEmailadres(emailadres);
         String[] split = emailadres.split("@"); //Results in voornaam.achternaam|khleuven.be
         String[] split2 = split[0].split("\\."); //Results in voornaam | achternaam

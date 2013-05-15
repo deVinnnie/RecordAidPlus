@@ -56,20 +56,16 @@ public class MyUserDetailsService implements UserDetailsService{
         domainFacade.addGebruiker(gebruiker);
     }
     
-    public void createUser(Gebruiker gebruiker, String wachtwoord, String wachtwoordConfirmation, Gebruiker begeleider)throws DomainException{
+    public void createUser(Gebruiker gebruiker, String wachtwoord, Gebruiker begeleider)throws DomainException{
         Rollen rol = Rollen.STUDENT; 
         if (gebruiker.getEmailadres().matches("^.+@khleuven.be$")) {
             rol = Rollen.LEERKRACHT;
         }
         gebruiker.addRol(rol);
         
-        if(!wachtwoord.equals(wachtwoordConfirmation)){
-            throw new DomainException("Uw wachtwoorden komen niet overeen."); 
-        }
-        
         String hash = this.passwordEncoder.encode(wachtwoord);
         
         gebruiker.setWachtwoordHash(hash);
-        domainFacade.addGebruiker(gebruiker);
+        domainFacade.addGebruiker(gebruiker, begeleider);
     }
 }

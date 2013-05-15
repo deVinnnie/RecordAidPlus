@@ -26,29 +26,19 @@ public class StartUpDataFiller {
     }
 
     public void init() throws DatabaseException {
-        try{
-            Setting setting = new Setting("admin_first_login", "TRUE");
-            facade.create(setting); 
-        }
-        catch(Exception e){
-            System.out.println("**Exception Occured:");
-            e.printStackTrace();
-        } 
-        
+        //<editor-fold defaultstate="collapsed" desc="Departementen & Lectoren">
         try {
-            //Departementen
             facade.addDepartement(new Departement("G&T", true));
             facade.addDepartement(new Departement("SSH", false));
             facade.addDepartement(new Departement("DLO Diest", false));
             facade.addDepartement(new Departement("Naamse steenweg", false));
             facade.addDepartement(new Departement("Hertogstraat", false));
 
-            //Lectoren mails
             String[] mails = {
-                "luc.janssens@khleuven.be",
-                "elke.steegmans@khleuven.be",
-                "mieke.kemme@khleuven.be",
-                "jan.van.hee@khleuven.be"
+                "severus.snape@khleuven.be",
+                "filius.flitwick@khleuven.be", 
+                "minerva.mcgonagall@khleuven.be",  
+                "remus.lupin@khleuven.be"
             };
 
             for (String mail : mails) {
@@ -59,6 +49,7 @@ public class StartUpDataFiller {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
+        //</editor-fold>
 
         try {
             //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(15);
@@ -70,7 +61,10 @@ public class StartUpDataFiller {
             Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", wachtwoord);
             g.valideer();
             this.facade.create(g);
-
+            
+            Setting setting = new Setting("admin_first_login", "TRUE");
+            facade.create(setting); 
+            
             //Create a dummy user
             String wachtwoord2 = "$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW.";
             Gebruiker g2 = new Gebruiker(Rollen.BEGELEIDER, "dummy@khleuven.be", "Dummy", "Dummy", wachtwoord2);

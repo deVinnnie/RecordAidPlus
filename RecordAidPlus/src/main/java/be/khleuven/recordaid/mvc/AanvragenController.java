@@ -12,6 +12,7 @@ import be.khleuven.recordaid.util.TimeSpan;
 import java.util.*;
 import java.util.logging.*; 
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -27,8 +28,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/aanvragen")
 @SessionAttributes({"aanvraag", "nieuweOpname", "nieuweMultiAanvraag"})
 public class AanvragenController extends AbstractController{
-    public AanvragenController() {
-    }
+    @Autowired
+    private MyUserDetailsService userDetailsService; 
+    
+    public AanvragenController() {}
 
     public AanvragenController(RecordAidDomainFacade domainFacade) {
         super(domainFacade);
@@ -177,23 +180,21 @@ public class AanvragenController extends AbstractController{
     }
 
     @RequestMapping(value = "/nieuw_multi", method = RequestMethod.POST)
-    public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag, 
-                                    @RequestParam("student") String student) {
-        try {
-            Gebruiker begeleider = this.getCurrentDossier().getGebruiker(); 
-            Gebruiker gebruiker = domainFacade.getGebruiker(student); 
-            if(gebruiker == null){
-                gebruiker = domainFacade.addGebruiker(new Gebruiker(student)  ,begeleider);
-            }
-            aanvraag.setDossier(domainFacade.getDossier(gebruiker));
-            aanvraag.setBegeleider(begeleider);
-            
-            aanvraag = domainFacade.addMultiPeriodeAanvraag(aanvraag, begeleider);
-            return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
-        } catch (DomainException ex) {
-            Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
+    public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag,
+            @RequestParam("student") String student) throws DomainException {
+        Gebruiker begeleider = this.getCurrentDossier().getGebruiker();
+        Gebruiker gebruiker = domainFacade.getGebruiker(student);
+        if (gebruiker == null) {
+            //Create the user if the user doesn't exist yet. 
+            gebruiker = new Gebruiker(student);
+            userDetailsService.createUser(gebruiker, gebruiker.getValidatieCode(), begeleider);
+            gebruiker = domainFacade.getGebruiker(student);
         }
-        return "/home"; 
+        aanvraag.setDossier(domainFacade.getDossier(gebruiker));
+        aanvraag.setBegeleider(begeleider);
+
+        aanvraag = domainFacade.addMultiPeriodeAanvraag(aanvraag, begeleider);
+        return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
     }
     //</editor-fold>
 

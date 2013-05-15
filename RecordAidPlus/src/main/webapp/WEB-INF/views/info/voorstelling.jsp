@@ -40,6 +40,7 @@
             <dd>Vertegenwoordiger StEIL</dd>
         </dl>
         <h2>RecordAid Peter</h2>
-        <p>De persoon die we zeker en vast niet mogen vergeten, de persoon die er voor gezorgd heeft dat we staan waar we nu staan: <strong>Luc Janssens</strong><br /></p>
+        <p>De persoon die we zeker en vast niet mogen vergeten, de persoon 
+            die er voor gezorgd heeft dat we staan waar we nu staan: <strong>Luc Janssens</strong>.</p>
     </div>
 </article>
