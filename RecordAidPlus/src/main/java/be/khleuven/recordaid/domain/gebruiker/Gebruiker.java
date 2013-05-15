@@ -34,7 +34,9 @@ public class Gebruiker implements Serializable, UserDetails {
 
     private String wachtwoordHash;
     private String validatieCode;
+    
     private boolean gevalideerd = false;
+    private boolean forcePasswordChange = false; 
     
     public Gebruiker() {
         this.validatieCode = ValidatieCodeGenerator.generateValidatieCode();
@@ -76,6 +78,7 @@ public class Gebruiker implements Serializable, UserDetails {
         this.setAchternaam(achternaam); 
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Validatie">
     /**
      * Methode om een gebruiker te valideren op basis van een validatieCode. De
      * methode geeft een boolean terug om aan te geven of de code juist is.
@@ -116,8 +119,9 @@ public class Gebruiker implements Serializable, UserDetails {
         this.validatieCode = "***";
         this.gevalideerd = false;
     }
+    //</editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Setters">
+    // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
     /**
      * Setter om de rol van de gebruiker te setten.
      *
@@ -168,9 +172,7 @@ public class Gebruiker implements Serializable, UserDetails {
     public void setRollen(List<Rollen> rollen) {
         this.rollen = rollen;
     }
-    // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Getters">
     /**
      * Geeft het emailadres van de gebruiker terug.
      *
@@ -227,7 +229,6 @@ public class Gebruiker implements Serializable, UserDetails {
      *
      * @return String die het wachtwoord van de gebruiker is.
      */
-    //@Length(max=60)
     public String getWachtwoordHash() {
         return wachtwoordHash;
     }
@@ -252,6 +253,14 @@ public class Gebruiker implements Serializable, UserDetails {
                 this.rollen.remove(Rollen.GEINTERESSEERDE);
             }
         }
+    }
+
+    public boolean isForcePasswordChange() {
+        return forcePasswordChange;
+    }
+
+    public void setForcePasswordChange(boolean forcePasswordChange) {
+        this.forcePasswordChange = forcePasswordChange;
     }
     // </editor-fold>
     

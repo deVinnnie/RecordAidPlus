@@ -16,19 +16,20 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
  * @author Vincent Ceulemans
  */
 public class RecordAidAuthenticationHandler implements AuthenticationSuccessHandler {
-    private AuthenticationSuccessHandler target = new SavedRequestAwareAuthenticationSuccessHandler();
 
+    private AuthenticationSuccessHandler target = new SavedRequestAwareAuthenticationSuccessHandler();
     @Autowired
-    private RecordAidDomainFacade domainFacade; 
-    
+    private RecordAidDomainFacade domainFacade;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
-        HttpServletResponse response, Authentication auth) throws IOException, ServletException {
-        Gebruiker gebruiker = (Gebruiker) auth.getPrincipal(); 
-        if(gebruiker.getEmailadres().equals("recordaid@khleuven.be") 
-                && domainFacade.getSetting("admin_first_login").getWaarde().equals("TRUE")
-                ) {
+            HttpServletResponse response, Authentication auth) throws IOException, ServletException {
+        Gebruiker gebruiker = (Gebruiker) auth.getPrincipal();
+        if (gebruiker.getEmailadres().equals("recordaid@khleuven.be")
+                && domainFacade.getSetting("admin_first_login").getWaarde().equals("TRUE")) {
             response.sendRedirect("/RecordAidPlus/opties");
+        } else if (gebruiker.isForcePasswordChange()) {
+            response.sendRedirect("/RecordAidPlus/gebruikers/wachtwoord"); 
         } else {
             target.onAuthenticationSuccess(request, response, auth);
         }

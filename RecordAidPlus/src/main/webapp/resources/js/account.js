@@ -30,20 +30,20 @@ function checkAccountUpdate()
 
 function boodschapAnimaties()
 {
-    $("#wachtwoord_fout_error").hide();
-    $("#wachtwoord_fout_error").fadeIn(2000);
+    $("#error").hide();
+    $("#error").fadeIn(2000);
     
     setTimeout(function()
     {
-        $("#wachtwoord_fout_error").fadeOut(1000);
+        $("#error").fadeOut(1000);
     }, 3000);
     
     
-    $("#wachtwoord_verandert_boodschap").hide();
-    $("#wachtwoord_verandert_boodschap").fadeIn(2000);
+    $("#error").hide();
+    $("#error").fadeIn(2000);
     
     setTimeout(function()
     {
-        $("#wachtwoord_verandert_boodschap").fadeOut(1000);
+        $("#error").fadeOut(1000);
     }, 3000);
 }

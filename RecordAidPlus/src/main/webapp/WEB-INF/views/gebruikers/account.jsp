@@ -30,8 +30,7 @@
 </table>
 
 <h2>Wachtwoord wijzigen</h2>
-<p class="boodschap" id="wachtwoord_fout_error" style="color: red;">${wachtwoord_fout_error}</p>
-<p class="boodschap" id="wachtwoord_verandert_boodschap" style="color: green;">${wachtwoord_verandert_boodschap}</p>
+<p id="error" class="error"></p>
 <form id="form_updateAccount" method="POST">
     <table>
         <tr>
@@ -40,11 +39,11 @@
         </tr>
         <tr>
             <td><label for="nieuw_ww1">Nieuw wachtwoord</label></td>
-            <td><input type="password" id="nieuw_ww1" name="nieuw_ww1" class="tb"></td>
+            <td><input type="password" id="nieuw_ww1" name="nieuw_ww1"></td>
         </tr>
         <tr>
             <td><label for="nieuw_ww2">Wachtwoord herhalen</label></td>
-            <td><input type="password" id="nieuw_ww2" name="nieuw_ww2" class="tb"></td>
+            <td><input type="password" id="nieuw_ww2" name="nieuw_ww2"></td>
         </tr>
         <tr>
             <td>&nbsp;</td>  
