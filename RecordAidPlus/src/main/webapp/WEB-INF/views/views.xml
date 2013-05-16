@@ -180,7 +180,7 @@
     
     <!--Normal Pages-->
     <definition name="/gegevens/*/*" extends="template">
-        <put-attribute name="title" value="{1}.{2}.{3}.title"/>
+        <put-attribute name="title" value="gegevens.{1}.{2}.title"/>
         <put-attribute name="content" value="/WEB-INF/views/gegevens/{1}/{2}.jsp" />
     </definition>
     

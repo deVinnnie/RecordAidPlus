@@ -282,6 +282,11 @@ public class RecordAidDomainFacade {
         }
         return lector;
     }
+    
+    public Lector getLector(long id){
+        Lector lector = commonDb.find(Lector.class, id); 
+        return lector; 
+    }
 
     public void removeLector(Lector lector) {
         List<OpnameMoment> lessenVanLector = this.getLessenVanLector(lector);

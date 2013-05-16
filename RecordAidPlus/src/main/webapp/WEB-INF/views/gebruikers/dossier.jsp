@@ -38,7 +38,7 @@
                         </td>
                         <td><fmt:formatDate value="${aanvraag.aanvraagDatum.time}" pattern="yyyy-MM-dd"/></td>
                         <td>${aanvraag.reden}</td>
-                        <td>${aanvraag.status}</td>
+                        <td>${aanvraag.status.name}</td>
                         <td><a href="<s:url value="/aanvragen/detail?id=${aanvraag.id}"/>"/>Details</a></td>
                     </tr> 
                     </c:forEach>

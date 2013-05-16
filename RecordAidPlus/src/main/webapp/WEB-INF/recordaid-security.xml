@@ -18,6 +18,8 @@
         <intercept-url pattern="/items/reserveer" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
         <intercept-url pattern="/items/reservervaties" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
         <intercept-url pattern="/**/beheer" access="hasAnyRole('ADMIN','KERNLID')"/>
+        <intercept-url pattern="/beheer/beheer" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY')"/>
+        <intercept-url pattern="/aanvragen/beheer" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY')"/>
         <intercept-url pattern="/gebruikers/detail" access="hasAnyRole('ADMIN','KERNLID')"/>
         <intercept-url pattern="/aanvragen/bewerk" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY')"/> 
         <form-login login-processing-url="/static/j_spring_security_check"

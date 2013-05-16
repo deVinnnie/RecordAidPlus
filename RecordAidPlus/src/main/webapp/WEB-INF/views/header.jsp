@@ -1,6 +1,6 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
@@ -25,59 +25,49 @@
         <li>
             <%-- Be sure to use single quotes '' around the given String, 
             otherwise you get a "expected equal symbol" error--%>
-            <a href="<s:url value="/home"/>" <m:isActiveLink page="home" currentPage="${page}"/>>
-                Home
-            </a>
+            <s:url var="url" value="/home"/>
+            <a href="${url}" <m:isActiveLink page="home" currentPage="${page}"/>>Home</a>
         </li>
 
         <li>
-            <a href="<s:url value="/info/voorstelling"/>" <m:isActiveLink page="info" currentPage="${page}"/>>
-                Info
-            </a>
+            <s:url var="url" value="/info/voorstelling"/>
+            <a href="${url}" <m:isActiveLink page="info" currentPage="${page}"/>>Info</a>
         </li>
 
         <security:authorize access="hasRole('BEGELEIDER')">
             <li>
-                <a href="<s:url value="/aanvragen/begeleider"/>"
-                   <m:isActiveLink page="aanvragen" currentPage="${page}"/>>
-                    Aanvragen
-                </a>
+                <s:url var="url" value="/aanvragen/begeleider"/>
+                <a href="${url}" <m:isActiveLink page="aanvragen" currentPage="${page}"/>>Aanvragen</a>
             </li>
         </security:authorize>
         
         <security:authorize access="not hasRole('BEGELEIDER')">
             <li>
-                <a href="<s:url value="/aanvragen"/>" 
-                   <m:isActiveLink page="aanvragen" currentPage="${page}"/>>
-                    Mijn Aanvragen
-                </a>
+                <s:url var="url" value="/aanvragen"/>
+                <a href="${url}" <m:isActiveLink page="aanvragen" currentPage="${page}"/>>Mijn Aanvragen</a>
             </li> 
         </security:authorize>
 
         <li>
-            <a href="<s:url value="/support"/>" <m:isActiveLink page="support" currentPage="${page}"/>>
-                Probleem melden
-            </a>
+            <s:url var="url" value="/support"/>
+            <a href="${url}" <m:isActiveLink page="support" currentPage="${page}"/>>Probleem melden</a>
         </li>
         <li>
-            <a href="<s:url value="/faq"/>" <m:isActiveLink page="faq" currentPage="${page}"/>>
-                FAQ
-            </a>
+            <s:url var="url" value="/faq"/>
+            <a href="${url}" <m:isActiveLink page="faq" currentPage="${page}"/>>FAQ</a>
         </li> 
 
         <security:authorize access="isAuthenticated() and not hasRole('STUDENT')">
             <li>
-                <a href="<s:url value="/items/reserveer"/>" <m:isActiveLink page="reserveren" currentPage="${page}"/>>
-                    Reserveren
-                </a>
+                <s:url var="url" value="/items/reserveer"/>
+                <a href="${url}" <m:isActiveLink page="reserveren" currentPage="${page}"/>>Reserveren</a>
             </li>
         </security:authorize>
 
-        <security:authorize access="hasRole('KERNLID') or hasRole('ADMIN')">
+        <security:authorize access="hasRole('KERNLID') or hasRole('ADMIN') or hasRole('BUDDY')">
             <li>
-                <a href="<s:url value="/beheer"/>" <m:isActiveLink page="beheer" currentPage="${page}"/>>
-                    Beheer
-                </a>
+                <s:url var="url" value="/beheer"/>
+                <a href="${url}" <m:isActiveLink page="beheer" currentPage="${page}"/>>Beheer</a>
             </li>
         </security:authorize>
     </ul>

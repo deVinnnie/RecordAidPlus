@@ -2,6 +2,7 @@ package be.khleuven.recordaid.mvc;
 
 import be.khleuven.recordaid.domain.departement.Departement;
 import be.khleuven.recordaid.domain.departement.Lector;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +22,16 @@ public class GegevensController extends AbstractController{
     }
     
     //<editor-fold defaultstate="collapsed" desc="Lectoren">
-    @RequestMapping(value="/lectoren/verwijder", params="lector")
-    public String verwijderLector(@RequestParam("lector") String lector){
-        Lector gevondenLector = domainFacade.getLector(lector); 
+    @RequestMapping(value="/lectoren/verwijder", params="id")
+    public String verwijderLector(@RequestParam("id") long id){
+        Lector gevondenLector = domainFacade.getLector(id); 
         domainFacade.removeLector(gevondenLector);
         return "redirect:/gegevens/beheer";
     }
     
-    @RequestMapping(value="/lectoren/bewerk", params="lector", method = RequestMethod.GET)
-    public String showBewerkLectorForm(ModelMap model, @RequestParam("lector") String lector){
-        Lector gevondenLector = domainFacade.getLector(lector); 
+    @RequestMapping(value="/lectoren/bewerk", params="id", method = RequestMethod.GET)
+    public String showBewerkLectorForm(ModelMap model, @RequestParam("id") long id){
+        Lector gevondenLector = domainFacade.getLector(id); 
         if(gevondenLector != null){
             model.addAttribute("lector", gevondenLector);
             return "/gegevens/lectoren/editor";
@@ -40,8 +41,8 @@ public class GegevensController extends AbstractController{
         }
     }
     
-    @RequestMapping(value="/lectoren/bewerk", method = RequestMethod.POST)
-    public String bewerkLector(ModelMap model, @RequestParam("lector") Lector lector){
+    @RequestMapping(value="/lectoren/bewerk")
+    public String bewerkLector(@Valid Lector lector){
         domainFacade.edit(lector); 
         return "redirect:/gegevens/beheer";
     }

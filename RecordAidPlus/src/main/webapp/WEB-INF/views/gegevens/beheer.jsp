@@ -35,8 +35,8 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td><a href="<s:url value="/gegevens/lectoren/verwijder?lector=${lector.emailadres}"/>">Verwijder</a></td>
-                <td><a href="<s:url value="/gegevens/lectoren/bewerk?lector=${lector.emailadres}"/>">Bewerk</a></td>
+                <td><a href="<s:url value="/gegevens/lectoren/verwijder?id=${lector.id}"/>">Verwijder</a></td>
+                <td><a href="<s:url value="/gegevens/lectoren/bewerk?id=${lector.id}"/>">Bewerk</a></td>
             </tr>  
         </c:forEach>
     </tbody>

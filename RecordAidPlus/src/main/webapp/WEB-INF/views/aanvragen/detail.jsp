@@ -9,9 +9,12 @@
     <security:authorize access="hasRole('ADMIN') or hasRole('KERNLID')">
         <a href="<s:url value="/aanvragen/beheer"/>">Terug naar beheer</a>
     </security:authorize>
-    <security:authorize access="not hasRole('ADMIN') and not hasRole('KERNLID')">
+    <security:authorize access="not hasRole('ADMIN') and not hasRole('KERNLID') and not hasRole('BEGELEIDER')">
         <a href="<s:url value="/aanvragen/mijnaanvragen"/>">Terug naar overzicht</a>
-    </security:authorize> 
+    </security:authorize>
+    <security:authorize access="hasRole('BEGELEIDER')">
+        <a href="<s:url value="/aanvragen/begeleider/"/>">Terug naar overzicht</a>
+    </security:authorize>
     <security:authorize access="hasRole('ADMIN') or hasRole('KERNLID')">
         <a href="<s:url value="/aanvragen/bewerk?id=${aanvraag.id}"/>">Bewerken</a>
     </security:authorize>

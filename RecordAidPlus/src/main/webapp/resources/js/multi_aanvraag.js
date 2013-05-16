@@ -14,7 +14,7 @@ function init(){
         $("#lectoren_list")
                 .append($('<li></li>')
                     .html('<button id="lectoren_remove_button'+teller+'" type="button">-</button>\n\
-                            <input type="text" id="lectoren'+teller+'" name="lectoren['+teller+']"/>')
+                            <input type="text" id="lectoren'+teller+'" name="lectoren['+teller+']" list="lectoren"/>')
                 ); 
         document.getElementById("lectoren_remove_button"+teller).onclick = removeLector;
         teller++;

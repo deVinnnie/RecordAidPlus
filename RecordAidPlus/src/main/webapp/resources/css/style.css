@@ -331,6 +331,7 @@ Succes and Error messages
     margin: 0 auto;
     width: auto;
     height: 160px;
+    overflow: hidden; 
 }
 
 .important-links {
