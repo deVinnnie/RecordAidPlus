@@ -59,4 +59,33 @@
         <td>Aanvraagdatum</td>
         <td><fmt:formatDate value="${aanvraag.aanvraagDatum.time}" pattern="yyyy-MM-dd" /></td>
     </tr>
+    <c:if test="${type eq 'MultiPeriodeAanvraag'}">
+        <tr>
+            <td>Betrokken Lectoren</td>
+            <td>
+                <ul class="normal-list">
+                    <c:forEach var="lector" items="${aanvraag.lectoren}">
+                        <li>${lector.naam} (<a href="mailto:${lector.emailadres}">${lector.emailadres}</a>)</li>
+                        </c:forEach>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Goedkeuringen</td>
+            <td>
+                <ul class="normal-list">
+                    <c:forEach var="goedkeuring" items="${aanvraag.goedkeuringen}">
+                        <li>
+                            ${goedkeuring.lector.naam}
+                            <ul class="normal-list">
+                                <c:forEach var="opnameMethode" items="${goedkeuring.mogelijkeOpnameMethodes}">
+                                    <li>${opnameMethode.naam}</li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </td>
+        </tr>
+    </c:if>
 </table>

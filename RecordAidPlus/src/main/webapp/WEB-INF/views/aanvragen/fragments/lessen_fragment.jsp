@@ -84,8 +84,11 @@
                 <c:if test="${not empty opnameMoment.opname}">
                     <tr>
                         <td>Opname</td>
-                        <td><c:out value="${opnameMoment.opname.locatie.medium}
+                        <td><c:out value="${opnameMoment.opname.locatie.medium} - 
                                ${opnameMoment.opname.locatie.wegwijzer}"/>
+                            <security:authorize access="hasRole('ADMIN') or hasRole('KERNLID') or hasRole('BUDDY')">
+                                <c:out value=" - ${opnameMoment.opname.status}"/>
+                            </security:authorize>
                         </td>
                     </tr>
                 </c:if>

@@ -43,5 +43,5 @@ $(document).ready(function(){
             </td>
         </tr>
     </table>
-    <input type="submit" value="Volgende"/>
+    <input type="submit" value="Volgende (Lessen Toevoegen)"/>
 </springforms:form>

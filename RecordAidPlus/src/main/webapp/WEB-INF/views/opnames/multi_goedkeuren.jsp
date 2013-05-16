@@ -1,31 +1,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
-<h1>Opname goedkeuren</h1>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<h1>Opnames goedkeuren</h1>
 <m:boodschap/>
 <%--Toon details van de opname--%>
 <table class="details">
     <tr>
-        <td>Aanvrager</td>
+        <td>Student</td>
         <td><c:out value="${aanvraag.dossier.gebruiker.voornaam} ${aanvraag.dossier.gebruiker.achternaam}"/></td>
     </tr>
     <tr>
-        <td>Lesdatum</td>
-        <td><fmt:formatDate value="${opnameMoment.tijdstip.beginTime.time}" pattern="yyyy-MM-dd hh:mm" /></td>
-    </tr>
-    <tr>
-        <td>Voor hele reeks?</td>
-        <td>
-            <c:choose>
-                <c:when test="${aanvraag.voorHeleReeks}">
-                    Ja
-                </c:when>
-                <c:otherwise>
-                    Nee
-                </c:otherwise>
-            </c:choose>
-        </td>
+        <td>Periode</td>
+        <td> <fmt:formatDate value="${aanvraag.periode.beginTime.time}" pattern="yyyy-MM-dd" />
+        tot 
+        <fmt:formatDate value="${aanvraag.periode.endTime.time}" pattern="yyyy-MM-dd" /></td>
     </tr>
     <tr>
         <td>Reden</td>

@@ -5,6 +5,8 @@ import be.khleuven.recordaid.util.propertyeditors.*;
 import be.khleuven.recordaid.opnames.*;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.AbstractAanvraag;
+import be.khleuven.recordaid.domain.aanvragen.Goedkeuring;
+import be.khleuven.recordaid.domain.aanvragen.MultiPeriodeAanvraag;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.util.Boodschap;
 import java.util.*;
@@ -60,16 +62,16 @@ public class OpnameController extends AbstractController {
         domainFacade.removeOpnameMethode(domainFacade.findOpnameMethode(id));
         return "redirect:/opnames/beheer";
     }
-    
+
     @RequestMapping(value = "/nieuw_opnamemethode", method = RequestMethod.GET)
-    public String showNieuwOpnameMethode(ModelMap model){
-        model.addAttribute("opnameMethode",new OpnameMethode()); 
+    public String showNieuwOpnameMethode(ModelMap model) {
+        model.addAttribute("opnameMethode", new OpnameMethode());
         return "/opnames/nieuw_opnamemethode";
     }
-    
+
     @RequestMapping(value = "/nieuw_opnamemethode", method = RequestMethod.POST)
-    public String addNieuwOpnameMethode(@Valid OpnameMethode opnameMethode){
-        domainFacade.create(opnameMethode); 
+    public String addNieuwOpnameMethode(@Valid OpnameMethode opnameMethode) {
+        domainFacade.create(opnameMethode);
         return "redirect:/opnames/beheer";
     }
     //</editor-fold>
@@ -105,16 +107,13 @@ public class OpnameController extends AbstractController {
         }
     }
 
-     @RequestMapping(value = "/opname_goedkeuren", params = {"toegangscode", "opname", "aanvraag", "action"}, method = RequestMethod.POST)
-    public String weigerenOpname(ModelMap model, @RequestParam("toegangscode") String toegangscode,
-            @RequestParam("opname") long id,
-            @RequestParam("aanvraag") long aanvraagID,
-            @RequestParam("action") String action, 
-            RedirectAttributes redirectAttr)
-    {
-        return this.goedkeurenOpname(model, toegangscode, id, aanvraagID, new ArrayList<String>(), action,redirectAttr);
+    @RequestMapping(value = "/opname_goedkeuren", params = {"toegangscode", "opname", "aanvraag", "action"}, method = RequestMethod.POST)
+    public String goedkeurenOpname(ModelMap model, @RequestParam("toegangscode") String toegangscode,
+            @RequestParam("opname") long id, @RequestParam("aanvraag") long aanvraagID, @RequestParam("action") String action,
+            RedirectAttributes redirectAttr) {
+        return this.goedkeurenOpname(model, toegangscode, id, aanvraagID, new ArrayList<String>(), action, redirectAttr);
     }
-    
+
     @RequestMapping(value = "/opname_goedkeuren", params = {"toegangscode", "opname", "aanvraag", "action", "methodes"}, method = RequestMethod.POST)
     public String goedkeurenOpname(ModelMap model, @RequestParam("toegangscode") String toegangscode,
             @RequestParam("opname") long id, @RequestParam("aanvraag") long aanvraagID,
@@ -131,13 +130,8 @@ public class OpnameController extends AbstractController {
             if (action.equals("Goedkeuren")) {
                 opnameMoment.setGoedgekeurd(Boolean.TRUE);
 
-                //Zet de mogelijke opnameMethodes. 
-                List<OpnameMethode> mogelijkeOpnameMethodes = new ArrayList<OpnameMethode>();
-                for (String methodeID : methodes) {
-                    OpnameMethode opnameMethode = domainFacade.findOpnameMethode(Long.parseLong(methodeID));
-                    mogelijkeOpnameMethodes.add(opnameMethode);
-                }
-                opnameMoment.setMogelijkeOpnameMethodes(mogelijkeOpnameMethodes);
+                //Zet de mogelijke opnameMethodes.  
+                opnameMoment.setMogelijkeOpnameMethodes(convertStringsToOpnameMethodes(methodes));
                 redirectAttr.addFlashAttribute("boodschap", new Boodschap("De opname werd goedgekeurd.", "succes"));
                 dossier.addGebeurtenis("Opname voor " + opnameMoment.getOOD() + " werd goedgekeurd.", null);
             } else {
@@ -147,13 +141,59 @@ public class OpnameController extends AbstractController {
             }
             domainFacade.edit(opnameMoment);
             domainFacade.edit(dossier);
-            redirect = "redirect:/opnames/opname_goedkeuren?opname=" + id + "&aanvraag=" 
+            redirect = "redirect:/opnames/opname_goedkeuren?opname=" + id + "&aanvraag="
                     + aanvraagID + "&toegangscode=" + toegangscode;
         }
         return redirect;
     }
-    //</editor-fold>
 
+    private List<OpnameMethode> convertStringsToOpnameMethodes(List<String> strings) {
+        List<OpnameMethode> mogelijkeOpnameMethodes = new ArrayList<OpnameMethode>();
+        for (String methodeID : strings) {
+            OpnameMethode opnameMethode = domainFacade.findOpnameMethode(Long.parseLong(methodeID));
+            mogelijkeOpnameMethodes.add(opnameMethode);
+        }
+        return mogelijkeOpnameMethodes;
+    }
+
+    @RequestMapping(value = "/multi_goedkeuren", params = {"toegangscode", "aanvraag", "lector"}, method=RequestMethod.GET)
+    public String showMultiAanvraagGoedkeurenForm(ModelMap model, @RequestParam("toegangscode") String toegangscode, 
+                @RequestParam("aanvraag") long aanvraagID, @RequestParam("lector") String lector) {
+        AbstractAanvraag gevondenAanvraag = domainFacade.findAanvraag(aanvraagID);
+
+        if (gevondenAanvraag instanceof MultiPeriodeAanvraag) {
+            MultiPeriodeAanvraag multiPeriodeAanvraag = (MultiPeriodeAanvraag) gevondenAanvraag;
+
+            //Controleer of de toegangscode klopt!
+            if (multiPeriodeAanvraag.getToegangsCode().equals(toegangscode)) {
+                model.addAttribute("aanvraag", gevondenAanvraag);
+                model.addAttribute("opnameMethodes", domainFacade.getOpnameMethodes());
+                return "/opnames/multi_goedkeuren";
+            }
+        }
+        return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/multi_goedkeuren", params = {"toegangscode", "aanvraag", "lector"}, method = RequestMethod.POST)
+    public String multiAanvraagGoedkeurenForm(ModelMap model,
+            @RequestParam("toegangscode") String toegangscode,@RequestParam("aanvraag") long aanvraagID, @RequestParam("lector") String lector,
+            @RequestParam("methodes") List<String> methodes) {
+        AbstractAanvraag gevondenAanvraag = domainFacade.findAanvraag(aanvraagID);
+
+        if (gevondenAanvraag instanceof MultiPeriodeAanvraag) {
+            MultiPeriodeAanvraag multiPeriodeAanvraag = (MultiPeriodeAanvraag) gevondenAanvraag;
+
+            //Controleer of de toegangscode klopt!
+            if (multiPeriodeAanvraag.getToegangsCode().equals(toegangscode)) {
+                Lector gevondenLector = domainFacade.getLector(lector);
+                multiPeriodeAanvraag.addGoedkeuring(new Goedkeuring(gevondenLector,convertStringsToOpnameMethodes(methodes)));
+                domainFacade.edit(multiPeriodeAanvraag); 
+            }
+        }
+        return "redirect:/home";
+    }
+
+    //</editor-fold>
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.registerCustomEditor(Calendar.class, new CalendarPropertyEditor());

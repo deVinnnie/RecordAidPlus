@@ -19,6 +19,7 @@ import java.util.logging.*;
  * @author Vincent Ceulemans
  */
 public class StartUpDataFiller {
+
     private RecordAidDomainFacade facade;
 
     public StartUpDataFiller(RecordAidDomainFacade facade) {
@@ -36,8 +37,8 @@ public class StartUpDataFiller {
 
             String[] mails = {
                 "severus.snape@khleuven.be",
-                "filius.flitwick@khleuven.be", 
-                "minerva.mcgonagall@khleuven.be",  
+                "filius.flitwick@khleuven.be",
+                "minerva.mcgonagall@khleuven.be",
                 "remus.lupin@khleuven.be"
             };
 
@@ -51,32 +52,24 @@ public class StartUpDataFiller {
         }
         //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Dummy gebruiker">
         try {
             //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(15);
-            //String wachtwoord = passwordEncoder.encode("geheim"); 
-            //System.out.println(wachtwoord); 
+            //String hash = passwordEncoder.encode("geheim"); 
 
-            //Create Admin user
-            String wachtwoord = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
-            Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", wachtwoord);
-            g.valideer();
-            this.facade.create(g);
-            
-            Setting setting = new Setting("admin_first_login", "TRUE");
-            facade.create(setting); 
-            
             //Create a dummy user
-            String wachtwoord2 = "$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW.";
-            Gebruiker g2 = new Gebruiker(Rollen.BEGELEIDER, "dummy@khleuven.be", "Dummy", "Dummy", wachtwoord2);
-            g2.valideer();
-            this.facade.create(g2);
+            String hash = "$2a$15$Rf1AtBbVC9jz.XUU69e1gu7alwMrsGRH0t0GVTJltHb49DP6ZlbW.";
+            Gebruiker gebruiker = new Gebruiker(Rollen.BEGELEIDER, "dummy@khleuven.be", "Dummy", "Dummy", hash);
+            gebruiker.valideer();
+            this.facade.create(gebruiker);
         } catch (Exception e) {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Opnamemethodes">
         try {
-            //Opnamemethodes
             OpnameMethode opnameMethode = new OpnameMethode("Scherm", "Scherm");
             OpnameMethode opnameMethode2 = new OpnameMethode("Scherm/Bord en Lector", "Scherm/Bord en Lector");
             facade.create(opnameMethode);
@@ -85,9 +78,10 @@ public class StartUpDataFiller {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
-
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="Items">
         try {
-            //Items
             Item item1 = new Item("Item1");
             Item item2 = new Item("Item2");
 
@@ -107,7 +101,9 @@ public class StartUpDataFiller {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Mailing">
         try {
             SubjectPrefix prefix = new SubjectPrefix();
             prefix.setId(1);
@@ -125,6 +121,7 @@ public class StartUpDataFiller {
             System.out.println("**Exception Occured:");
             e.printStackTrace();
         }
+        //</editor-fold>
 
         try {
             Dossier dossier = facade.getDossier(facade.getGebruiker("dummy@khleuven.be"));
@@ -147,10 +144,8 @@ public class StartUpDataFiller {
             dossier.addAanvraag(aanvraag);
             facade.edit(dossier);
             facade.edit(aanvraag);
-        } catch (DomainException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(StartUpDataFiller.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         try {
@@ -165,6 +160,9 @@ public class StartUpDataFiller {
             MultiPeriodeAanvraag aanvraag = new MultiPeriodeAanvraag(dossier, facade.getDepartement("G&T"));
             aanvraag.setBegeleider(dummy);
             aanvraag.setPeriode(new TimeSpan(start, end));
+            List<Lector> lectoren = new ArrayList<Lector>();
+            lectoren.add(new Lector("lector2@khleuven.be"));
+            aanvraag.setLectoren(lectoren);
 
             facade.addMultiPeriodeAanvraag(aanvraag, dummy);
         } catch (Exception e) {

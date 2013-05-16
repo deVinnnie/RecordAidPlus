@@ -16,17 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class InfoController {
     @RequestMapping(value = "/info/{pagina}")
     public String handleInfoRequest(@PathVariable("pagina") String pagina, ModelMap model) {
-        /*title, url*/
-        Map<String, String> links = new LinkedHashMap<String, String>();
-        links.put("Voorstelling", "/info/voorstelling"); 
-        links.put("Studenten", "/info/studenten"); 
-        links.put("Lectoren","/info/lectoren");
-        links.put("Problemen", "/info/problemen"); 
-        links.put("Buddies", "/info/buddies"); 
-        links.put("Studentenbegeleiding", "/info/studentenbegeleiding"); 
-        links.put("Media", "/info/media"); 
-        links.put("Contact", "/info/contact"); 
-        model.addAttribute("links",links); 
         return "/info/" + pagina;
     }
 }

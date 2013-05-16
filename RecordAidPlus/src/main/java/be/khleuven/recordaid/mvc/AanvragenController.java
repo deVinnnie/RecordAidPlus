@@ -51,10 +51,11 @@ public class AanvragenController extends AbstractController{
     public String addNieuweAanvraag(@ModelAttribute("aanvraag") AbstractAanvraag aanvraag,
             BindingResult bindingResult,
             ModelMap model) throws DomainException {
-        return "redirect:/aanvragen/nieuwe_opname";
+        return "redirect:/aanvragen/nieuwe_les";
     }
-
-    @RequestMapping(value = "/nieuwe_opname")
+    
+    //<editor-fold defaultstate="collapsed" desc="OpnameMomenten">
+    @RequestMapping(value = "/nieuwe_les")
     public String showNieuweOpnameMomentForm(ModelMap model, @ModelAttribute("aanvraag") AbstractAanvraag aanvraag) throws DomainException {
         Calendar defaultDate = aanvraag.getDefaultOpnameMomentDag();
         OpnameMoment opnameMoment = new OpnameMoment();
@@ -62,63 +63,65 @@ public class AanvragenController extends AbstractController{
 
         model.addAttribute("nieuweOpname", opnameMoment);
         model.addAttribute("alleLectoren", domainFacade.getLectoren());
-        return "/aanvragen/nieuwe_opname";
+        model.addAttribute("type", aanvraag.getClass().getSimpleName()); 
+        model.addAttribute("chained", true);
+        return "/aanvragen/nieuwe_les";
     }
 
-    @RequestMapping(value = "/nieuwe_opname", method = RequestMethod.POST)
-    public String addNieuwOpnameMoment(
-            @ModelAttribute("nieuweOpname") OpnameMoment nieuwOpnameMoment,
-            BindingResult bindingResult,
+    @RequestMapping(value = "/nieuwe_les", params = "aanvraag", method = RequestMethod.GET)
+    public String showNieuweOpnameMomentForm(@RequestParam("aanvraag") long id, ModelMap model) throws DomainException {
+        AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
+        String redirect =  this.showNieuweOpnameMomentForm(model, aanvraag);
+        model.addAttribute("chained", false);
+        return redirect; 
+    }
+   
+    @RequestMapping(value = "/nieuwe_les", method = RequestMethod.POST)
+    public String addNieuwOpnameMoment(@ModelAttribute("nieuweOpname") OpnameMoment nieuwOpnameMoment,
             @ModelAttribute("aanvraag") AbstractAanvraag aanvraag,
-            @RequestParam("action") String action,
-            ModelMap model) throws DomainException {
+            @RequestParam("action") String action) throws DomainException {
         nieuwOpnameMoment.getLokaal().setDepartement(aanvraag.getDepartement());
         aanvraag.addOpnameMoment(nieuwOpnameMoment);
 
         if (action.equals("Gereed")) {
             return "redirect:/aanvragen/bevestigen";
         } else {
-            return "redirect:/aanvragen/nieuwe_opname";
+            return "redirect:/aanvragen/nieuwe_les";
         }
     }
-
-    @RequestMapping(value = "/nieuwe_opname", params = "aanvraag", method = RequestMethod.GET)
-    public String showNieuweOpnameMomentFormById(
-            @RequestParam("aanvraag") long id,
-            ModelMap model) throws DomainException {
-        AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
-        Calendar defaultDate = aanvraag.getDefaultOpnameMomentDag();
-        OpnameMoment opnameMoment = new OpnameMoment();
-        opnameMoment.setTijdstip(new TimeSpan((Calendar) defaultDate.clone(), (Calendar) defaultDate.clone()));
-
-        model.addAttribute("nieuweOpname", opnameMoment);
-        model.addAttribute("alleLectoren", domainFacade.getLectoren());
-        model.addAttribute("opnameMethodes", domainFacade.getOpnameMethodes());
-        return "/aanvragen/nieuwe_opname";
-    }
-
-    @RequestMapping(value = "/nieuwe_opname", params = "aanvraag", method = RequestMethod.POST)
-    public String addNieuwOpnameMomentById(
+    
+    @RequestMapping(value = "/nieuwe_les", params = "aanvraag", method = RequestMethod.POST)
+    public String addNieuwOpnameMoment(
             @ModelAttribute("nieuweOpname") OpnameMoment nieuwOpnameMoment,
-            BindingResult bindingResult,
-            @RequestParam("aanvraag") long id,
-            @RequestParam("action") String action,
-            ModelMap model) throws DomainException {
+            @RequestParam("aanvraag") long id, @RequestParam("action") String action, ModelMap model) throws DomainException {
         AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
         nieuwOpnameMoment.getLokaal().setDepartement(aanvraag.getDepartement());
         aanvraag.addOpnameMoment(nieuwOpnameMoment);
         domainFacade.edit(aanvraag);
 
         if (action.equals("Gereed")) {
-            return "redirect:/aanvragen/bewerk?id=" + aanvraag.getId();
+            return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
         } else {
-            return "redirect:/aanvragen/nieuwe_opname?id=" + aanvraag.getId();
+            return "redirect:/aanvragen/nieuwe_opname?aanvraag=" + aanvraag.getId();
         }
+    }
+    //</editor-fold>
+    
+    @RequestMapping(value = "/inform_lectoren", params="aanvraag",method = RequestMethod.GET)
+    public String informLectoren(@RequestParam("aanvraag") long id, RedirectAttributes redirectAttr) throws DomainException{
+        AbstractAanvraag findAanvraag = domainFacade.findAanvraag(id);
+        if(findAanvraag instanceof MultiPeriodeAanvraag){
+            domainFacade.informLectoren((MultiPeriodeAanvraag) findAanvraag, this.getCurrentDossier().getGebruiker()); 
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Mails verzonden", "succes")); 
+        }
+        else{
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Can't do that, sorry!", "error")); 
+        }
+        return "redirect:/aanvragen/bewerk?id="+id; 
     }
 
     @RequestMapping(value = "/bevestigen", method = RequestMethod.GET)
-    public String showBevestigAanvraagForm(@ModelAttribute("aanvraag") AbstractAanvraag nieuweAanvraag,
-            ModelMap model) {
+    public String showBevestigAanvraagForm(@ModelAttribute("aanvraag") AbstractAanvraag nieuweAanvraag, ModelMap model) {
         model.addAttribute("aanvraag", nieuweAanvraag);
         return "/aanvragen/bevestigen";
     }
@@ -132,13 +135,10 @@ public class AanvragenController extends AbstractController{
                 redirectAttr.addFlashAttribute("boodschap", new Boodschap("De aanvraag is succesvol toegevoegd.", "succes"));
                 return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
             }
-            else{
-                return "redirect:/home";  
-            }
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
+        return "redirect:/home";  
     }
     //</editor-fold>
 
@@ -155,13 +155,12 @@ public class AanvragenController extends AbstractController{
     @RequestMapping(value = "/koppel_opname", params = {"aanvraag", "opnamemoment"}, method = RequestMethod.POST)
     public String koppelOpname(ModelMap model, @Valid Opname opname,
             @RequestParam("aanvraag") long aanvraag,
-            @RequestParam("opnamemoment") long opnamemoment) {
+            @RequestParam("opnamemoment") long opnamemoment) throws DomainException {
         AbstractAanvraag gevondenAanvraag = domainFacade.findAanvraag(aanvraag);
         OpnameMoment opnameMoment = gevondenAanvraag.getOpnameMoment(opnamemoment);
 
         if (opnameMoment != null) {
-            opnameMoment.setOpname(opname);
-            domainFacade.edit(opnameMoment);
+            domainFacade.koppelOpname(gevondenAanvraag, opnameMoment,opname, this.getCurrentDossier().getGebruiker()); 
         }
 
         return "redirect:/aanvragen/detail?id=" + gevondenAanvraag.getId();
@@ -180,16 +179,23 @@ public class AanvragenController extends AbstractController{
     }
 
     @RequestMapping(value = "/nieuw_multi", method = RequestMethod.POST)
+    public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag) throws DomainException {
+        return this.addNieuwMultiAanvraag(aanvraag, this.getCurrentDossier().getGebruiker().getEmailadres()); 
+    }
+    
+    @RequestMapping(value = "/nieuw_multi", params="student", method = RequestMethod.POST)
     public String addNieuwMultiAanvraag(@ModelAttribute("nieuweMultiAanvraag") MultiPeriodeAanvraag aanvraag,
             @RequestParam("student") String student) throws DomainException {
-        Gebruiker begeleider = this.getCurrentDossier().getGebruiker();
         Gebruiker gebruiker = domainFacade.getGebruiker(student);
+        Gebruiker begeleider = this.getCurrentDossier().getGebruiker();
+      
         if (gebruiker == null) {
             //Create the user if the user doesn't exist yet. 
             gebruiker = new Gebruiker(student);
             userDetailsService.createUser(gebruiker, gebruiker.getValidatieCode(), begeleider);
             gebruiker = domainFacade.getGebruiker(student);
-        }
+        } 
+       
         aanvraag.setDossier(domainFacade.getDossier(gebruiker));
         aanvraag.setBegeleider(begeleider);
 
@@ -231,7 +237,8 @@ public class AanvragenController extends AbstractController{
             ModelMap model) {
         AbstractAanvraag aanvraag = this.domainFacade.findAanvraag(id);
         model.addAttribute("aanvraag", aanvraag);
-
+        model.addAttribute("type", aanvraag.getClass().getSimpleName());
+        
         //Voeg mogelijke verantwoordelijken toe. 
         List<Gebruiker> alleBuddies = new ArrayList<Gebruiker>();
         for (Gebruiker gebruiker : domainFacade.getGebruikers(Rollen.BUDDY)) {

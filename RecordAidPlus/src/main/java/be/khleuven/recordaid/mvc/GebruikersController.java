@@ -1,13 +1,16 @@
 package be.khleuven.recordaid.mvc;
 
+import be.khleuven.recordaid.domain.DomainException;
 import be.khleuven.recordaid.domain.gebruiker.Gebruiker;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.domain.gebruiker.Rollen;
+import be.khleuven.recordaid.util.Boodschap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -23,6 +26,7 @@ public class GebruikersController extends AbstractController{
     @RequestMapping("/beheer")
     public String showBeheer(ModelMap model){
         model.addAttribute("gebruikers", domainFacade.getGebruikers()); 
+        model.addAttribute("dossiers", domainFacade.getDossiers()); 
         return ("/gebruikers/beheer"); 
     }
     
@@ -82,5 +86,13 @@ public class GebruikersController extends AbstractController{
         Dossier dossier = domainFacade.getDossier(gebruiker); 
         model.addAttribute("dossier", dossier); 
         return "/gebruikers/dossier"; 
+    }
+    
+    @RequestMapping("/buddyworden")
+    public String buddyWorden(RedirectAttributes redirectAttr) throws DomainException{
+        Gebruiker gebruiker = this.getCurrentDossier().getGebruiker(); 
+        domainFacade.buddyWorden(gebruiker); 
+        redirectAttr.addFlashAttribute("boodschap", new Boodschap("Bedankt voor je interesse! We nemen binnenkort contact op met jou.", "succes")); 
+        return "redirect:/gebruikers/account"; 
     }
 }

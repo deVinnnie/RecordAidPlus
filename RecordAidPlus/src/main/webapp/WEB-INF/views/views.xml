@@ -20,23 +20,29 @@
         <put-list-attribute name="styles" inherit="true">
             <add-attribute value="/css/blitzer/jquery-ui-1.10.1.custom.min.css"/>
             <add-attribute value="/js/DataTables-1.9.4/css/jquery.dataTables.css"/>
-            <add-attribute value="/css/datatables.css"/>
         </put-list-attribute>
     </definition>
     
     <definition name="base.beheer" extends="base.jquery">
         <put-attribute name="content" value="/WEB-INF/views/beheer/beheer_template.jsp"/>
+        <put-attribute name="subpage" value="" cascade="true"/>
     </definition>
     
     <definition name="base.info" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/info/info_template.jsp"/>
+        <put-attribute name="subpage" value="" cascade="true"/>
+    </definition>
+    
+    <definition name="base.info.jquery" extends="base.jquery">
+        <put-attribute name="content" value="/WEB-INF/views/info/info_template.jsp"/>
     </definition>
     <!--End Templates-->
     
-    <definition name="/home" extends="base.jquery">
+    <definition name="/home" extends="base.info.jquery">
         <put-attribute name="title" value="home.title"/>
         <put-attribute name="page" value="home" cascade="true"/>
-        <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
+        <put-attribute name="subpage" value="home" cascade="true"/>
+        <put-attribute name="subcontent" value="/WEB-INF/views/home.jsp" cascade="true"/>
     </definition>
     
     <!--Login-->
@@ -49,12 +55,12 @@
     </definition>
     
     <!--Aanvragen-->
-    <definition name="/aanvragen/nieuw" extends="base.jquery">
+    <definition name="/aanvragen/nieuwe_les" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw.title"/>
-        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuwe_les.jsp" />
         <put-attribute name="page" value="aanvragen" cascade="true"/>
         <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/js/nieuweAanvraag.js"/>
+            <add-attribute value="/js/nieuwe-les.js"/>
         </put-list-attribute>
     </definition>
     
@@ -65,12 +71,6 @@
         <put-list-attribute name="scripts" inherit="true">
             <add-attribute value="/js/multi_aanvraag.js"/>
         </put-list-attribute>
-    </definition>
-    
-    <definition name="/aanvragen/nieuwe_opname" extends="base.jquery">
-        <put-attribute name="title" value="aanvragen.nieuw.title"/>
-        <put-attribute name="page" value="aanvragen" cascade="true"/>
-        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuwe_opname.jsp" />
     </definition>
     
     <definition name="/aanvragen/mijnaanvragen" extends="base.jquery">
@@ -168,7 +168,6 @@
     <definition name="/beheer" extends="base.beheer">
         <put-attribute name="title" value="beheer.title"/>
         <put-attribute name="page" value="beheer" cascade="true"/>
-        <put-attribute name="subpage" value="" cascade="true"/>
         <put-attribute name="subcontent" value="/WEB-INF/views/beheer/beheer.jsp" cascade="true"/>
     </definition>
     

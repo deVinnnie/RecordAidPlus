@@ -15,15 +15,14 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Klasse die fungeert als een facade voor alle database klassen. 
- * De RecordAidDomainFacade kan aangesproken worden en deze geeft de betreffende
+ * Klasse die fungeert als een facade voor alle database klassen. De
+ * RecordAidDomainFacade kan aangesproken worden en deze geeft de betreffende
  * taak door aan het juiste model-object.
  *
  * @author Maxime Van den Kerkhof, Vincent Ceulemans
  */
 public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  
-
     private static String url = "http://recordaid.khleuven.be/";
     private static String configPath = System.getProperty("user.home") + "/.recordaid/recordaid.properties";
     private String mailHandlerType = "MailHandlerDummy";
@@ -37,8 +36,7 @@ public class RecordAidDomainFacade {
     /**
      * Constructor om een nieuwe RecordAidDomainFacade aan te maken.
      */
-    public RecordAidDomainFacade() {
-    }
+    public RecordAidDomainFacade() {}
 
     public RecordAidDomainFacade(
             CommonDatabaseInterface commonDb,
@@ -66,10 +64,20 @@ public class RecordAidDomainFacade {
         this.departementDb = departementDb;
         this.mailDb = mailDb;
 
-        //Watch out!! Dbunit inserts some default but real entities into the DB. 
-        //You don't want to accidently send a mail to them!
+        //Create Admin user
+        try {
+            //Standaard wachtwoord = "geheim". 
+            String hash = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
+            Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", hash);
+            g.valideer();
+            this.create(g);
 
-
+            Setting setting = new Setting("admin_first_login", "TRUE");
+            this.create(setting);
+        } catch (Exception e) {
+            //Move Along
+        }
+        
         if (initialize) {
             this.init();
         }
@@ -497,9 +505,8 @@ public class RecordAidDomainFacade {
         this.edit(aanvraag);
 
         //Voeg deze gebeurtenis toe aan de geschiedenis
-        Dossier dossier = aanvraag.getDossier();
-        dossier.addGebeurtenis("Aanvraag is goedgekeurd door de kern.", initiator);
-        this.edit(dossier);
+        Dossier dossier = aanvraag.getDossier(); 
+        logGebeurtenis(dossier, initiator, "Aanvraag is goedgekeurd door de kern."); 
 
         //Stuur mail naar de aanvrager met de boodschap dat de aanvraag goedgekeurd is. 
         Map<String, String> context = new HashMap<String, String>();
@@ -543,9 +550,8 @@ public class RecordAidDomainFacade {
         this.edit(aanvraag);
 
         //Voeg deze gebeurtenis toe aan de geschiedenis
-        Dossier dossier = aanvraag.getDossier();
-        dossier.addGebeurtenis("Aanvraag is afgekeurd door de kern.", initiator);
-        this.edit(dossier);
+        Dossier dossier = aanvraag.getDossier(); 
+        logGebeurtenis(dossier, initiator, "Aanvraag is afgekeurd door de kern.");
 
         //Stuur mail naar de aanvrager met de boodschap dat de aanvraag afgekeurd is. 
         Map<String, String> context = new HashMap<String, String>();
@@ -595,7 +601,8 @@ public class RecordAidDomainFacade {
         this.edit(faq);
     }
 
-    public void koppelOpname(AbstractAanvraag aanvraag, OpnameMoment opnameMoment, Opname opname) throws DomainException {
+    public void koppelOpname(AbstractAanvraag aanvraag, OpnameMoment opnameMoment, 
+            Opname opname, Gebruiker initiator) throws DomainException {
         //Koppel opname
         opnameMoment.setOpname(opname);
         this.edit(opnameMoment);
@@ -604,7 +611,8 @@ public class RecordAidDomainFacade {
         if (aanvraag instanceof DagAanvraag) {
             boolean alleOpnamesGedaan = true;
             for (OpnameMoment moment : aanvraag.getOpnameMomenten()) {
-                if (moment.getGoedgekeurd().equals(Boolean.TRUE)) {
+                if (moment.getGoedgekeurd()!=null && 
+                        moment.getGoedgekeurd().equals(Boolean.TRUE)) {
                     if (moment.getOpname() == null
                             || !moment.getOpname().getStatus().equals(OpnameStatus.GEREED)) {
                         alleOpnamesGedaan = false;
@@ -621,13 +629,57 @@ public class RecordAidDomainFacade {
                 this.sendMail("opnames_klaar", aanvraag.getDossier().getGebruiker().getEmailadres(), context);
             }
         }
+        
+        //Update Geschiedenis
+        logGebeurtenis(aanvraag.getDossier(), initiator, "Opname toegevoegd");
+    }
+
+    public void sluitAanvraag(AbstractAanvraag aanvraag, Gebruiker initiator) {
+        //Verander status. 
+        aanvraag.setStatus(Status.AFGEHANDELD);
+        this.edit(aanvraag);
+        
+        //Update Geschiedenis
+        logGebeurtenis(aanvraag.getDossier(), initiator, "Aanvraag afgehandeld.");
     }
     
-    public void sluitAanvraag(AbstractAanvraag aanvraag, Gebruiker gebruiker) {
-        aanvraag.setStatus(Status.AFGEHANDELD);
-        this.edit(aanvraag); 
-        Dossier dossier = aanvraag.getDossier(); 
-        dossier.addGebeurtenis("", gebruiker);
+     public void informLectoren(MultiPeriodeAanvraag aanvraag, Gebruiker initiator) throws DomainException {
+        //Verstuur mails
+        for (Lector lector : aanvraag.getLectoren()) {
+            Map<String, String> context = new HashMap<String, String>();
+            context.put("aanvraag_aanvrager_voornaam", aanvraag.getDossier().getGebruiker().getVoornaam());
+            context.put("aanvraag_aanvrager_achternaam", aanvraag.getDossier().getGebruiker().getAchternaam());
+            String link = url + "opnames/multi_goedkeuren?toegangscode="+aanvraag.getToegangsCode()
+                    +"&lector="+lector.getEmailadres()
+                    +"&aanvraag="+aanvraag.getId(); 
+            context.put("url",link);
+            this.sendMail("aanvraag_goedkeuring_multi_lector", lector.getEmailadres(), context);
+        }
+
+        //Update geschiedenis
+        this.logGebeurtenis(aanvraag.getDossier(), initiator, "Mail verstuurd naar betrokken lectoren.");
+    }
+
+    public void buddyWorden(Gebruiker gebruiker) throws DomainException {
+        Map<String, String> context = new HashMap<String, String>();
+        context.put("gebruiker_email", gebruiker.getEmailadres());  
+        context.put("gebruiker_voornaam", gebruiker.getVoornaam()); 
+        context.put("gebruiker_achternaam", gebruiker.getAchternaam()); 
+        this.sendMail("aanmelding_nieuwe_buddy", "recordaid@khleuven.be", context); 
     }
     //</editor-fold>
+
+    private void logGebeurtenis(Gebruiker gebruiker, Gebruiker initiator, String message) {
+        Dossier dossier = this.getDossier(gebruiker); 
+        dossier.addGebeurtenis(message, initiator);
+        this.edit(dossier);
+    }
+    
+    private void logGebeurtenis(Dossier dossier, Gebruiker initiator, String message) {
+        this.logGebeurtenis(dossier.getGebruiker(), initiator, message);
+    }
+    
+    public Collection<Dossier> getDossiers() {
+        return commonDb.findAll(Dossier.class);
+    }
 }

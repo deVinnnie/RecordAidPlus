@@ -11,27 +11,27 @@
         <tiles:useAttribute name="title" />
         <title><fmt:message key="title"/> | <fmt:message key="${title}"/></title>
         <c:set value="/resources" var="resources" />
-        <!--<link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.css" />-->
-        <!--<link rel="stylesheet" type="text/css" href="${resources}/css/reset.css" />-->
+        <%--Stylesheets--%>
         <tiles:useAttribute id="styles" name="styles" classname="java.util.List" />
         <c:forEach items="${styles}" var="style">
             <link rel="stylesheet" type="text/css" href="<s:url value="${resources}${style}"/>"/>
         </c:forEach>
-        <link rel="stylesheet" type="text/css" href="<s:url value="${resources}/css/default.css"/>"/>
+        <!--<link rel="stylesheet" type="text/css" href="<s:url value="${resources}/css/bootstrap.min.css"/>"/>   -->
+        <link rel="stylesheet" type="text/css" href="<s:url value="${resources}/css/style.css"/>"/>
+        <%--Scripts--%>
         <tiles:useAttribute id="scripts" name="scripts" classname="java.util.List" />
         <c:forEach items="${scripts}" var="script">
         <script type="text/javascript" src="<s:url value="${resources}${script}"/>"></script>
         </c:forEach>
+        <%--Favicon--%>
         <link rel="shortcut icon" href="<s:url value="${resources}/images/fav_icon.png"/>"/>
     </head>
     <body>
         <div id="content">
             <tiles:insertAttribute name="header"/>          
-            
             <div id="page">
             <tiles:insertAttribute name="content"/>
             </div>
-            
             <tiles:insertAttribute name="footer"/>
         </div>
     </body>

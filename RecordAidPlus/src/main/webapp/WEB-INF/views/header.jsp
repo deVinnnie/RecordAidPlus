@@ -82,3 +82,8 @@
         </security:authorize>
     </ul>
 </div>
+<noscript>
+<div class="error-balk">
+    <p>JavaScript is uitgeschakeld of wordt niet ondersteund door jouw browser, sommige functionaliteiten op deze site kunnen hierdoor niet werken.</p>
+</div>
+</noscript>

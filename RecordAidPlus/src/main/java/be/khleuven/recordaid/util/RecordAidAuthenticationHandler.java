@@ -27,9 +27,9 @@ public class RecordAidAuthenticationHandler implements AuthenticationSuccessHand
         Gebruiker gebruiker = (Gebruiker) auth.getPrincipal();
         if (gebruiker.getEmailadres().equals("recordaid@khleuven.be")
                 && domainFacade.getSetting("admin_first_login").getWaarde().equals("TRUE")) {
-            response.sendRedirect("/RecordAidPlus/opties");
+            response.sendRedirect("/opties");
         } else if (gebruiker.isForcePasswordChange()) {
-            response.sendRedirect("/RecordAidPlus/gebruikers/wachtwoord"); 
+            response.sendRedirect("/gebruikers/wachtwoord"); 
         } else {
             target.onAuthenticationSuccess(request, response, auth);
         }

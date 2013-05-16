@@ -56,11 +56,31 @@ ul{
     padding: 0; 
 }
 
-article ul{
+article ul, 
+.normal-list{
     list-style:square;   
     margin: 0 0 1.625em 2.5em; 
     padding-top: 10px;
     padding-left: 1em; 
+}
+
+.normal-list{
+    margin: 0; 
+}
+
+dl{
+    margin: 0 0 1.625em 2.5em; 
+    padding-top: 10px;
+    padding-left: 1em
+}
+
+dt {
+    display: list-item;
+    list-style-type: square;
+}
+
+dd{
+    margin-bottom: 1em; 
 }
 
 /*Content
@@ -152,7 +172,6 @@ input[type="text"],
 input[type="password"],
 input[type="email"]{
     width: 221px;
-    background: transparent url('images/bgtb.jpg') no-repeat;
     color : #747862;
     height:20px;
     border:0;
@@ -160,20 +179,30 @@ input[type="email"]{
     margin-bottom:0px;
 }
 
+input[type="text"], 
+input[type="password"],
+input[type="email"], 
+textarea{
+    border:1px solid #d1c7ac;
+    background: white url('images/bgta.jpg');
+    background-repeat:repeat-x;
+}
+
 input[type="submit"]{
     margin-top:0.5em;
 }
 
 textarea{
-    background-image:url('images/bgta.jpg');
-    background-repeat:repeat-x;
-    border:1px solid #d1c7ac;
-
     color:#333333;
     padding:3px;
     margin-right:4px;
     margin-bottom:8px;
     resize: none;
+}
+
+*[required="required"]{
+    box-shadow: 0 2px 2px #BE3030; 
+    border: 1px solid #BE3030 !important; 
 }
 
 /*
@@ -210,6 +239,18 @@ Succes and Error messages
     color: blue; 
 }
 
+.error-balk{
+    width:90%; 
+    background: #BE3030; 
+    color: white; 
+    padding: 0.1em 1em; 
+    margin:0.5em auto; 
+    text-align: center; 
+    font-weight: bold; 
+}
+
+/* Other
+---------------*/
 #preview{
     border: 1px solid #4E6CA3; 
     padding: 0.5em; 
@@ -282,11 +323,6 @@ Succes and Error messages
     float: right; 
 }
 
-#subnav ul{
-    list-style: none; 
-    padding: 0;
-}
-
 /* Footer 
 ---------------*/
 .footer{
@@ -356,22 +392,6 @@ Succes and Error messages
     border-bottom: 2px dashed #333;
 }  
 
-
-dl{
-    margin: 0 0 1.625em 2.5em; 
-    padding-top: 10px;
-    padding-left: 1em
-}
-
-dt {
-    display: list-item;
-    list-style-type: square;
-}
-
-dd{
-    margin-bottom: 1em; 
-}
-
 /*Images
 ---------------*/
 img.aligncenter{
@@ -383,4 +403,28 @@ img.aligncenter{
 img.logo{
     margin: 0 auto; 
     display: block; 
+}
+
+/* DataTables
+---------------*/
+.dataTables_wrapper, 
+table.dataTable {
+    clear: none; 
+}
+
+.dataTables_filter{
+    float:none; 
+}   
+
+table.dataTable tr.odd,
+table.dataTable tr.even { 
+    background-color: transparent !important; 
+}
+
+table.dataTable tr.odd td.sorting_1{
+    background-color:rgb(190, 178, 255);
+}
+
+table.dataTable tr.even td.sorting_1{
+    background-color: rgb(236, 232, 241);
 }

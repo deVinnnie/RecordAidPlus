@@ -45,7 +45,8 @@
         </table>
     </c:otherwise>
 </c:choose>
-<p>Dien een <a href="<s:url value="/aanvragen/nieuw"/>">nieuwe aanvraag</a> in.</p>
+<p>Dien een <a href="<s:url value="/aanvragen/nieuw"/>">nieuwe aanvraag (één dag)</a> in.</p>
+<p>Dien een <a href="<s:url value="/aanvragen/nieuw_multi"/>">nieuwe aanvraag voor langere periode</a> in.</p>
 
 <h2>Geschiedenis</h2>
 <c:choose>

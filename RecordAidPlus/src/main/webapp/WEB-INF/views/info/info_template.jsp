@@ -7,11 +7,19 @@
     <h1>Info</h1>
     <ul>
         <tiles:useAttribute id="subpage" name="subpage" classname="java.lang.String"/>
-        <c:forEach var="page" items="${links}">
-            <li>
-                <a href="<s:url value="${page.value}"/>" <m:isActiveLink page="${page.value}" currentPage="${subpage}"/>>${page.key}</a>
-            </li>
-        </c:forEach>
+        <jsp:useBean id="links" class="java.util.LinkedHashMap"  scope="request"> 
+            <c:set target="${links}" property="Voorstelling" value="/info/voorstelling"/>  
+            <c:set target="${links}" property="Studenten" value="/info/studenten"/>  
+            <c:set target="${links}" property="Lectoren" value="/info/lectoren"/>  
+            <c:set target="${links}" property="Problemen" value="/info/problemen"/>  
+            <c:set target="${links}" property="Buddies" value="/info/buddies"/>  
+            <c:set target="${links}" property="Studentenbegeleiding" value="/info/studentenbegeleiding"/>  
+            <c:set target="${links}" property="Media" value="/info/media/"/>   
+            <c:set target="${links}" property="Contact" value="/info/contact"/>  
+        </jsp:useBean>
+        <c:forEach var="link" items="${links}">
+            <li><a href="<s:url value="${link.value}"/>" <m:isActiveLink page="${link.value}" currentPage="${subpage}"/>>${link.key}</a></li>
+        </c:forEach> 
     </ul>
 </div>
 <div id="subcontent">

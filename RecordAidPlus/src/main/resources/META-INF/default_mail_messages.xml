@@ -86,6 +86,19 @@ Het RecordAid Team]]>
         <description>aanvraag_goedkeuring_lector</description>
     </message>
     
+     <message>
+        <subject>Aanvraag lesopname</subject>
+        <content>
+<![CDATA[Beste, <br><br>
+Student <b>$aanvraag_aanvrager_voornaam$ $aanvraag_aanvrager_achternaam$</b> kan een tijd niet naar de les komen. 
+Er werd een aanvraag ingediend om de lessen te laten opnemen door RecordAid.<br>
+Zou u ons via deze <a href="$url$">link</a> kunnen laten weten of we uw lessen mogen opnemen?
+<br><br>Met vriendelijke groeten,<br>
+Het RecordAid Team]]>  
+        </content>
+        <description>aanvraag_goedkeuring_multi_lector</description>
+    </message>
+    
     <message>
            <subject>Nieuwe Aanvraag</subject>
         <content>
@@ -120,5 +133,17 @@ $weigering_reden$
 Het RecordAid Team]]> 
         </content>
         <description>weigering_aanvraag</description>
+    </message>
+    <message>
+        <subject>Opnames beschikbaar</subject>
+        <content>
+<![CDATA[
+Beste $aanvraag_aanvrager_voornaam$, <br>
+De opnames van jouw aanvraag voor $aanvraag_datum$ zijn beschikbaar.<br>
+Log in op de website om ze te bekijken. 
+<br><br>Met vriendelijke groeten,<br>
+Het RecordAid Team]]> 
+        </content>
+        <description>opnames_klaar</description>
     </message>
 </messages>
