@@ -21,7 +21,7 @@ $(document).ready(function(){
         </tr>
         <tr>
             <td><label for="reden">Opmerkingen</label></td>
-            <td><springforms:textarea path="opmerking" id="opmerkingen" rows="6" cols="50"/></td>
+            <td><springforms:textarea path="opmerking" id="opmerkingen" rows="6" cols="50" placeholder="Opmerkingen of bijkomende informatie, eventueel opgeven als een student uit de klas bereid is om te helpen."/></td>
             <td><springforms:errors path="opmerking" id="opmerkingen_error" cssClass="error"/></td>
         </tr>
         <tr>

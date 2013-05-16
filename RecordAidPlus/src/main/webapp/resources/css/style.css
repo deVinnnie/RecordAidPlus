@@ -201,7 +201,7 @@ textarea{
 }
 
 *[required="required"]{
-    box-shadow: 0 2px 2px #BE3030; 
+    box-shadow: 0 0 4px #BE3030; 
     border: 1px solid #BE3030 !important; 
 }
 
