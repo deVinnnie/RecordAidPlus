@@ -26,7 +26,7 @@
                 <c:forEach var="aanvraag" items="${aanvragen}" >
                     <tr align="center">
                         <td>
-                         <c:choose>
+                            <c:choose>
                                 <c:when test="${aanvraag.getClass().getSimpleName() eq 'DagAanvraag'}">
                                     <fmt:formatDate value="${aanvraag.lesDatum.time}" pattern="yyyy-MM-dd" />
                                 </c:when>
@@ -37,43 +37,48 @@
                                 </c:when>
                             </c:choose>    
                         </td>
-                        <td>${aanvraag.status.name}</td>
-                        <td><a href="<s:url value="/aanvragen/detail?id=${aanvraag.id}"/>">Details</a></td>
+                        <td><c:out value="${aanvraag.status.name}"/></td>
+                        <td>
+                            <s:url var="url" value="/aanvragen/detail?id=${aanvraag.id}"/>
+                            <a href="${url}">Details</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
     </c:otherwise>
 </c:choose>
-<p>Dien een <a href="<s:url value="/aanvragen/nieuw"/>">nieuwe aanvraag (één dag)</a> in.</p>
-<p>Dien een <a href="<s:url value="/aanvragen/nieuw_multi"/>">nieuwe aanvraag voor langere periode</a> in.</p>
+<s:url var="url" value="/aanvragen/nieuw"/>
+<p>Dien een <a href="${url}">nieuwe aanvraag (één dag)</a> in.</p>
+<s:url var="url" value="/aanvragen/nieuw_multi"/>
+<p>Dien een <a href="${url}">nieuwe aanvraag voor langere periode</a> in.</p>
 
 <h2>Geschiedenis</h2>
 <c:choose>
     <c:when test="${not empty dossier.geschiedenis.gebeurtenissen}">
-         <script type="text/javascript">
-            $('document').ready(function(){
-                datatable("#geschiedenis"); 
-            }); 
+        <script type="text/javascript">
+            $('document').ready(function() {
+                datatable("#geschiedenis");
+            });
         </script>
-            <table id="geschiedenis">
-                <thead>
-                    <tr>
-                        <th>Datum</th>
-                        <th>Gebeurtenis</th>
-                        <th>Wie?</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <c:forEach var="gebeurtenis" items="${dossier.geschiedenis.gebeurtenissen}">
+        <table id="geschiedenis">
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Gebeurtenis</th>
+                    <th>Wie?</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <c:forEach var="gebeurtenis" items="${dossier.geschiedenis.gebeurtenissen}">
                     <tr>
                         <td><fmt:formatDate value="${gebeurtenis.tijdstip.time}" pattern="yyyy-MM-dd HH:mm"/></td>
                         <td><c:out value="${gebeurtenis.message}"/></td>
                         <td><c:out value="${gebeurtenis.betrokkenGebruiker.voornaam} ${gebeurtenis.betrokkenGebruiker.achternaam}"/></td>
                     </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                </c:forEach>
+            </tbody>
+        </table>
     </c:when>
     <c:otherwise>
         <p>Er zijn nog geen gebeurtenissen om te tonen.</p>

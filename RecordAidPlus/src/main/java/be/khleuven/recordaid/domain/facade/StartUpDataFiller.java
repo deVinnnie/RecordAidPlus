@@ -3,7 +3,6 @@ package be.khleuven.recordaid.domain.facade;
 import be.khleuven.recordaid.domain.departement.*;
 import be.khleuven.recordaid.domain.gebruiker.*;
 import be.khleuven.recordaid.database.DatabaseException;
-import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.*;
 import be.khleuven.recordaid.domain.gebruiker.Dossier;
 import be.khleuven.recordaid.opnames.OpnameMethode;

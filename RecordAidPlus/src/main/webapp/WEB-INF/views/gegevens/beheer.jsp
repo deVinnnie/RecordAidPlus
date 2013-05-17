@@ -23,8 +23,8 @@
     <tbody>
         <c:forEach var="lector" items="${lectoren}">
             <tr>
-                <td>${lector.naam}</td>
-                <td>${lector.emailadres}</td>
+                <td><c:out value="${lector.naam}"/></td>
+                <td><c:out value="${lector.emailadres}"/></td>
                 <td>
                     <c:choose>
                         <c:when test="${lector.autonoomOpnemen}">
@@ -35,8 +35,17 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td><a href="<s:url value="/gegevens/lectoren/verwijder?id=${lector.id}"/>">Verwijder</a></td>
-                <td><a href="<s:url value="/gegevens/lectoren/bewerk?id=${lector.id}"/>">Bewerk</a></td>
+                <td>
+                    <s:url var="url" value="/gegevens/lectoren/verwijder">
+                        <s:param name="id" value="${lector.id}"/>
+                    </s:url>
+                    <a href="${url}">Verwijder</a></td>
+                <td>
+                    <s:url var="url" value="/gegevens/lectoren/bewerk">
+                        <s:param name="id" value="${lector.id}"/>
+                    </s:url>
+                    <a href="${url}">Bewerk</a>
+                </td>
             </tr>  
         </c:forEach>
     </tbody>
@@ -53,7 +62,7 @@
     <tbody>
         <c:forEach var="departement" items="${departementen}">
             <tr>
-                <td>${departement.naam}</td>
+                <td><c:out value="${departement.naam}"/></td>
                 <td>
                     <c:choose>
                         <c:when test="${departement.actief}">

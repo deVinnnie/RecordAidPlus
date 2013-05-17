@@ -32,12 +32,14 @@
                         </td>
                         <td><c:out value="${aanvraag.opnameMomenten.size()}"/></td>
                         <td>
-                            <a href="<s:url value="/gebruikers/dossier?gebruiker=${aanvraag.dossier.gebruiker.emailadres}"/>">
+                            <s:url var="url" value="/gebruikers/dossier?gebruiker=${aanvraag.dossier.gebruiker.emailadres}"/>
+                            <a href="${url}">
                             <c:out value="${aanvraag.dossier.gebruiker.voornaam} ${aanvraag.dossier.gebruiker.achternaam}"/>
                             </a>
                         </td>
-                        <td>${aanvraag.status.name}</td>
-                        <td><a href="<s:url value="/aanvragen/detail?id=${aanvraag.id}"/>">Details</a></td>
+                        <td><c:out value="${aanvraag.status.name}"/></td>
+                        <s:url var="url" value="/aanvragen/detail?id=${aanvraag.id}"/>
+                        <td><a href="${url}">Details</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

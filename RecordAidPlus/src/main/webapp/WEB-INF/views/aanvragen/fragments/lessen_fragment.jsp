@@ -22,21 +22,21 @@
             <table>
                 <tr>
                     <td>OOD</td>
-                    <td>${opnameMoment.OOD}</td>
+                    <td><c:out value="${opnameMoment.OOD}"/></td>
                 </tr>
                 <tr>
                     <td>Lokaal</td>
-                    <td>${opnameMoment.lokaal.naam}</td>
+                    <td><c:out value="${opnameMoment.lokaal.naam}"/></td>
                 </tr>
                 <tr>
                     <td>Klas/Reeks</td>
-                    <td>${opnameMoment.reeks}</td>
+                    <td><c:out value="${opnameMoment.reeks}"/></td>
                 </tr>
                 <tr>
                     <td>Verantwoordelijk RecordAid lid</td>
                     <c:choose>
                         <c:when test="${not empty opnameMoment.verantwoordelijke}">
-                            <td>${opnameMoment.verantwoordelijke.voornaam} ${opnameMoment.verantwoordelijke.achternaam}</td>
+                            <td><c:out value="${opnameMoment.verantwoordelijke.voornaam} ${opnameMoment.verantwoordelijke.achternaam}"/></td>
                         </c:when>
                         <c:otherwise>
                             <td>Niemand Toegewezen</td>
@@ -46,9 +46,9 @@
                 <tr>
                     <td>Lector</td>
                     <td>
-                        ${opnameMoment.lector.naam}
-                        <a href="mailto:${opnameMoment.lector.emailadres}">
-                            (${opnameMoment.lector.emailadres})
+                        <c:out value="${opnameMoment.lector.naam}"/>
+                        <a href="<c:out value="mailto:${opnameMoment.lector.emailadres}"/>">
+                            (<c:out value="${opnameMoment.lector.emailadres}"/>)
                         </a>
                     </td>
                 </tr>
@@ -74,7 +74,7 @@
                         <td>
                             <ul>
                                 <c:forEach var="opnameMethode" items="${opnameMoment.mogelijkeOpnameMethodes}">
-                                    <li>${opnameMethode.naam}</li>
+                                    <li><c:out value="${opnameMethode.naam}"/></li>
                                     </c:forEach>
                             </ul>
                         </td>

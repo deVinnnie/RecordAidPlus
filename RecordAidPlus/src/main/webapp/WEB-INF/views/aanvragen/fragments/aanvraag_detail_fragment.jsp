@@ -41,19 +41,19 @@
     </c:if>
     <tr>
         <td>Status</td>
-        <td>${aanvraag.status.name}</td>
+        <td><c:out value="${aanvraag.status.name}"/></td>
     </tr>
     <tr>
         <td>Departement</td>
-        <td>${aanvraag.departement.naam}</td>
+        <td><c:out value="${aanvraag.departement.naam}"/></td>
     </tr>
     <tr>
         <td>Reden</td>
-        <td>${aanvraag.reden}</td>
+        <td><c:out value="${aanvraag.reden}"/></td>
     </tr>
     <tr>
         <td>Opmerkingen</td>
-        <td>${aanvraag.opmerking}</td>
+        <td><c:out value="${aanvraag.opmerking}"/></td>
     </tr>
     <tr>
         <td>Aanvraagdatum</td>
@@ -65,8 +65,12 @@
             <td>
                 <ul class="normal-list">
                     <c:forEach var="lector" items="${aanvraag.lectoren}">
-                        <li>${lector.naam} (<a href="mailto:${lector.emailadres}">${lector.emailadres}</a>)</li>
-                        </c:forEach>
+                        <li><c:out value="${lector.naam}"/>
+                            (<a href="<c:out value="mailto:${lector.emailadres}"/>">
+                                <c:out value="${lector.emailadres}"/>
+                            </a>)
+                        </li>
+                    </c:forEach>
                 </ul>
             </td>
         </tr>
@@ -76,10 +80,10 @@
                 <ul class="normal-list">
                     <c:forEach var="goedkeuring" items="${aanvraag.goedkeuringen}">
                         <li>
-                            ${goedkeuring.lector.naam}
+                            <c:out value="${goedkeuring.lector.naam}"/>
                             <ul class="normal-list">
                                 <c:forEach var="opnameMethode" items="${goedkeuring.mogelijkeOpnameMethodes}">
-                                    <li>${opnameMethode.naam}</li>
+                                    <li><c:out value="${opnameMethode.naam}"/></li>
                                 </c:forEach>
                             </ul>
                         </li>
