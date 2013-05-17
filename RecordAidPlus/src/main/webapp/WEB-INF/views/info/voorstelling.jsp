@@ -22,7 +22,7 @@
             <dt>Carl Vanderwegen</dt>
             <dd>Verantwoordelijke Buddy&#8217;s Biomedische Laboratoriumtechnologie</dd>
             <dt>Maxime Van den Kerkhof</dt>
-            <dd> Verantwoordelijke Website</dd>
+            <dd>Verantwoordelijke Website</dd>
             <dt>Sander Brebels / Rens Oosterbos</dt>
             <dd>Verantwoordelijke Promo</dd>
             <dt>Mattias Mercy</dt>

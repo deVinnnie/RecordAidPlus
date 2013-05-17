@@ -201,8 +201,7 @@ textarea{
 }
 
 *[required="required"]{
-    box-shadow: 0 0 4px #BE3030; 
-    border: 1px solid #BE3030 !important; 
+    border: 1px dotted #BE3030 !important; 
 }
 
 /*

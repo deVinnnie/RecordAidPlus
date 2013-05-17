@@ -1,7 +1,6 @@
 package be.khleuven.recordaid.domain.gebruiker;
 
-import be.khleuven.recordaid.util.StringUtils;
-import be.khleuven.recordaid.util.ValidatieCodeGenerator;
+import be.khleuven.recordaid.util.*; 
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
@@ -281,7 +280,7 @@ public class Gebruiker implements Serializable, UserDetails {
      * waarden van de instantievariabelen.
      *
      * @param obj Object dat met dit object vergeleken moet worden.
-     * @return Yes indien ze hetzelfde zijn, false indien ze niet hetzelfde
+     * @return True indien ze hetzelfde zijn, false indien ze niet hetzelfde
      * zijn.
      */
     @Override
@@ -298,7 +297,7 @@ public class Gebruiker implements Serializable, UserDetails {
     }
 
     /**
-     * Methode die gebruikt wordt in bepaalde Collection<> klassen.
+     * Methode die gebruikt wordt in bepaalde Collection klassen.
      *
      * @return integer gebaseerd op waarden van de instantievariabelen.
      */

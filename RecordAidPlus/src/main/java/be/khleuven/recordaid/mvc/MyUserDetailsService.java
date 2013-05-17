@@ -36,6 +36,7 @@ public class MyUserDetailsService implements UserDetailsService{
     public void changePassword(Gebruiker gebruiker, String wachtwoord){
         String hash = this.passwordEncoder.encode(wachtwoord);
         gebruiker.setWachtwoordHash(hash);
+        gebruiker.setForcePasswordChange(false);
         domainFacade.edit(gebruiker);
     }
     
@@ -56,7 +57,7 @@ public class MyUserDetailsService implements UserDetailsService{
         domainFacade.addGebruiker(gebruiker);
     }
     
-    public void createUser(Gebruiker gebruiker, String wachtwoord, Gebruiker begeleider)throws DomainException{
+    public void createUser(Gebruiker gebruiker, String wachtwoord, Gebruiker begeleider) throws DomainException{
         Rollen rol = Rollen.STUDENT; 
         if (gebruiker.getEmailadres().matches("^.+@khleuven.be$")) {
             rol = Rollen.LEERKRACHT;
@@ -66,6 +67,7 @@ public class MyUserDetailsService implements UserDetailsService{
         String hash = this.passwordEncoder.encode(wachtwoord);
         
         gebruiker.setWachtwoordHash(hash);
+        gebruiker.setForcePasswordChange(true);
         domainFacade.addGebruiker(gebruiker, begeleider);
     }
 }

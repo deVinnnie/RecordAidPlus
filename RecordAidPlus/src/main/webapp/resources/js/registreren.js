@@ -1,17 +1,17 @@
-var emailOK = false; 
-var achternaamOK = false;
-var voornaamOK = false;
-var wachtwoordOK = false;
-var wachtwoordConfirmatieOK = false;
+var emailOK = true;
+var achternaamOK = true;
+var voornaamOK = true;
+var wachtwoordOK = true;
+var wachtwoordConfirmatieOK = true;
 
-$("document").ready(function()
+$('document').ready(function()
 {
     $("#emailadres").focus(hide).focusout(checkEmail);
-    $("#naam").focus(hide).focusout(checkAchternaam);
+    $("#achternaam").focus(hide).focusout(checkAchternaam);
     $("#voornaam").focus(hide).focusout(checkVoornaam);
     $("#wachtwoord").focus(hide).focusout(checkWachtwoord);
-    $("#wachtwoordConfirmation").focus(hide).focusout(checkWachtwoordConfirmation);
-    $("#registratieForm").submit(registreer_gebruiker); 
+    $("#wachtwoord_confirmation").focus(hide).focusout(checkWachtwoordConfirmation);
+    $("#registratieForm").submit(registreer_gebruiker);
 });
 
 function registreer_gebruiker()
@@ -19,97 +19,86 @@ function registreer_gebruiker()
     checkEmail();
     checkAchternaam();
     checkVoornaam();
-    checkWachtwoord1();
-    checkWachtwoordConfirmation();    
-    return (emailOK && achternaamOK && voornaamOK 
-            && wachtwoordOK && wachtwoordConfirmatieOK);
+    checkWachtwoord();
+    checkWachtwoordConfirmation();
+    console.log(""+emailOK+voornaamOK+achternaamOK+ wachtwoordOK+ wachtwoordConfirmatieOK); 
+    return (emailOK && achternaamOK && voornaamOK && wachtwoordOK && wachtwoordConfirmatieOK);
 }
 
 function checkEmail()
 {
     emailOK = true;
     $("#email_error").empty();
-    if(!($("#emailadres").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@khleuven.be$/) 
+    if (!($("#emailadres").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@khleuven.be$/)
             || $("#emailadres").val().match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@student.khleuven.be$/)))
     {
-        $("#email_error").hide()
-            .append("Geen goed emailadres")
-            .fadeIn("slow");
+        showError("#email_error", "Geen goed emailadres");
         emailOK = false;
     }
-    else{
-        if($("#voornaam").val() =='' && $("#achternaam").val() == ''){
-               var arrayStrings = $("#emailadres").val().split('@');
-               var arrayNaam = arrayStrings[0].split('.'); 
-               var voornaam = arrayNaam[0]; 
-               var achternaam =""; 
-               for(var i = 1; i < arrayNaam.length; i++){
-                   if(i!==1){
-                       achternaam+=" "; 
-                   }
-                   achternaam += arrayNaam[i].charAt(0).toUpperCase() +arrayNaam[i].slice(1);; 
-               }
-               
-               voornaam = voornaam.charAt(0).toUpperCase() + voornaam.slice(1);
-               
-               $("#voornaam").val(voornaam);
-               $("#achternaam").val(achternaam); 
-           }
+    else if ($("#voornaam").val() == '' && $("#achternaam").val() == '') {
+        var arrayStrings = $("#emailadres").val().split('@');
+        var arrayNaam = arrayStrings[0].split('.');
+        var voornaam = arrayNaam[0];
+        var achternaam = "";
+        for (var i = 1; i < arrayNaam.length; i++) {
+            if (i !== 1) {
+                achternaam += " ";
+            }
+            achternaam += arrayNaam[i].charAt(0).toUpperCase() + arrayNaam[i].slice(1);
+            ;
+        }
+
+        voornaam = voornaam.charAt(0).toUpperCase() + voornaam.slice(1);
+
+        $("#voornaam").val(voornaam);
+        $("#achternaam").val(achternaam);
     }
 }
 
 function checkAchternaam()
-{ 
+{
     achternaamOK = true;
-    $("#naam_error").empty();
-    if(!($("#naam").val().match(/([a-zA-ZáíóúñÑö]+( |'|-)?)+/)))
+    $("#achternaam_error").empty();
+    if (!($("#achternaam").val().match(/([a-zA-ZáíóúñÑö]+( |'|-)?)+/)))
     {
-        $("#naam_error").hide()
-            .append("Geen goede naam")
-            .fadeIn("slow");
+        showError("#achternaam_error", "Geen goede achternaam");
         achternaamOK = false;
     }
 }
-
 function checkVoornaam()
 {
-    voornaamOK = true;
+    var voornaamOK = true;
     $("#voornaam_error").empty();
-    if(!$("#voornaam").val().match(/([a-zA-ZáíóúñÑö]+( |'|-)?)+/))
+    if (!$("#voornaam").val().match(/([a-zA-ZáíóúñÑö]+( |'|-)?)+/))
     {
-        $("#voornaam_error").hide()
-            .append("Geen goede voornaam")
-            .fadeIn("slow");
+        showError("#voornaam_error", "Geen goede voornaam");
         voornaamOK = false;
     }
 }
-
 function checkWachtwoord()
 {
     wachtwoordOK = true;
     $("#wachtwoord_error").empty();
-    if($("#wachtwoord").val().length < 6)
+    if ($("#wachtwoord").val().length < 6)
     {
-        $("#wachtwoord_error").hide()
-            .append("Uw wachtwoord is te kort")
-            .fadeIn("slow");
+        showError("#wachtwoord_error", "Uw wachtwoord is te kort");
         wachtwoordOK = false;
     }
 }
-
 function checkWachtwoordConfirmation()
 {
     wachtwoordConfirmatieOK = true;
-    $("#wachtwoordConfirmation_error").empty();
-    if($("#wachtwoord1").val() !== $("#wachtwoord2").val())
+    $("#wachtwoord_confirmation_error").empty();
+    if ($("#wachtwoord").val() !== $("#wachtwoord_confirmation").val())
     {
-        $("#wachtwoordConfirmation_error").hide()
-            .append("De wachtwoorden komen niet overeen")
-            .fadeIn("slow");
+        showError("#wachtwoord_confirmation_error", "De wachtwoorden komen niet overeen");
         wachtwoordConfirmatieOK = false;
     }
 }
+function hide(event) {
+    $("#" + event.target.id + "_error").fadeOut("slow");
+}
 
-function hide(event){
-    $("#"+event.target.id+"_error").fadeOut("slow"); 
+function showError(id, message) {
+    $(id).hide().append(message).fadeIn("slow");
 }

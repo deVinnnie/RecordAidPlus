@@ -13,28 +13,28 @@
             </tr> 
             <tr>
                 <td><label for="email">E-mail adres (KHLeuven)</label></td>
-                <td><springforms:input path="emailadres" type="text" id="emailadres"/></td>
+                <td><springforms:input path="emailadres" type="text" id="emailadres" required="required"/></td>
                 <td id="email_error" class="error"></td>
             </tr>
             <tr>
                 <td><label for="voornaam">Voornaam</label></td>
-                <td><springforms:input path="voornaam" type="text" id="voornaam"/></td>
+                <td><springforms:input path="voornaam" type="text" id="voornaam" required="required"/></td>
                 <td id="voornaam_error" class="error"></td>
             </tr>
             <tr>
-                <td><label for="naam">Achternaam</label></td>
-                <td><springforms:input path="achternaam" type="text" id="achternaam"/></td>
-                <td id="naam_error" class="error"></td>
+                <td><label for="achternaam">Achternaam</label></td>
+                <td><springforms:input path="achternaam" type="text" id="achternaam" required="required"/></td>
+                <td id="achternaam_error" class="error"></td>
             </tr>
             <tr>
                 <td><label for="wachtwoord">Wachtwoord</label></td>
-                <td><input type="password" id="wachtwoord" name="wachtwoord"/></td>
+                <td><input type="password" id="wachtwoord" name="wachtwoord" required="required"/></td>
                 <td id="wachtwoord_error" class="error"></td>
             </tr>
             <tr>
                 <td><label for="wachtwoord_confirmation">Wachtwoord (controle)</label></td>
-                <td><input type="password" id="wachtwoord_confirmation" name="wachtwoord_confirmation"/></td>
-                <td id=wachtwoord_confirmation_error" class="error"></td>
+                <td><input type="password" id="wachtwoord_confirmation" name="wachtwoord_confirmation" required="required"/></td>
+                <td id="wachtwoord_confirmation_error" class="error"></td>
             </tr>
             <tr>
                 <td><label for="geinteresseerd">Geinteresseerd</label></td>    

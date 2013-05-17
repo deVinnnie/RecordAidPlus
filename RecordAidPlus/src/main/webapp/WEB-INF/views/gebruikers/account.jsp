@@ -3,31 +3,28 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="m" tagdir="/WEB-INF/tags/" %>
+<%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
 <h1>Mijn account</h1>
-<table>
-    <tr>
-        <td>E-mailadres</td>
-        <td>${gebruiker.emailadres}</td>
-    </tr>
-    <tr>
-        <td>Voornaam</td>
-        <td>${gebruiker.voornaam}</td>
-    </tr>
-    <tr>
-        <td>Achternaam</td>
-        <td>${gebruiker.achternaam}</td>
-    </tr>
-    <tr>
-        <td>Rol</td>
-        <td>
-            <ul>
-                <c:forEach var="rol" items="${gebruiker.rollen}">
-                    <li>${rol.name}</li>
-                    </c:forEach>
-            </ul>
-        </td>
-    </tr>
-</table>
+<springforms:form method="POST" modelAttribute="gebruiker">
+    <table>
+        <tr>
+            <td>E-mailadres</td>
+            <td>${gebruiker.emailadres}</td>
+        </tr>
+        <%@include file="fragments/naam_editor.jsp" %>
+        <tr>
+            <td>Rol</td>
+            <td>
+                <ul>
+                    <c:forEach var="rol" items="${gebruiker.rollen}">
+                        <li>${rol.name}</li>
+                        </c:forEach>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Opslaan"/>
+</springforms:form>
 
 <h2>Wachtwoord wijzigen</h2>
 <p id="error" class="error"></p>

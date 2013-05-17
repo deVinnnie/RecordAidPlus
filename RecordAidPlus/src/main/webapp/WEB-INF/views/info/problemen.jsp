@@ -43,7 +43,9 @@
 
     <h3>1. Geluid van micro afzetten</h3>
     <p>U kan het geluid van de micro afzetten. In leslokalen is het toch niet echt nodig dat uw stem wordt versterkt door de micro omdat de studenten u sowieso verstaan. Let op, uw stem wordt <strong>wel</strong> nog steeds opgenomen door het opname programma. Dus hier hoeft u geen zorgen over te maken.</p>
-    <p>U doet door rechtermuisklik te doen op het icoontje Volume te klikken <img src="<s:url value="/resources/images/problemen/VolumeIcoontje.jpg"/>" alt="VolumeIcoontje" width="18" height="20"> en dan kiezen voor Volumeregeling openen<br>
+    <p>U doet door rechtermuisklik te doen op het icoontje Volume te klikken 
+        <s:url var="url" value="/resources/images/info/problemen/VolumeIcoontje.jpg"/>
+        <img src="${url}" alt="VolumeIcoontje" width="18" height="20"> en dan kiezen voor Volumeregeling openen<br>
         <a href="<s:url value="/resources/images/info/problemen/VolumeRechterMuisklik.jpg"/>">
             <img src="<s:url value="/resources/images/info/problemen/VolumeRechterMuisklik.jpg"/>" 
                  alt="Volumeregeling openen" width="302" height="58">
