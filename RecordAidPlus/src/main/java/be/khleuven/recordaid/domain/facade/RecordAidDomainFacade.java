@@ -64,7 +64,7 @@ public class RecordAidDomainFacade {
         this.departementDb = departementDb;
         this.mailDb = mailDb;
 
-        //Create Admin user
+        //Create Admin user and departementen
         try {
             //Standaard wachtwoord = "geheim". 
             String hash = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
@@ -74,6 +74,12 @@ public class RecordAidDomainFacade {
 
             Setting setting = new Setting("admin_first_login", "TRUE");
             this.create(setting);
+            
+            this.addDepartement(new Departement("G&T", true));
+            this.addDepartement(new Departement("SSH", false));
+            this.addDepartement(new Departement("DLO Diest", false));
+            this.addDepartement(new Departement("Naamse steenweg", false));
+            this.addDepartement(new Departement("Hertogstraat", false));
         } catch (Exception e) {
             //Move Along
         }

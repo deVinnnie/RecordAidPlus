@@ -26,14 +26,8 @@ public class StartUpDataFiller {
     }
 
     public void init() throws DatabaseException {
-        //<editor-fold defaultstate="collapsed" desc="Departementen & Lectoren">
+        //<editor-fold defaultstate="collapsed" desc="Lectoren">
         try {
-            facade.addDepartement(new Departement("G&T", true));
-            facade.addDepartement(new Departement("SSH", false));
-            facade.addDepartement(new Departement("DLO Diest", false));
-            facade.addDepartement(new Departement("Naamse steenweg", false));
-            facade.addDepartement(new Departement("Hertogstraat", false));
-
             String[] mails = {
                 "severus.snape@khleuven.be",
                 "filius.flitwick@khleuven.be",
