@@ -18,14 +18,4 @@ public class LectorTest {
         Lector lector = new Lector("voornaam.middelnaam.achternaam@khleuven.be");
         assertEquals("Voornaam Middelnaam Achternaam", lector.getNaam()); 
     }
-
-    /**
-     * Test of equals method, of class Lector.
-     */
-    @Test
-    public void testEquals_zelfde_emailadres_geeft_true() {
-        Lector lector = new Lector("voornaam.middelnaam.achternaam@khleuven.be");
-        Lector lector2 = new Lector("voornaam.middelnaam.achternaam@khleuven.be");
-        assertTrue(lector.equals(lector2)); 
-    }
 }
