@@ -37,7 +37,7 @@
                 <td id="wachtwoord_confirmation_error" class="error"></td>
             </tr>
             <tr>
-                <td><label for="geinteresseerd">Geinteresseerd</label></td>    
+                <td><label for="geinteresseerd">Geinteresseerd om te helpen</label></td>    
                 <td><springforms:checkbox path="geinteresseerd" id="geinteresseerd"/></td>
             </tr>
             <tr>

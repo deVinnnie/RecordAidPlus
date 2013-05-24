@@ -45,7 +45,7 @@ public class RecordAidDomainFacade {
             ReservatieDatabaseInterface reservatieDB,
             DepartementDatabaseInterface departementDb,
             MailDatabaseInterface mailDb) {
-        this(commonDb, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true);
+        this(commonDb, gebruikerDB, aanvraagDB, reservatieDB, departementDb, mailDb, true, "MailHandlerDummy");
     }
 
     @Autowired
@@ -56,30 +56,34 @@ public class RecordAidDomainFacade {
             ReservatieDatabaseInterface reservatieDB,
             DepartementDatabaseInterface departementDb,
             MailDatabaseInterface mailDb,
-            boolean initialize) {
+            boolean initialize, 
+            String mailHandlerType) {
         this.commonDb = commonDb;
         this.gebruikerDB = gebruikerDB;
         this.aanvraagDB = aanvraagDB;
         this.reservatieDB = reservatieDB;
         this.departementDb = departementDb;
         this.mailDb = mailDb;
+        this.mailHandlerType = mailHandlerType; 
 
         //Create Admin user and departementen
         try {
-            //Standaard wachtwoord = "geheim". 
-            String hash = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
-            Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "RecordAid", "Admin", hash);
-            g.valideer();
-            this.create(g);
+            if(this.getGebruiker("recordaid@khleuven.be") == null){
+                //Standaard wachtwoord = "geheim". 
+                String hash = "$2a$15$ThkOeJ8D.jfblYskRaxx4uOtvTUPfeY9M2r8v5VmOqZmk7TUyJe5m";
+                Gebruiker g = new Gebruiker(Rollen.ADMIN, "recordaid@khleuven.be", "", "Admin", hash);
+                g.valideer();
+                this.create(g);
 
-            Setting setting = new Setting("admin_first_login", "TRUE");
-            this.create(setting);
-            
-            this.addDepartement(new Departement("G&T", true));
-            this.addDepartement(new Departement("SSH", false));
-            this.addDepartement(new Departement("DLO Diest", false));
-            this.addDepartement(new Departement("Naamse steenweg", false));
-            this.addDepartement(new Departement("Hertogstraat", false));
+                Setting setting = new Setting("admin_first_login", "TRUE");
+                this.create(setting);
+                
+                this.addDepartement(new Departement("G&T", true));
+                this.addDepartement(new Departement("SSH", false));
+                this.addDepartement(new Departement("DLO Diest", false));
+                this.addDepartement(new Departement("Naamse steenweg", false));
+                this.addDepartement(new Departement("Hertogstraat", false));
+            }
         } catch (Exception e) {
             //Move Along
         }

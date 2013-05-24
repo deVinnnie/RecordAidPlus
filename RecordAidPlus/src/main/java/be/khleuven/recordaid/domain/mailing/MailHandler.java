@@ -67,6 +67,7 @@ public class MailHandler extends AbstractMailHandler
     @Override
     public boolean sendMessage(MailMessage mailMessage){
         boolean succes = false;
+        mailMessage.setSender(this.getUsername());
         
         try
         {
@@ -74,9 +75,9 @@ public class MailHandler extends AbstractMailHandler
             message.setFrom(new InternetAddress(mailMessage.getSender()));
             message.reply(false);
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailMessage.getRecipient()));
-            message.setSubject(mailMessage.getSubject());
+            message.setSubject(mailMessage.renderSubject());
 
-            message.setContent(mailMessage.getMessage(), "text/html");
+            message.setContent(mailMessage.renderMessage(), "text/html");
             Transport.send(message);
 
             succes = true;
