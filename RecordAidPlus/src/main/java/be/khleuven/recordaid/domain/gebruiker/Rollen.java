@@ -15,7 +15,7 @@ public enum Rollen
     OPLEIDINGSHOOFD ("Opleidingshoofd"),
     BUDDY ("Buddy"),
     KERNLID ("Kernlid"),
-    GEINTERESSEERDE ("Geïnteresserde"), 
+    GEINTERESSEERDE ("Geïnteresseerde"), 
     ADMIN ("Admin");
     
     private String name; 

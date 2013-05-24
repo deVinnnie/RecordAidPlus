@@ -217,6 +217,13 @@ td{
     font-size: 1em;
 }
 
+.table-container{
+    width: 100%;
+    overflow-y: auto;
+    _overflow: auto;
+    margin: 0 0 1em;
+}
+
 /*
 Succes and Error messages
 ---------------*/
@@ -394,6 +401,11 @@ Succes and Error messages
 
 /*Images
 ---------------*/
+img{
+    max-width: 100%; 
+    height: auto; 
+}
+
 img.aligncenter{
     display: block;
     margin-left: auto;

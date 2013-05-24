@@ -9,43 +9,45 @@
     });
 </script>
 <h1>Gebruikers Beheren</h1>
-<table id="tabel">
-    <thead>
-        <tr>
-            <th>Voornaam</th>
-            <th>Naam</th>
-            <th>Emailadres</th>
-            <th>Rollen</th>
-            <th>Gevalideerd</th>
-            <th>Details</th>
-            <th>Dossier</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach items="${gebruikers}" var="gebruiker">
+<div class="table-container">
+    <table id="tabel">
+        <thead>
             <tr>
-                <td>${gebruiker.voornaam}</td>
-                <td>${gebruiker.achternaam}</td>
-                <td>${gebruiker.emailadres}</td>
-                <td>
-                    <c:forEach items="${gebruiker.rollen}" var="rol">
-                        <c:out value="${rol.name}"/><br>
-                    </c:forEach>
-                </td>
-                <td><c:choose>
-                        <c:when test="${gebruiker.gevalideerd}">
-                            Ja
-                        </c:when>
-                        <c:otherwise>
-                            Nee
-                        </c:otherwise>
-                    </c:choose></td>
-                <td><a href="<s:url value="/gebruikers/detail?emailadres=${gebruiker.emailadres}"/>">Details</a></td>
-                <td><a href="<s:url value="/gebruikers/dossier?gebruiker=${gebruiker.emailadres}"/>">Dossier</a></td>
+                <th>Voornaam</th>
+                <th>Naam</th>
+                <th>Emailadres</th>
+                <th>Rollen</th>
+                <th>Gevalideerd</th>
+                <th>Details</th>
+                <th>Dossier</th>
             </tr>
-        </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <c:forEach items="${gebruikers}" var="gebruiker">
+                <tr>
+                    <td>${gebruiker.voornaam}</td>
+                    <td>${gebruiker.achternaam}</td>
+                    <td>${gebruiker.emailadres}</td>
+                    <td>
+                        <c:forEach items="${gebruiker.rollen}" var="rol">
+                            <c:out value="${rol.name}"/><br>
+                        </c:forEach>
+                    </td>
+                    <td><c:choose>
+                            <c:when test="${gebruiker.gevalideerd}">
+                                Ja
+                            </c:when>
+                            <c:otherwise>
+                                Nee
+                            </c:otherwise>
+                        </c:choose></td>
+                    <td><a href="<s:url value="/gebruikers/detail?emailadres=${gebruiker.emailadres}"/>">Details</a></td>
+                    <td><a href="<s:url value="/gebruikers/dossier?gebruiker=${gebruiker.emailadres}"/>">Dossier</a></td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
 
 <h1>Alle gebeurtenissen</h1>
 <script type="text/javascript">

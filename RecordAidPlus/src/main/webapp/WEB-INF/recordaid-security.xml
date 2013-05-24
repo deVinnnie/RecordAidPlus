@@ -13,6 +13,7 @@
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/info/**" access="permitAll"/>
         <intercept-url pattern="/login/**" access="permitAll"/>
+        <intercept-url pattern="/faq" access="permitAll"/>
         <intercept-url pattern="/support" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <intercept-url pattern="/items/reserveer" access="hasAnyRole('ADMIN','KERNLID', 'BUDDY','LEERKRACHT')"/> 
