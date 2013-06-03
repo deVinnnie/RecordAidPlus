@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- *
+ * Dummy implemenatie bedoeld voor testing. 
+ * Print mails uit naar de console. 
+ * 
  * @author Vincent Ceulemans
  */
 public class MailHandlerDummy extends AbstractMailHandler{

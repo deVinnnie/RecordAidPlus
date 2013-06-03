@@ -3,7 +3,8 @@ package be.khleuven.recordaid.domain.mailing;
 import java.io.IOException;
 
 /**
- *
+ * Factory voor het maken van MailHandlers. 
+ * 
  * @author Vincent Ceulemans
  */
 public class MailHandlerFactory {

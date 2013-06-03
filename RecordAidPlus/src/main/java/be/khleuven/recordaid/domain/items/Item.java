@@ -12,7 +12,8 @@ import static be.khleuven.recordaid.util.CalendarUtils.*;
  * 
  * De klasse item bestaat zodat op de website items gereserveerd kunnen worden op bepaalde tijdstippen.
  *
- * @author Hannes
+ * @author Hannes Crombez
+ * @author Vincent Ceulemans
  */
 @Entity
 public class Item extends Identifiable implements Serializable

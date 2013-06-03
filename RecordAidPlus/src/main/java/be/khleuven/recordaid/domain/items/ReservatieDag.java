@@ -6,7 +6,7 @@ import javax.persistence.*;
 import static be.khleuven.recordaid.util.CalendarUtils.*;
 
 /**
- *
+ * Wrapper voor de reservaties op dezelfde dag. 
  * @author Vincent Ceulemans
  */
 @Entity

@@ -5,7 +5,8 @@ package be.khleuven.recordaid.domain.gebruiker;
  * De rol van de gebruiker bepaalt wat een gebruiker te zien 
  * krijgt op de website en wat een gebruiker mag en kan veranderen.
  *
- * @author Hannes
+ * @author Hannes Crombez
+ * @author Vincent Ceulemans
  */
 public enum Rollen
 {

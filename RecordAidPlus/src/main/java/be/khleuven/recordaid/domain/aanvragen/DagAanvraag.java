@@ -13,7 +13,7 @@ import javax.persistence.*;
  * Een Aanvraag beschrijft de aanvraag van een gebruiker om een bepaalde les op
  * te nemen.
  *
- * @author Hannes
+ * @author Vincent Ceulemans
  */
 @Entity
 public class DagAanvraag extends AbstractAanvraag

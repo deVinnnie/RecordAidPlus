@@ -5,7 +5,8 @@ package be.khleuven.recordaid.domain.aanvragen;
  * een aanvraag beschrijft in welk stadium een aanvraag zich bevindt en wat er
  * voor die aanvraag kan gebeuren.
  *
- * @author Koen
+ * @author Koen Verheyden
+ * @author Vincent Ceulemans
  */
 public enum Status
 {

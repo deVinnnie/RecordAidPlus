@@ -1,7 +1,7 @@
 package be.khleuven.recordaid.util;
 
 /**
- *
+ * 
  * @author Vincent Ceulemans
  */
 public class StringUtils {

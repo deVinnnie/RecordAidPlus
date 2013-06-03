@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
  * boolean om te bepalen of de FAQ relevant is voor andere gebruikers of niet.
  *
  * @author Maxime Van den Kerkhof
+ * @author Vincent Ceulemans
  */
 @Entity
 public class FAQ extends Identifiable implements Serializable

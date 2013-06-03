@@ -10,7 +10,7 @@ import java.security.SecureRandom;
  * ene email met de gegenereerde validatiecode en zal deze moeten ingeven om zo
  * te tonen dat het emailadres van zich is.
  *
- * @author Hannes
+ * @author Hannes Crombez
  */
 public final class ValidatieCodeGenerator
 {

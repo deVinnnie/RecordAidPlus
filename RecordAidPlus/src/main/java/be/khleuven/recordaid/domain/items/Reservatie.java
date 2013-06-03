@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Represents a reservation of an item for a certain period of a day. 
  * 
  * The date and item of the reservation are stored in the parent <code>ReservatieDag</code>. 
- *
+ * @author Vincent Ceulemans
  */
 @Entity
 public class Reservatie extends Identifiable

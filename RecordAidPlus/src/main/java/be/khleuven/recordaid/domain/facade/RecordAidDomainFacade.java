@@ -19,7 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * RecordAidDomainFacade kan aangesproken worden en deze geeft de betreffende
  * taak door aan het juiste model-object.
  *
- * @author Maxime Van den Kerkhof, Vincent Ceulemans
+ * @author Maxime Van den Kerkhof 
+ * @author Vincent Ceulemans
  */
 public class RecordAidDomainFacade {
     //<editor-fold defaultstate="collapsed" desc="Instantievariabelen & Constructors">  

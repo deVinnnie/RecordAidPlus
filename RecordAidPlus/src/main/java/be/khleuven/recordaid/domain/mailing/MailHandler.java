@@ -12,6 +12,7 @@ import javax.mail.internet.*;
  * afhankelijk van de reden waarom de mail gestuurd wordt.
  *
  * @author Maxime Van den Kerkhof
+ * @author Vincent Ceulemans
  */
 public class MailHandler extends AbstractMailHandler
 {   

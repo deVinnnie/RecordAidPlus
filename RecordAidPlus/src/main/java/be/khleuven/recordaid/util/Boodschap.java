@@ -1,7 +1,8 @@
 package be.khleuven.recordaid.util;
 
 /**
- *
+ * Convenience klasse voor het overbrengen van boodschappen via een Controller naar een view. 
+ * 
  * @author Vincent Ceulemans
  */
 public class Boodschap {

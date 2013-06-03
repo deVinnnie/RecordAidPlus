@@ -13,7 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  * gebruiker, en aan de hand van het type gebruiker wordt ook bepaald wat deze
  * gebruiker wel en niet kan.
  *
- * @author Hannes, Vincent
+ * @author Hannes Crombez
+ * @author Vincent Ceulemans
  */
 @Entity
 public class Gebruiker implements Serializable, UserDetails {

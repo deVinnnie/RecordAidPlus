@@ -10,7 +10,8 @@ import javax.persistence.*;
  * Klasse die voor een bericht over een defect in een lokaal bijhoudt om welk
  * lokaal het gaat, wat het defect is en wie dit defect gemeld heeft.
  *
- * @author Koen
+ * @author Koen Verheyden
+ * @author Vincent Ceulemans
  */
 @Entity
 public class Support extends Identifiable implements Serializable
