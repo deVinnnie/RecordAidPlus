@@ -64,6 +64,12 @@
         </put-list-attribute>
     </definition>
     
+    <definition name="/aanvragen/nieuw" extends="base.jquery">
+        <put-attribute name="title" value="aanvragen.nieuw.title"/>
+        <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw.jsp" />
+        <put-attribute name="page" value="aanvragen" cascade="true"/>
+    </definition>
+    
     <definition name="/aanvragen/nieuw_multi" extends="base.jquery">
         <put-attribute name="title" value="aanvragen.nieuw_multi.title"/>
         <put-attribute name="content" value="/WEB-INF/views/aanvragen/nieuw_multi.jsp" />
