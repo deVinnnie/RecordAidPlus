@@ -10,6 +10,9 @@
     <c:otherwise>
         <c:forEach var="opnameMoment" items="${aanvraag.opnameMomenten}">
             <h3 class="les">
+                <c:if test="${aanvraag.getClass().getSimpleName() eq 'MultiPeriodeAanvraag'}">
+                    <fmt:formatDate value="${opnameMoment.beginTijdstip.time}" pattern="yyyy-MM-dd " />
+                </c:if>
                 <fmt:formatDate value="${opnameMoment.beginTijdstip.time}" pattern="HH:mm" /> tot 
                 <fmt:formatDate value="${opnameMoment.eindTijdstip.time}" pattern="HH:mm" />  
                 <%@include file="les_status_fragment.jsp" %>

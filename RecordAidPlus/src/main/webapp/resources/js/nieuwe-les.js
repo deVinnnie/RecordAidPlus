@@ -1,6 +1,7 @@
 $('document').ready(function()
 {
     $("#nieuweLes").submit(checkUren);
+    datepicker("#datum");
 });
 
 function checkUren()

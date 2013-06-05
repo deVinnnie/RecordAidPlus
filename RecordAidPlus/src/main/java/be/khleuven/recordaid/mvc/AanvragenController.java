@@ -9,6 +9,8 @@ import be.khleuven.recordaid.domain.facade.RecordAidDomainFacade;
 import be.khleuven.recordaid.domain.*;
 import be.khleuven.recordaid.domain.aanvragen.*;
 import be.khleuven.recordaid.util.TimeSpan;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*; 
 import javax.validation.Valid;
@@ -99,6 +101,34 @@ public class AanvragenController extends AbstractController{
         aanvraag.addOpnameMoment(nieuwOpnameMoment);
         domainFacade.edit(aanvraag);
 
+        if (action.equals("Gereed")) {
+            return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
+        } else {
+            return "redirect:/aanvragen/nieuwe_opname?aanvraag=" + aanvraag.getId();
+        }
+    }
+    
+    //TODO: Abstract this and previous method. 
+    @RequestMapping(value = "/nieuwe_les", params = {"aanvraag","datum"}, method = RequestMethod.POST)
+    public String addNieuwOpnameMoment(
+            @ModelAttribute("nieuweOpname") OpnameMoment nieuwOpnameMoment,
+            @RequestParam("aanvraag") long id, @RequestParam("action") String action, 
+            ModelMap model, @RequestParam("datum") String dat) throws DomainException, ParseException {
+        AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
+        nieuwOpnameMoment.getLokaal().setDepartement(aanvraag.getDepartement());
+        
+        SimpleDateFormat smdf = new SimpleDateFormat("yyyy-MM-dd"); 
+        Calendar datum = Calendar.getInstance(); 
+        datum.setTime(smdf.parse(dat));
+        
+        nieuwOpnameMoment.getTijdstip().getBeginTime()
+                .set(datum.get(Calendar.YEAR), datum.get(Calendar.MONTH), datum.get(Calendar.DATE));
+        nieuwOpnameMoment.getTijdstip().getEndTime()
+                .set(datum.get(Calendar.YEAR), datum.get(Calendar.MONTH), datum.get(Calendar.DATE));
+        
+        aanvraag.addOpnameMoment(nieuwOpnameMoment);
+        domainFacade.edit(aanvraag);
+        
         if (action.equals("Gereed")) {
             return "redirect:/aanvragen/detail?id=" + aanvraag.getId();
         } else {
@@ -253,7 +283,7 @@ public class AanvragenController extends AbstractController{
     }
 
     @RequestMapping(value = "/bewerk", method = RequestMethod.POST)
-    public String updateAanvraag(@ModelAttribute("aanvraag") DagAanvraag aanvraag, RedirectAttributes redirectAttr) {
+    public String updateAanvraag(@ModelAttribute("aanvraag") AbstractAanvraag aanvraag, RedirectAttributes redirectAttr) {
         this.domainFacade.edit(aanvraag);
         redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag gewijzigd", "succes")); 
         return "redirect:/aanvragen/detail?id=" + aanvraag.getId();

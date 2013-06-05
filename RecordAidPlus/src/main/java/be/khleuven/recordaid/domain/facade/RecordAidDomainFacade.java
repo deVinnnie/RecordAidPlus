@@ -497,11 +497,11 @@ public class RecordAidDomainFacade {
     public void setMailHandlerType(String mailHandlerType) {
         this.mailHandlerType = mailHandlerType;
     }
-    //</editor-fold>
-
+    
     public Setting getSetting(String sleutel) {
         return commonDb.find(Setting.class, sleutel);
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Handelingen">
     /**

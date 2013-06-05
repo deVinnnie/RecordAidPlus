@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="springforms" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h1>Een nieuwe aanvraag plaatsen</h1>
 <h2>Les toevoegen</h2>
 <springforms:errors path="*" cssClass="error"/>
@@ -22,7 +23,10 @@
         <c:if test="${type eq 'MultiPeriodeAanvraag'}">
             <tr>
                 <td><label for="datum">Datum</label></td>
-                <td><springforms:input path="tijdstip" id="datum" required="required"/></td>
+                <td>
+                    <input type="text" name="datum" id="datum" required="required" 
+                           value="<fmt:formatDate value="${nieuweOpname.tijdstip.beginTime.time}" pattern="yyyy-MM-dd"/>"/>
+                               </td>
             </tr>
         </c:if>
         <tr>
