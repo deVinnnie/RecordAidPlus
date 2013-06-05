@@ -2,12 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
-    <!--Initialize: Fill database with data or not. Use true in testing, false in production-->
+    <!--Initialize: Fill database with data or not. Use true in development, false in production-->
     <bean id="inititalize" class="java.lang.Boolean">
         <constructor-arg value="false"/> 
     </bean>
     
     <bean id="mailHandlerType" class="java.lang.String">
+        <!--value="MailHandler" in productie; value="MailHandlerDummy" in development-->
         <constructor-arg value="MailHandler"/>
     </bean>
     

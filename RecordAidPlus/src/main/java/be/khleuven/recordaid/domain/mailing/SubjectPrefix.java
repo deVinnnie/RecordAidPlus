@@ -3,6 +3,9 @@ package be.khleuven.recordaid.domain.mailing;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
+//TODO: This functionality should be refactored to use the Setting class instead. 
+
 /**
  *
  * @author Vincent Ceulemans
