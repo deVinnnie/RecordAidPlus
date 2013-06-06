@@ -94,7 +94,6 @@ public class OpnameController extends AbstractController {
             @RequestParam("aanvraag") long aanvraagID) {
         OpnameMoment opnameMoment = domainFacade.findOpnameMoment(id);
         AbstractAanvraag gevondenAanvraag = domainFacade.findAanvraag(aanvraagID);
-
         //Controleer of de toegangscode klopt!
         if (gevondenAanvraag.getOpnameMomenten().contains(opnameMoment)
                 && opnameMoment.getToegangsCode().equals(toegangscode)) {

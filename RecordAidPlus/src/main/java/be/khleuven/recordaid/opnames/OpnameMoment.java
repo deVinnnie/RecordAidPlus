@@ -176,30 +176,15 @@ public class OpnameMoment extends Identifiable implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+    @Override 
+    public boolean equals(Object o){
+        boolean isEqual = false; 
+        if(o instanceof OpnameMoment){
+            OpnameMoment opnamemoment2 = (OpnameMoment) o; 
+            if(opnamemoment2.getId() == this.getId()){
+                isEqual = true; 
+            }    
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final OpnameMoment other = (OpnameMoment) obj;
-        if ((this.OOD == null) ? (other.OOD != null) : !this.OOD.equals(other.OOD)) {
-            return false;
-        }
-        if (this.lokaal != other.lokaal && (this.lokaal == null || !this.lokaal.equals(other.lokaal))) {
-            return false;
-        }
-        if ((this.reeks == null) ? (other.reeks != null) : !this.reeks.equals(other.reeks)) {
-            return false;
-        }
-        if (this.tijdstip != other.tijdstip && (this.tijdstip == null || !this.tijdstip.equals(other.tijdstip))) {
-            return false;
-        }
-        if (this.lector != other.lector && (this.lector == null || !this.lector.equals(other.lector))) {
-            return false;
-        }
-        return true;
+        return isEqual; 
     }
 }
