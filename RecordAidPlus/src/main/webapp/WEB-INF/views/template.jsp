@@ -16,7 +16,6 @@
         <c:forEach items="${styles}" var="style">
             <link rel="stylesheet" type="text/css" href="<s:url value="${resources}${style}"/>"/>
         </c:forEach>
-        <!--<link rel="stylesheet" type="text/css" href="<s:url value="${resources}/css/bootstrap.min.css"/>"/>   -->
         <link rel="stylesheet" type="text/css" href="<s:url value="${resources}/css/style.css"/>"/>
         <%--Scripts--%>
         <tiles:useAttribute id="scripts" name="scripts" classname="java.util.List" />
