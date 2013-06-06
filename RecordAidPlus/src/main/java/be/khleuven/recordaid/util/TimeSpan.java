@@ -14,10 +14,14 @@ import javax.persistence.*;
  */
 @Entity
 public class TimeSpan extends Identifiable implements Serializable {
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "ENDTIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar endTime;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "BEGINTIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar beginTime; 
     
     public TimeSpan() {}

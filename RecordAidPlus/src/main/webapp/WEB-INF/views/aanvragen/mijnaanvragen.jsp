@@ -72,7 +72,7 @@
             <tbody> 
                 <c:forEach var="gebeurtenis" items="${dossier.geschiedenis.gebeurtenissen}">
                     <tr>
-                        <td><fmt:formatDate value="${gebeurtenis.tijdstip.time}" pattern="yyyy-MM-dd HH:mm"/></td>
+                        <td><fmt:formatDate value="${gebeurtenis.tijdstip.time}" pattern="yyyy-MM-dd HH:mm"/> UTC</td>
                         <td><c:out value="${gebeurtenis.message}"/></td>
                         <td><c:out value="${gebeurtenis.betrokkenGebruiker.voornaam} ${gebeurtenis.betrokkenGebruiker.achternaam}"/></td>
                     </tr>

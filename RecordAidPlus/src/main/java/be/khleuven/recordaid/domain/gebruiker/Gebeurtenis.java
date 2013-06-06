@@ -11,7 +11,8 @@ import javax.persistence.*;
  */
 @Entity
 public class Gebeurtenis extends Identifiable implements Serializable {
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "TIJDSTIP")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar tijdstip = Calendar.getInstance(); 
     
     @OneToOne
