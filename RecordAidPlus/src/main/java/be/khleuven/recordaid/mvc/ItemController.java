@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/items")
 public class ItemController extends AbstractController{
+    //Kleuren voor het aanduiden van verschillende items in het algemeen overzicht. 
     private String[] kleuren = new String[]{
         "#F00", 
         "#0F0", 
@@ -107,7 +108,7 @@ public class ItemController extends AbstractController{
         } catch (Exception ex) {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         }  
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM"); 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
         String datum = dateFormat.format(nieuweReservatie.getSlot().getBeginTime().getTime()); 
         return "redirect:/items/reserveer?selected_item="+itemID+"&datum="+datum;
     }

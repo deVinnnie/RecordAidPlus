@@ -8,9 +8,17 @@
         <s:url value="/items/reservaties?item=${selectedItem.id}" var="feed"/>
         <security:authentication property="principal.voornaam" var="voornaam"/>
         <security:authentication property="principal.achternaam" var="achternaam"/>
-        <c:if test="${empty datum}">
+        <%--Doesn't work as expected: 
+            Twee problemen: 
+        1) Een meegegeven datum maakt dat datums ervoor niet geselecteerd kunnen worden, 
+            ook al bevinden ze zich in de toekomst. (JavaScript methode van calendar plugin aanpassen)
+        2) De datum wordt (vermoedelijk) geinterpreteerd als getal: 2013-01-01 wordt 2011 
+            omdat de parameter als wiskundige formule wordt uitgevoerd. Dit geeft verkeerde resultaten. 
+        Voorlopige fix: De datum parameter steeds negeren en de huidige datum gebruiken. 
+        -->
+        <%--<c:if test="${empty datum}">--%>
             <c:set var="datum" value="new Date()"/>
-        </c:if>
+        <%--</c:if>--%>
 
         <c:if test="${not empty selectedItem}">
             <script type="text/javascript">
