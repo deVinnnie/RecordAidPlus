@@ -4,8 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*; 
 
 /**
- * Klasse waarvan overge-erfd kan worden door klassen die een id willen
- * toevoegen.
+ * Definieert een ID voor overervende entiteiten. 
  *
  * @author Maxime Van den Kerkhof
  */
@@ -16,7 +15,6 @@ public class Identifiable implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
 
     /**
      * Constructor zonder parameters, nodig voor Java Persistency.
