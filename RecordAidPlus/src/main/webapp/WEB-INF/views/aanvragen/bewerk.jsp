@@ -8,8 +8,12 @@
     <h1>Bewerken :  <%@include file="fragments/aanvraag_datum.jsp" %></h1>
     <m:boodschap/>
     <a href="<s:url value="/aanvragen/beheer"/>">Terug naar het overzicht</a>
-    <a href="<s:url value="/aanvragen/goedkeuren?id=${aanvraag.id}"/>">Goedkeuren</a>
-    <a href="<s:url value="/aanvragen/weigeren?id=${aanvraag.id}"/>">Weigeren</a>
+    <c:if test="${aanvraag.status.name ne 'Goedgekeurd'}">
+        <a href="<s:url value="/aanvragen/goedkeuren?id=${aanvraag.id}"/>">Goedkeuren</a>
+    </c:if>
+    <c:if test="${aanvraag.status.name ne 'Afgekeurd'}">
+        <a href="<s:url value="/aanvragen/weigeren?id=${aanvraag.id}"/>">Weigeren</a>
+    </c:if>
     <a href="<s:url value="/aanvragen/sluiten?id=${aanvraag.id}"/>">Voltooid</a>
 </div>
 
