@@ -6,11 +6,9 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.target-database" value="Derby"/>
-            <property name="eclipselink.ddl-generation" value="none"/>
-            <!--<property name="eclipselink.ddl-generation.output-mode" value="database"/>-->
-            <!--<property name="eclipselink.create-ddl-jdbc-file-name" value="create.sql"/>
-            <property name="eclipselink.drop-ddl-jdbc-file-name" value="drop.sql"/>
-            <property name="eclipselink.application-location" value="/home/vincent/Development/RecordAidPlus/RecordAidPlus/src/test/sql/"/>-->
+            
+            <!--Use drop-and-create-tables in development-->
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
         </properties>
     </persistence-unit>
 </persistence>
