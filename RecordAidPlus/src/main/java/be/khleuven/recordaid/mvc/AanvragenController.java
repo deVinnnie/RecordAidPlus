@@ -296,7 +296,11 @@ public class AanvragenController extends AbstractController{
         try {
             AbstractAanvraag aanvraag = domainFacade.findAanvraag(id);
             domainFacade.aanvaardAanvraag(aanvraag, this.getCurrentDossier().getGebruiker());   
-            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag goedgekeurd", "succes")); 
+            String mailVerstuurd = "";
+            if(aanvraag instanceof DagAanvraag){
+                mailVerstuurd = " Mails naar lectoren zijn verstuurd."; 
+            }
+            redirectAttr.addFlashAttribute("boodschap", new Boodschap("Aanvraag goedgekeurd." + mailVerstuurd, "succes"));     
         } catch (DomainException ex) {
             Logger.getLogger(AanvragenController.class.getName()).log(Level.SEVERE, null, ex);
             redirectAttr.addFlashAttribute("boodschap", new Boodschap("Er ging iets mis!", "error")); 
@@ -351,6 +355,5 @@ public class AanvragenController extends AbstractController{
         dataBinder.registerCustomEditor(OpnameMethode.class, new OpnameMethodePropertyEditor(domainFacade));
         dataBinder.registerCustomEditor(Lector.class, new LectorPropertyEditor(domainFacade));
         dataBinder.registerCustomEditor(Gebruiker.class, new GebruikerPropertyEditor(domainFacade));
-        //dataBinder.registerCustomEditor(Lokaal.class, new GenericPropertyEditor(domainFacade));
     }
 }
